@@ -780,4 +780,256 @@
             const date = new Date(startDate);
             date.setMonth(date.getMonth() + m);
             const month = date.getMonth();
-            const year
+            const year = date.getFullYear();
+
+            // Salary
+            if (monthlyIncome > 0) {
+                const salDate = new Date(year, month, salaryDay);
+                if (salDate <= today) {
+                    balance += monthlyIncome;
+                    transactions.push({
+                        date: salDate,
+                        desc: `BY TRANSFER-SALARY/${employer}`,
+                        credit: monthlyIncome,
+                        debit: 0,
+                        balance: balance,
+                        ref: `SAL/${String(rand(1000, 9999))}`
+                    });
+                }
+            }
+
+            // Recurring
+            recurring.forEach(exp => {
+                const expDate = new Date(year, month, exp.day);
+                if (expDate <= today) {
+                    balance -= exp.amount;
+                    transactions.push({
+                        date: expDate,
+                        desc: `TO TRANSFER-AUTO/${exp.name}`,
+                        credit: 0,
+                        debit: exp.amount,
+                        balance: balance,
+                        ref: `AUTO/${String(rand(1000, 9999))}`
+                    });
+                }
+            });
+
+            // Random daily transactions - REAL UPI LIKE PDF
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            for (let d = 1; d <= daysInMonth; d++) {
+                const curDate = new Date(year, month, d);
+                if (curDate > today) continue;
+
+                const isWeekend = (curDate.getDay() === 0 || curDate.getDay() === 6);
+                let prob = isWeekend ? 0.55 * spendMult : 0.30 * spendMult;
+
+                // Festival spikes
+                const isFestival = (d >= 10 && d <= 15) || (d >= 22 && d <= 28);
+                if (isFestival) prob *= 1.3;
+
+                if (Math.random() < prob) {
+                    const amt = Math.round((rand(200, 5000) * spendMult) / 100) * 100;
+                    const name1 = upiNames[rand(0, upiNames.length - 1)];
+                    const bank1 = bankCodes[rand(0, bankCodes.length - 1)];
+                    const refNum = String(rand(100000000000, 999999999999));
+                    const type = upiTypes[rand(0, 1)];
+                    const isDebit = type.includes('DR');
+
+                    if (isDebit) {
+                        balance -= amt;
+                        transactions.push({
+                            date: curDate,
+                            desc: `${type}/${refNum}/${name1}/${bank1}/${String(rand(1000000000, 9999999999))}/Payme`,
+                            credit: 0,
+                            debit: amt,
+                            balance: balance,
+                            ref: refNum
+                        });
+                    } else {
+                        balance += amt;
+                        transactions.push({
+                            date: curDate,
+                            desc: `${type}/${refNum}/${name1}/${bank1}/${String(rand(1000000000, 9999999999))}/Payme`,
+                            credit: amt,
+                            debit: 0,
+                            balance: balance,
+                            ref: refNum
+                        });
+                    }
+                }
+            }
+        }
+
+        // Sort by date
+        transactions.sort((a, b) => a.date - b.date);
+
+        // ─── Build HTML ───
+        const variantClass = pdfVariant === 'dark' ? 'dark' : '';
+        const bankClass = bank ? bank.class : 'sbi';
+        const bankName = bank ? bank.name : 'Bank';
+        const bankShort = bank ? bank.short : 'SBI';
+
+        let rows = '';
+        let totalDebits = 0, totalCredits = 0;
+
+        // Opening balance row
+        rows += `
+            <tr style="font-weight:600;background:#f8f9fa;">
+                <td colspan="4">Opening Balance</td>
+                <td>—</td>
+                <td>—</td>
+                <td>₹${openingBal.toLocaleString()}</td>
+            </tr>
+        `;
+
+        transactions.forEach(t => {
+            const dateStr = t.date.toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            const debitStr = t.debit > 0 ? `₹${t.debit.toLocaleString()}` : '—';
+            const creditStr = t.credit > 0 ? `₹${t.credit.toLocaleString()}` : '—';
+            const balStr = `₹${Math.round(t.balance).toLocaleString()}`;
+            if (t.debit > 0) totalDebits += t.debit;
+            if (t.credit > 0) totalCredits += t.credit;
+
+            const debitClass = t.debit > 0 ? 'debit' : '';
+            const creditClass = t.credit > 0 ? 'credit' : '';
+
+            rows += `
+                <tr>
+                    <td>${dateStr}</td>
+                    <td>${dateStr}</td>
+                    <td style="font-size:9px;">${t.desc}</td>
+                    <td style="font-size:9px;">${t.ref || '—'}</td>
+                    <td class="${debitClass}">${debitStr}</td>
+                    <td class="${creditClass}">${creditStr}</td>
+                    <td>${balStr}</td>
+                </tr>
+            `;
+        });
+
+        const closingBal = transactions.length > 0 ? Math.round(transactions[transactions.length - 1].balance) : openingBal;
+
+        const periodStart = new Date(startDate);
+        const periodEnd = new Date(today);
+        const periodStr = `${periodStart.toLocaleDateString('en-IN', {day:'2-digit',month:'2-digit',year:'numeric'})} To ${periodEnd.toLocaleDateString('en-IN', {day:'2-digit',month:'2-digit',year:'numeric'})}`;
+        const genDate = today.toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric' });
+
+        const html = `
+            <div class="real-statement ${bankClass} ${variantClass}" id="statementPrint">
+                <div class="bank-header">
+                    <div class="bank-logo"><span class="${bankClass}">${bankName}</span></div>
+                    <div class="sub-text">BANK STATEMENT</div>
+                </div>
+                <div class="acc-details">
+                    <span><span class="lbl">Account Holder:</span> ${name}</span>
+                    <span><span class="lbl">Account No:</span> ${accNum}</span>
+                    <span><span class="lbl">IFSC:</span> ${ifsc}</span>
+                    <span><span class="lbl">Branch:</span> ${branch}</span>
+                    <span><span class="lbl">MICR:</span> ${micr}</span>
+                    <span><span class="lbl">CIF No:</span> ${cif}</span>
+                    <span style="grid-column:1/-1;"><span class="lbl">Address:</span> ${address}</span>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Value Date</th>
+                            <th>Post Date</th>
+                            <th>Details</th>
+                            <th>Ref No/Cheque No</th>
+                            <th>Debit</th>
+                            <th>Credit</th>
+                            <th>Balance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${rows}
+                        <tr style="font-weight:700;border-top:2px solid #1c1c1c;background:#f8f9fa;">
+                            <td colspan="4" style="text-align:right;">TOTAL</td>
+                            <td class="debit">₹${Math.round(totalDebits).toLocaleString()}</td>
+                            <td class="credit">₹${Math.round(totalCredits).toLocaleString()}</td>
+                            <td>₹${closingBal.toLocaleString()}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="summary-box">
+                    <span><strong>Opening Balance:</strong> ₹${openingBal.toLocaleString()}</span>
+                    <span><strong>Total Debits:</strong> ₹${Math.round(totalDebits).toLocaleString()}</span>
+                    <span><strong>Total Credits:</strong> ₹${Math.round(totalCredits).toLocaleString()}</span>
+                    <span><strong>Closing Balance:</strong> ₹${closingBal.toLocaleString()}</span>
+                </div>
+                <div class="footer">
+                    <strong>Statement Period:</strong> ${periodStr} &nbsp;|&nbsp; <strong>Generated on:</strong> ${genDate}
+                    <br />
+                    Please do not share your ATM, Debit/Credit Card number, PIN, OTP, Username or Password with anyone.
+                    This is a computer generated statement and does not require a signature.
+                    ${pdfPassword ? '🔒 Password Protected' : ''}
+                </div>
+            </div>
+        `;
+
+        document.getElementById('statementContent').innerHTML = html;
+        document.getElementById('output').classList.add('show');
+        document.getElementById('output').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        showToast('✅ Statement generated successfully!');
+    }
+
+    // ─── DOWNLOAD PDF ───
+    function downloadPDF() {
+        const element = document.getElementById('statementPrint');
+        if (!element) { showToast('❌ Please generate a statement first'); return; }
+
+        const orientation = document.querySelector('#pdfOrientation .active')?.dataset.value || 'portrait';
+        const pdfPassword = document.getElementById('pdfPassword').value || '';
+        const bankKey = document.querySelector('.bank-btn.active')?.dataset.bank || 'sbi';
+        const bank = banks[bankKey];
+        const fileName = `Bank_Statement_${bank ? bank.short : 'Bank'}_${new Date().toISOString().slice(0,10)}.pdf`;
+
+        const opt = {
+            margin: [0.4, 0.4, 0.4, 0.4],
+            filename: fileName,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, useCORS: true },
+            jsPDF: { unit: 'in', format: 'a4', orientation: orientation },
+            pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+        };
+
+        const clone = element.cloneNode(true);
+        clone.style.width = '100%';
+        clone.style.maxWidth = '100%';
+        clone.style.margin = '0 auto';
+        clone.style.padding = '15px';
+
+        const container = document.createElement('div');
+        container.style.cssText = 'background:#fff;padding:15px;max-width:1000px;margin:0 auto;';
+        container.appendChild(clone);
+        document.body.appendChild(container);
+
+        html2pdf().set(opt).from(container).save().then(() => {
+            document.body.removeChild(container);
+            showToast('📥 PDF downloaded successfully!');
+        }).catch(() => {
+            document.body.removeChild(container);
+            showToast('❌ Error generating PDF');
+        });
+    }
+
+    // ─── COPY ───
+    function copyStatement() {
+        const element = document.getElementById('statementPrint');
+        if (!element) { showToast('❌ Please generate a statement first'); return; }
+        const text = element.textContent;
+        navigator.clipboard.writeText(text).then(() => {
+            showToast('📋 Statement copied!');
+        }).catch(() => {
+            const range = document.createRange();
+            range.selectNode(element);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand('copy');
+            window.getSelection().removeAllRanges();
+            showToast('📋 Statement copied!');
+        });
+    }
+</script>
+
+</body>
+</html>

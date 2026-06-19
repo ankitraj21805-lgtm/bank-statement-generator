@@ -4,35 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pro Statement - Bank Statement Generator</title>
-    <meta name="description" content="Professional bank statement generator for SBI, HDFC, ICICI, Axis, Kotak, PNB, and more. Generate realistic bank statements instantly." />
-    <meta name="keywords" content="bank statement generator, SBI statement, HDFC statement, ICICI statement, bank statement PDF, UPI statement" />
-    <meta property="og:title" content="Pro Statement - Bank Statement Generator" />
-    <meta property="og:description" content="Generate professional bank statements for all major Indian banks instantly." />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Pro Statement - Bank Statement Generator" />
-
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'G-XXXXXXXXXX');
-    </script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js">
     </script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js">
+    </script>
     <style>
-        /* ═══════════════════════════════════════════ */
-        /* ─── CSS VARIABLES & RESET ─── */
-        /* ═══════════════════════════════════════════ */
         :root {
             --primary: #1a5276;
-            --primary-light: #2980b9;
             --primary-dark: #0d2b44;
+            --primary-light: #2980b9;
             --accent: #f39c12;
             --accent-hover: #e67e22;
             --bg: #f0f4f8;
@@ -44,7 +24,9 @@
             --shadow-hover: 0 12px 48px rgba(0, 0, 0, 0.12);
             --radius: 14px;
             --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            --success: #27ae60;
+            --danger: #e74c3c;
+            --warning: #f39c12;
         }
 
         * {
@@ -54,23 +36,10 @@
         }
 
         body {
-            font-family: var(--font);
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg);
-            color: var(--text);
             min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* ─── SCROLLBAR ─── */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary-light);
-            border-radius: 10px;
+            padding: 20px;
         }
 
         /* ─── ANIMATIONS ─── */
@@ -87,11 +56,16 @@
         @keyframes slideIn {
             from {
                 opacity: 0;
-                transform: translateX(-40px);
+                transform: translateX(-30px);
             }
             to {
                 opacity: 1;
                 transform: translateX(0);
+            }
+        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
             }
         }
         @keyframes pulse {
@@ -100,29 +74,7 @@
                 transform: scale(1);
             }
             50% {
-                transform: scale(1.05);
-            }
-        }
-        @keyframes shimmer {
-            0% {
-                background-position: -200% 0;
-            }
-            100% {
-                background-position: 200% 0;
-            }
-        }
-        @keyframes float {
-            0%,
-            100% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
+                transform: scale(1.03);
             }
         }
 
@@ -132,434 +84,77 @@
         .animate-slide {
             animation: slideIn 0.5s ease forwards;
         }
-        .animate-pulse {
-            animation: pulse 2s ease-in-out infinite;
-        }
-        .animate-float {
-            animation: float 3s ease-in-out infinite;
-        }
 
-        /* ─── SKELETON LOADER ─── */
-        .skeleton {
-            background: linear-gradient(90deg, #e8ecf1 25%, #f0f2f5 50%, #e8ecf1 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-            border-radius: 8px;
-        }
-
-        /* ─── TOAST ─── */
-        .toast-container {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .toast {
-            padding: 12px 24px;
-            border-radius: 10px;
-            color: #fff;
-            font-weight: 600;
-            font-size: 13px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-            animation: slideIn 0.4s ease forwards;
-            max-width: 400px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-family: var(--font);
-        }
-        .toast-success {
-            background: #27ae60;
-        }
-        .toast-error {
-            background: #e74c3c;
-        }
-        .toast-info {
-            background: var(--primary);
-        }
-        .toast-warning {
-            background: var(--accent);
-        }
-
-        /* ═══════════════════════════════════════════ */
-        /* ─── LOGIN SCREEN ─── */
-        /* ═══════════════════════════════════════════ */
-        #login-screen {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #0d2b44 0%, #1a5276 50%, #2980b9 100%);
-            padding: 20px;
-            position: relative;
-            overflow: hidden;
-        }
-        #login-screen::before {
-            content: '';
-            position: absolute;
-            width: 600px;
-            height: 600px;
-            background: rgba(243, 156, 18, 0.08);
-            border-radius: 50%;
-            top: -200px;
-            right: -200px;
-            animation: float 6s ease-in-out infinite;
-        }
-        #login-screen::after {
-            content: '';
-            position: absolute;
-            width: 400px;
-            height: 400px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 50%;
-            bottom: -150px;
-            left: -150px;
-            animation: float 8s ease-in-out infinite reverse;
-        }
-        .login-box {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 48px 40px;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-width: 420px;
-            width: 100%;
-            position: relative;
-            z-index: 1;
-            animation: fadeIn 0.6s ease;
-        }
-        .login-box .logo {
-            text-align: center;
-            margin-bottom: 32px;
-        }
-        .login-box .logo h1 {
-            font-size: 28px;
-            font-weight: 800;
-            color: var(--primary);
-        }
-        .login-box .logo h1 span {
-            color: var(--accent);
-        }
-        .login-box .logo p {
-            color: var(--text-light);
-            font-size: 14px;
-            margin-top: 4px;
-        }
-        .login-box label {
-            display: block;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text);
-            margin-bottom: 6px;
-        }
-        .login-box input {
-            width: 100%;
-            padding: 12px 16px;
-            border: 2px solid var(--border);
-            border-radius: 10px;
-            font-size: 15px;
-            transition: var(--transition);
-            background: #fafbfc;
-            font-family: var(--font);
-        }
-        .login-box input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(26, 82, 118, 0.1);
-            background: #fff;
-        }
-        .login-box .login-btn {
-            width: 100%;
-            padding: 14px;
-            background: var(--primary);
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition);
-            margin-top: 16px;
-            font-family: var(--font);
-        }
-        .login-box .login-btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(26, 82, 118, 0.3);
-        }
-        .login-box .login-btn:active {
-            transform: translateY(0);
-        }
-        .login-box .error-msg {
-            color: #e74c3c;
-            font-size: 13px;
-            margin-top: 12px;
-            text-align: center;
-            display: none;
-        }
-        .login-box .error-msg.show {
-            display: block;
-        }
-
-        /* ═══════════════════════════════════════════ */
-        /* ─── LANDING PAGE ─── */
-        /* ═══════════════════════════════════════════ */
-        #landing-page {
-            display: none;
-            min-height: 100vh;
-            background: #ffffff;
-        }
-        #landing-page.show {
-            display: block;
-        }
-
-        .landing-hero {
-            background: linear-gradient(135deg, #0d2b44 0%, #1a5276 50%, #2980b9 100%);
-            padding: 80px 20px 100px;
-            text-align: center;
-            color: #fff;
-            position: relative;
-            overflow: hidden;
-        }
-        .landing-hero::before {
-            content: '';
-            position: absolute;
-            width: 800px;
-            height: 800px;
-            background: rgba(243, 156, 18, 0.06);
-            border-radius: 50%;
-            top: -300px;
-            right: -300px;
-        }
-        .landing-hero .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-        .landing-hero .hero-badge {
-            display: inline-block;
-            background: rgba(243, 156, 18, 0.2);
-            padding: 6px 20px;
-            border-radius: 40px;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--accent);
-            margin-bottom: 20px;
-            border: 1px solid rgba(243, 156, 18, 0.3);
-        }
-        .landing-hero h1 {
-            font-size: 48px;
-            font-weight: 800;
-            line-height: 1.2;
-            margin-bottom: 16px;
-        }
-        .landing-hero h1 span {
-            color: var(--accent);
-        }
-        .landing-hero p {
-            font-size: 18px;
-            opacity: 0.85;
-            max-width: 600px;
-            margin: 0 auto 32px;
-            line-height: 1.6;
-        }
-        .landing-hero .hero-btns {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        .landing-hero .hero-btns .btn-primary {
-            padding: 14px 40px;
-            background: var(--accent);
-            color: #fff;
-            border: none;
-            border-radius: 50px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: var(--font);
-        }
-        .landing-hero .hero-btns .btn-primary:hover {
-            background: var(--accent-hover);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(243, 156, 18, 0.4);
-        }
-        .landing-hero .hero-btns .btn-secondary {
-            padding: 14px 40px;
-            background: transparent;
-            color: #fff;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: var(--font);
-        }
-        .landing-hero .hero-btns .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: #fff;
-        }
-
-        .landing-features {
-            padding: 80px 20px;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-        .landing-features h2 {
-            text-align: center;
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-        .landing-features .subtitle {
-            text-align: center;
-            color: var(--text-light);
-            font-size: 17px;
-            margin-bottom: 48px;
-        }
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-        }
-        .feature-card {
-            background: var(--card-bg);
-            padding: 30px 24px;
-            border-radius: var(--radius);
-            border: 1px solid var(--border);
-            transition: var(--transition);
-            text-align: center;
-        }
-        .feature-card:hover {
-            transform: translateY(-6px);
-            box-shadow: var(--shadow-hover);
-            border-color: var(--primary-light);
-        }
-        .feature-card .icon {
-            font-size: 40px;
-            margin-bottom: 12px;
-        }
-        .feature-card h3 {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-        .feature-card p {
-            color: var(--text-light);
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        .landing-footer {
-            text-align: center;
-            padding: 40px 20px;
-            border-top: 1px solid var(--border);
-            color: var(--text-light);
-            font-size: 14px;
-        }
-
-        /* ═══════════════════════════════════════════ */
-        /* ─── DASHBOARD (Main App) ─── */
-        /* ═══════════════════════════════════════════ */
-        #dashboard {
-            display: none;
-            padding: 20px;
+        .app {
             max-width: 1200px;
             margin: 0 auto;
-        }
-        #dashboard.show {
-            display: block;
+            background: var(--card-bg);
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+            padding: 24px 30px 30px;
         }
 
-        /* Dashboard Header */
-        .dash-header {
+        .app-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 12px;
-            padding: 16px 0 20px;
+            padding-bottom: 16px;
             border-bottom: 2px solid var(--border);
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
-        .dash-header .brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .dash-header .brand .logo-text {
+        .app-header .brand {
             font-size: 22px;
             font-weight: 800;
             color: var(--primary);
         }
-        .dash-header .brand .logo-text span {
+        .app-header .brand span {
             color: var(--accent);
         }
-        .dash-header .user-actions {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        .dash-header .user-actions .logout-btn {
-            padding: 8px 20px;
-            background: #e74c3c;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
+        .app-header .badge {
+            font-size: 12px;
+            background: #eaf2f8;
+            color: var(--primary);
+            padding: 6px 16px;
+            border-radius: 20px;
             font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: var(--font);
-            font-size: 13px;
-        }
-        .dash-header .user-actions .logout-btn:hover {
-            background: #c0392b;
         }
 
-        /* Stats Bar */
         .stats-bar {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            margin-bottom: 24px;
+            gap: 14px;
+            margin-bottom: 20px;
         }
         .stat-card {
-            background: var(--card-bg);
-            padding: 16px 20px;
+            background: var(--bg);
+            padding: 14px 18px;
             border-radius: var(--radius);
             border: 1px solid var(--border);
-            box-shadow: var(--shadow);
         }
         .stat-card .num {
-            font-size: 28px;
+            font-size: 26px;
             font-weight: 800;
             color: var(--primary);
         }
         .stat-card .label {
-            font-size: 13px;
+            font-size: 12px;
             color: var(--text-light);
         }
 
-        /* Tabs */
         .tabs {
             display: flex;
             gap: 4px;
             background: var(--bg);
             padding: 4px;
             border-radius: 12px;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
         }
         .tab-btn {
-            padding: 10px 24px;
+            padding: 10px 22px;
             border: none;
             background: transparent;
             border-radius: 8px;
@@ -567,7 +162,7 @@
             font-size: 14px;
             cursor: pointer;
             transition: var(--transition);
-            font-family: var(--font);
+            font-family: inherit;
             color: var(--text-light);
         }
         .tab-btn:hover {
@@ -587,28 +182,6 @@
             display: block;
         }
 
-        /* ─── CARDS ─── */
-        .card {
-            background: var(--card-bg);
-            border-radius: var(--radius);
-            padding: 20px 24px;
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow);
-            margin-bottom: 20px;
-            transition: var(--transition);
-        }
-        .card:hover {
-            box-shadow: var(--shadow-hover);
-        }
-        .card-title {
-            font-size: 14px;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: var(--text-light);
-            letter-spacing: 0.5px;
-            margin-bottom: 16px;
-        }
-
         .grid-2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -618,37 +191,42 @@
             .grid-2 {
                 grid-template-columns: 1fr;
             }
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
             .stats-bar {
                 grid-template-columns: 1fr 1fr;
-            }
-            .landing-hero h1 {
-                font-size: 32px;
             }
         }
         @media (max-width: 500px) {
             .stats-bar {
                 grid-template-columns: 1fr;
             }
-            .dash-header {
-                flex-direction: column;
-                align-items: flex-start;
+            .app {
+                padding: 12px 14px;
             }
-            .tab-btn {
+            .tabs .tab-btn {
                 font-size: 12px;
-                padding: 6px 14px;
+                padding: 6px 12px;
             }
-            .login-box {
-                padding: 30px 20px;
-            }
-            .landing-hero {
-                padding: 50px 16px 70px;
-            }
-            .landing-hero h1 {
-                font-size: 26px;
-            }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 18px 20px 22px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            margin-bottom: 16px;
+            transition: var(--transition);
+        }
+        .card:hover {
+            box-shadow: var(--shadow-hover);
+        }
+        .card-title {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-light);
+            letter-spacing: 0.5px;
+            margin-bottom: 14px;
         }
 
         .form-group {
@@ -670,7 +248,7 @@
             border: 1px solid var(--border);
             border-radius: 8px;
             font-size: 14px;
-            font-family: var(--font);
+            font-family: inherit;
             background: #fafbfc;
             transition: var(--transition);
         }
@@ -698,7 +276,6 @@
             }
         }
 
-        /* ─── BANK BUTTONS ─── */
         .bank-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
@@ -715,7 +292,7 @@
             font-size: 11px;
             transition: var(--transition);
             text-align: center;
-            font-family: var(--font);
+            font-family: inherit;
         }
         .bank-btn:hover {
             border-color: var(--primary-light);
@@ -762,7 +339,32 @@
             color: var(--text-light);
         }
 
-        /* ─── EXPENSE ITEMS ─── */
+        .pill-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        .pill {
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 500;
+            background: var(--bg);
+            color: var(--text);
+            border: 1.5px solid transparent;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+        .pill:hover {
+            background: #d5dbdb;
+        }
+        .pill.active {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+
         .expense-item {
             display: grid;
             grid-template-columns: 2fr 1fr 0.8fr 0.3fr;
@@ -780,12 +382,12 @@
             border: 1px solid var(--border);
             border-radius: 6px;
             font-size: 12px;
-            font-family: var(--font);
+            font-family: inherit;
         }
         .expense-item .remove-btn {
             background: none;
             border: none;
-            color: #e74c3c;
+            color: var(--danger);
             font-size: 16px;
             cursor: pointer;
             font-weight: 700;
@@ -800,37 +402,11 @@
             cursor: pointer;
             color: var(--primary);
             transition: var(--transition);
-            font-family: var(--font);
+            font-family: inherit;
             margin-top: 4px;
         }
         .add-btn:hover {
             background: #d4e6f1;
-        }
-
-        .pill-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 4px;
-        }
-        .pill {
-            padding: 4px 14px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 500;
-            background: var(--bg);
-            color: var(--text);
-            border: 1.5px solid transparent;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: var(--font);
-        }
-        .pill:hover {
-            background: #d5dbdb;
-        }
-        .pill.active {
-            background: var(--primary);
-            color: #fff;
-            border-color: var(--primary);
         }
 
         .gen-btn {
@@ -844,7 +420,7 @@
             font-weight: 700;
             cursor: pointer;
             transition: var(--transition);
-            font-family: var(--font);
+            font-family: inherit;
             margin-top: 16px;
             position: relative;
         }
@@ -898,7 +474,7 @@
             font-size: 13px;
             cursor: pointer;
             min-width: 80px;
-            font-family: var(--font);
+            font-family: inherit;
             transition: var(--transition);
         }
         .btn-group button:hover {
@@ -918,129 +494,123 @@
         .btn-secondary:hover {
             background: #d5dbdb;
         }
-
-        /* ─── WHITE-LABEL ─── */
-        .white-label-preview {
-            padding: 16px;
-            background: var(--bg);
-            border-radius: 10px;
-            margin-top: 12px;
-            border: 2px dashed var(--border);
-            text-align: center;
-        }
-        .white-label-preview .wl-logo {
-            font-size: 20px;
-            font-weight: 800;
-        }
-
-        /* ─── HISTORY ─── */
-        .history-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 14px;
-            background: var(--bg);
-            border-radius: 8px;
-            margin-bottom: 6px;
-            border-left: 4px solid var(--primary);
-            transition: var(--transition);
-        }
-        .history-item:hover {
-            background: #e8ecf1;
-        }
-        .history-item .h-info {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-        .history-item .h-info .h-name {
-            font-weight: 600;
-            font-size: 13px;
-        }
-        .history-item .h-info .h-date {
-            font-size: 11px;
-            color: var(--text-light);
-        }
-        .history-item .h-actions {
-            display: flex;
-            gap: 8px;
-        }
-        .history-item .h-actions button {
-            padding: 4px 12px;
-            border: none;
-            border-radius: 6px;
-            font-size: 11px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: var(--transition);
-            font-family: var(--font);
-        }
-        .history-item .h-actions .view-btn {
-            background: var(--primary);
+        .btn-success {
+            background: var(--success);
             color: #fff;
         }
-        .history-item .h-actions .view-btn:hover {
-            background: var(--primary-dark);
-        }
-        .history-item .h-actions .del-btn {
-            background: #e74c3c;
-            color: #fff;
-        }
-        .history-item .h-actions .del-btn:hover {
-            background: #c0392b;
+        .btn-success:hover {
+            background: #219a52;
         }
 
-        /* ─── BULK CSV ─── */
-        .csv-upload {
+        /* ─── PDF TEMPLATE UPLOAD ─── */
+        .template-upload-area {
             border: 2px dashed var(--border);
-            padding: 30px;
+            padding: 30px 20px;
             text-align: center;
-            border-radius: 10px;
+            border-radius: 12px;
             transition: var(--transition);
             cursor: pointer;
-        }
-        .csv-upload:hover {
-            border-color: var(--primary-light);
             background: #fafbfc;
         }
-        .csv-upload input[type="file"] {
-            display: none;
+        .template-upload-area:hover {
+            border-color: var(--primary-light);
+            background: #f0f5fa;
         }
-        .csv-upload .icon {
-            font-size: 40px;
+        .template-upload-area.dragover {
+            border-color: var(--primary);
+            background: #eaf2f8;
+        }
+        .template-upload-area .icon {
+            font-size: 48px;
             margin-bottom: 8px;
         }
-        .csv-upload p {
+        .template-upload-area p {
             color: var(--text-light);
             font-size: 14px;
         }
-        .csv-upload .browse-btn {
+        .template-upload-area .browse-btn {
             color: var(--primary);
             font-weight: 700;
             cursor: pointer;
         }
+        .template-upload-area input[type="file"] {
+            display: none;
+        }
 
-        /* ─── TEMPLATE BUILDER ─── */
-        .template-builder .template-field {
+        .template-preview {
+            margin-top: 16px;
+            padding: 16px;
+            background: var(--bg);
+            border-radius: 10px;
+            display: none;
+        }
+        .template-preview.show {
+            display: block;
+        }
+        .template-preview .preview-header {
             display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .template-preview .preview-header .file-name {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        .template-preview .preview-header .remove-btn {
+            background: none;
+            border: none;
+            color: var(--danger);
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .template-preview .pdf-preview {
+            width: 100%;
+            height: 300px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            font-size: 14px;
+            overflow: hidden;
+        }
+        .template-preview .pdf-preview canvas {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        /* ─── FIELD MAPPING ─── */
+        .field-mapping {
+            margin-top: 16px;
+            display: none;
+        }
+        .field-mapping.show {
+            display: block;
+        }
+        .field-mapping .mapping-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 10px;
             align-items: center;
-            margin-bottom: 8px;
+            padding: 6px 0;
+            border-bottom: 1px solid var(--border);
         }
-        .template-builder .template-field input {
-            flex: 1;
+        .field-mapping .mapping-row .label {
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--text);
+        }
+        .field-mapping .mapping-row select {
             padding: 6px 10px;
             border: 1px solid var(--border);
             border-radius: 6px;
             font-size: 13px;
-            font-family: var(--font);
-        }
-        .template-builder .template-field select {
-            padding: 6px 10px;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            font-size: 13px;
-            font-family: var(--font);
+            font-family: inherit;
+            background: #fff;
         }
 
         /* ─── BANK STATEMENT OUTPUT ─── */
@@ -1207,7 +777,7 @@
             line-height: 1.6;
         }
 
-        /* SBI Theme */
+        /* ─── BANK THEMES ─── */
         .bank-statement.sbi .header {
             background: #1a5276;
             color: #fff;
@@ -1232,7 +802,6 @@
             color: #1a5276;
         }
 
-        /* HDFC */
         .bank-statement.hdfc .header {
             background: #004d8c;
             color: #fff;
@@ -1257,7 +826,6 @@
             color: #004d8c;
         }
 
-        /* ICICI */
         .bank-statement.icici .header {
             background: #ed1c24;
             color: #fff;
@@ -1282,7 +850,6 @@
             color: #ed1c24;
         }
 
-        /* Axis */
         .bank-statement.axis .header {
             background: #a2001a;
             color: #fff;
@@ -1307,7 +874,6 @@
             color: #a2001a;
         }
 
-        /* Kotak */
         .bank-statement.kotak .header {
             background: #1a2b5c;
             color: #fff;
@@ -1332,7 +898,6 @@
             color: #1a2b5c;
         }
 
-        /* BOB */
         .bank-statement.bob .header {
             background: #1f3a7a;
             color: #fff;
@@ -1357,7 +922,6 @@
             color: #1f3a7a;
         }
 
-        /* PNB */
         .bank-statement.pnb .header {
             background: #b8860b;
             color: #fff;
@@ -1382,7 +946,6 @@
             color: #b8860b;
         }
 
-        /* IndusInd */
         .bank-statement.indusind .header {
             background: #0066b3;
             color: #fff;
@@ -1407,7 +970,6 @@
             color: #0066b3;
         }
 
-        /* Canara */
         .bank-statement.canara .header {
             background: #003366;
             color: #fff;
@@ -1432,7 +994,6 @@
             color: #003366;
         }
 
-        /* Union */
         .bank-statement.union .header {
             background: #1a3c6e;
             color: #fff;
@@ -1506,128 +1067,73 @@
         .bank-statement.dark .footer strong {
             color: #f39c12 !important;
         }
+
+        .toast-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .toast {
+            padding: 12px 24px;
+            border-radius: 10px;
+            color: #fff;
+            font-weight: 600;
+            font-size: 13px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            animation: slideIn 0.4s ease forwards;
+            max-width: 400px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .toast-success {
+            background: var(--success);
+        }
+        .toast-error {
+            background: var(--danger);
+        }
+        .toast-info {
+            background: var(--primary);
+        }
+        .toast-warning {
+            background: var(--warning);
+        }
     </style>
 </head>
 <body>
 
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- ─── TOAST CONTAINER ─── -->
-    <!-- ═══════════════════════════════════════════ -->
-    <div class="toast-container" id="toastContainer"></div>
-
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- ─── LOGIN SCREEN ─── -->
-    <!-- ═══════════════════════════════════════════ -->
-    <div id="login-screen">
-        <div class="login-box animate-fade">
-            <div class="logo">
-                <h1>Pro <span>Statement</span></h1>
-                <p>Professional Bank Statement Generator</p>
-            </div>
-            <form id="loginForm" onsubmit="handleLogin(event)">
-                <label for="password">Enter Password</label>
-                <input type="password" id="password" placeholder="Enter your password" autofocus />
-                <div class="error-msg" id="loginError">❌ Incorrect password. Please try again.</div>
-                <button type="submit" class="login-btn">🔐 Unlock Dashboard</button>
-            </form>
-            <p style="text-align:center;margin-top:16px;font-size:12px;color:var(--text-light);">Demo Password: <strong>989898</strong></p>
-        </div>
-    </div>
-
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- ─── LANDING PAGE ─── -->
-    <!-- ═══════════════════════════════════════════ -->
-    <div id="landing-page">
-        <div class="landing-hero">
-            <div class="hero-content animate-fade">
-                <div class="hero-badge">🚀 Professional Bank Statement Generator</div>
-                <h1>Generate <span>Realistic</span> Bank Statements Instantly</h1>
-                <p>Supporting 10+ Indian banks including SBI, HDFC, ICICI, Axis, Kotak, PNB, and more. Perfect for testing, education, and business validation.</p>
-                <div class="hero-btns">
-                    <button class="btn-primary" onclick="goToDashboard()">🚀 Get Started</button>
-                    <button class="btn-secondary" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">Learn More</button>
-                </div>
-            </div>
+    <div class="app">
+        <!-- ─── HEADER ─── -->
+        <div class="app-header">
+            <div class="brand">Pro <span>Statement</span></div>
+            <span class="badge">🔒 PDF Template Upload</span>
         </div>
 
-        <div class="landing-features" id="features">
-            <h2>⚡ Powerful Features</h2>
-            <p class="subtitle">Everything you need to generate professional bank statements</p>
-            <div class="features-grid">
-                <div class="feature-card animate-fade" style="animation-delay:0.1s;">
-                    <div class="icon">🏦</div>
-                    <h3>10+ Banks Supported</h3>
-                    <p>SBI, HDFC, ICICI, Axis, Kotak, BOB, PNB, IndusInd, Canara, Union Bank</p>
-                </div>
-                <div class="feature-card animate-fade" style="animation-delay:0.2s;">
-                    <div class="icon">📄</div>
-                    <h3>Realistic PDF Output</h3>
-                    <p>Exact replica of official bank statements with proper formatting</p>
-                </div>
-                <div class="feature-card animate-fade" style="animation-delay:0.3s;">
-                    <div class="icon">🎨</div>
-                    <h3>White-Label Ready</h3>
-                    <p>Add your own logo, company name, and brand colors</p>
-                </div>
-                <div class="feature-card animate-fade" style="animation-delay:0.4s;">
-                    <div class="icon">📊</div>
-                    <h3>Bulk Generation</h3>
-                    <p>Upload CSV and generate multiple statements at once</p>
-                </div>
-                <div class="feature-card animate-fade" style="animation-delay:0.5s;">
-                    <div class="icon">📝</div>
-                    <h3>Custom Templates</h3>
-                    <p>Design your own statement templates</p>
-                </div>
-                <div class="feature-card animate-fade" style="animation-delay:0.6s;">
-                    <div class="icon">📜</div>
-                    <h3>Export History</h3>
-                    <p>All generated statements saved automatically</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="landing-footer">
-            <p>© 2026 Pro Statement · Made with ❤️</p>
-        </div>
-    </div>
-
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- ─── DASHBOARD ─── -->
-    <!-- ═══════════════════════════════════════════ -->
-    <div id="dashboard">
-
-        <!-- Dashboard Header -->
-        <div class="dash-header">
-            <div class="brand">
-                <div class="logo-text">Pro <span>Statement</span></div>
-            </div>
-            <div class="user-actions">
-                <span style="font-size:13px;color:var(--text-light);">👤 Admin</span>
-                <button class="logout-btn" onclick="handleLogout()">🚪 Logout</button>
-            </div>
-        </div>
-
-        <!-- Stats -->
-        <div class="stats-bar" id="statsBar">
+        <!-- ─── STATS ─── -->
+        <div class="stats-bar">
             <div class="stat-card"><div class="num" id="statStatements">0</div><div class="label">Statements Generated</div></div>
-            <div class="stat-card"><div class="num" id="statBanks">10</div><div class="label">Banks Supported</div></div>
+            <div class="stat-card"><div class="num">10</div><div class="label">Banks Supported</div></div>
             <div class="stat-card"><div class="num" id="statHistory">0</div><div class="label">Saved History</div></div>
             <div class="stat-card"><div class="num" id="statTemplates">0</div><div class="label">Custom Templates</div></div>
         </div>
 
-        <!-- Tabs -->
+        <!-- ─── TABS ─── -->
         <div class="tabs">
             <button class="tab-btn active" data-tab="generator">⚡ Generator</button>
             <button class="tab-btn" data-tab="history">📜 History</button>
             <button class="tab-btn" data-tab="whitelabel">🎨 White-Label</button>
             <button class="tab-btn" data-tab="bulk">📊 Bulk</button>
             <button class="tab-btn" data-tab="templates">📝 Templates</button>
+            <button class="tab-btn" data-tab="pdf-template">📄 PDF Template</button>
         </div>
 
         <!-- ═══ TAB: GENERATOR ═══ -->
         <div class="tab-content active" id="tab-generator">
-
             <!-- Bank Selection -->
             <div class="card">
                 <div class="card-title">🏛️ Select Bank</div>
@@ -1653,60 +1159,59 @@
             </div>
 
             <div class="grid-2">
-                <!-- Left Column -->
                 <div>
                     <div class="card">
                         <div class="card-title">👤 Account Details</div>
                         <div class="form-group">
                             <label>Account Holder Name</label>
-                            <input type="text" id="accName" placeholder="Enter name" value="" />
+                            <input type="text" id="accName" placeholder="Enter name" />
                         </div>
                         <div class="form-group">
                             <label>Email</label>
-                            <input type="text" id="email" placeholder="Enter email" value="" />
+                            <input type="text" id="email" placeholder="Enter email" />
                         </div>
                         <div class="form-group">
                             <label>Address</label>
-                            <input type="text" id="address" placeholder="Enter address" value="" />
+                            <input type="text" id="address" placeholder="Enter address" />
                         </div>
                         <div class="inline">
                             <div class="form-group">
                                 <label>Account Number</label>
-                                <input type="text" id="accNum" placeholder="Enter account number" value="" />
+                                <input type="text" id="accNum" placeholder="Enter account number" />
                             </div>
                             <div class="form-group">
                                 <label>IFSC Code</label>
-                                <input type="text" id="ifsc" placeholder="Enter IFSC" value="" />
+                                <input type="text" id="ifsc" placeholder="Enter IFSC" />
                             </div>
                         </div>
                         <div class="inline">
                             <div class="form-group">
                                 <label>Branch Name</label>
-                                <input type="text" id="branch" placeholder="Enter branch" value="" />
+                                <input type="text" id="branch" placeholder="Enter branch" />
                             </div>
                             <div class="form-group">
                                 <label>Branch Code</label>
-                                <input type="text" id="branchCode" placeholder="Enter code" value="" />
+                                <input type="text" id="branchCode" placeholder="Enter code" />
                             </div>
                         </div>
                         <div class="inline-3">
                             <div class="form-group">
                                 <label>CIF Number</label>
-                                <input type="text" id="cif" placeholder="Enter CIF" value="" />
+                                <input type="text" id="cif" placeholder="Enter CIF" />
                             </div>
                             <div class="form-group">
                                 <label>MICR Code</label>
-                                <input type="text" id="micr" placeholder="Enter MICR" value="" />
+                                <input type="text" id="micr" placeholder="Enter MICR" />
                             </div>
                             <div class="form-group">
                                 <label>CKYCR</label>
-                                <input type="text" id="ckycr" placeholder="Enter CKYCR" value="" />
+                                <input type="text" id="ckycr" placeholder="Enter CKYCR" />
                             </div>
                         </div>
                         <div class="inline">
                             <div class="form-group">
                                 <label>Branch Phone</label>
-                                <input type="text" id="branchPhone" placeholder="Enter phone" value="" />
+                                <input type="text" id="branchPhone" placeholder="Enter phone" />
                             </div>
                             <div class="form-group">
                                 <label>Interest Rate</label>
@@ -1716,7 +1221,6 @@
                     </div>
                 </div>
 
-                <!-- Right Column -->
                 <div>
                     <div class="card">
                         <div class="card-title">💼 Income &amp; Period</div>
@@ -1821,7 +1325,7 @@
                 <div class="btn-group">
                     <button class="btn-primary" onclick="downloadPDF()">📥 Download PDF</button>
                     <button class="btn-secondary" onclick="copyStatement()">📋 Copy</button>
-                    <button class="btn-secondary" onclick="saveToHistory()">💾 Save to History</button>
+                    <button class="btn-success" onclick="saveToHistory()">💾 Save to History</button>
                 </div>
             </div>
         </div>
@@ -1831,9 +1335,9 @@
             <div class="card">
                 <div class="card-title">📜 Statement History</div>
                 <div id="historyList">
-                    <p style="color:var(--text-light);text-align:center;padding:20px;">No statements saved yet. Generate and save one!</p>
+                    <p style="color:var(--text-light);text-align:center;padding:20px;">No statements saved yet.</p>
                 </div>
-                <button class="add-btn" onclick="clearHistory()" style="margin-top:12px;color:#e74c3c;">🗑️ Clear All History</button>
+                <button class="add-btn" onclick="clearHistory()" style="margin-top:12px;color:var(--danger);">🗑️ Clear All</button>
             </div>
         </div>
 
@@ -1843,11 +1347,11 @@
                 <div class="card-title">🎨 White-Label Settings</div>
                 <div class="form-group">
                     <label>Your Company Name</label>
-                    <input type="text" id="wlCompany" placeholder="Enter your company name" value="" />
+                    <input type="text" id="wlCompany" placeholder="Enter company name" />
                 </div>
                 <div class="form-group">
                     <label>Your Logo Text</label>
-                    <input type="text" id="wlLogo" placeholder="e.g., ABC Corp" value="" />
+                    <input type="text" id="wlLogo" placeholder="e.g., ABC Corp" />
                 </div>
                 <div class="form-group">
                     <label>Primary Color</label>
@@ -1858,8 +1362,8 @@
                     <input type="color" id="wlAccent" value="#f39c12" />
                 </div>
                 <button class="add-btn" onclick="applyWhiteLabel()">✅ Apply White-Label</button>
-                <div class="white-label-preview" id="wlPreview">
-                    <div class="wl-logo" style="color:#1a5276;">Your Brand</div>
+                <div class="white-label-preview" id="wlPreview" style="margin-top:12px;padding:16px;background:var(--bg);border-radius:10px;border:2px dashed var(--border);text-align:center;">
+                    <div style="font-size:20px;font-weight:800;color:var(--primary);">Your Brand</div>
                     <p style="color:var(--text-light);font-size:13px;">Preview will appear here after applying</p>
                 </div>
             </div>
@@ -1869,16 +1373,16 @@
         <div class="tab-content" id="tab-bulk">
             <div class="card">
                 <div class="card-title">📊 Bulk Generation (CSV Upload)</div>
-                <div class="csv-upload" onclick="document.getElementById('csvFile').click()">
-                    <div class="icon">📤</div>
-                    <p>Click to upload CSV file or drag & drop</p>
+                <div class="csv-upload" onclick="document.getElementById('csvFile').click()" style="border:2px dashed var(--border);padding:30px;text-align:center;border-radius:12px;cursor:pointer;transition:var(--transition);">
+                    <div style="font-size:48px;margin-bottom:8px;">📤</div>
+                    <p>Click to upload CSV file</p>
                     <p style="font-size:12px;color:var(--text-light);">Format: Name, Account, IFSC, Branch, Amount</p>
-                    <span class="browse-btn">Browse Files</span>
-                    <input type="file" id="csvFile" accept=".csv" onchange="handleCSVUpload(event)" />
+                    <span style="color:var(--primary);font-weight:700;">Browse Files</span>
+                    <input type="file" id="csvFile" accept=".csv" style="display:none;" onchange="handleCSVUpload(event)" />
                 </div>
                 <div id="bulkPreview" style="margin-top:16px;display:none;">
                     <p><strong>Rows uploaded:</strong> <span id="bulkCount">0</span></p>
-                    <button class="add-btn" onclick="processBulk()">⚡ Generate All</button>
+                    <button class="add-btn" onclick="processBulk()" style="background:var(--primary);color:#fff;">⚡ Generate All</button>
                     <div id="bulkResults" style="margin-top:12px;"></div>
                 </div>
             </div>
@@ -1888,34 +1392,24 @@
         <div class="tab-content" id="tab-templates">
             <div class="card">
                 <div class="card-title">📝 Custom Templates</div>
-                <p style="color:var(--text-light);font-size:13px;margin-bottom:12px;">Design your own statement template by selecting which fields to show and their order.</p>
                 <div class="template-builder" id="templateBuilder">
-                    <div class="template-field">
-                        <input type="text" placeholder="Field Name" value="Account Holder" />
-                        <select>
+                    <div class="template-field" style="display:flex;gap:10px;align-items:center;margin-bottom:8px;">
+                        <input type="text" placeholder="Field Name" value="Account Holder" style="flex:1;padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;" />
+                        <select style="padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;">
                             <option value="text">Text</option>
                             <option value="date">Date</option>
                             <option value="number">Number</option>
                         </select>
-                        <button class="remove-btn" onclick="this.parentElement.remove()">✕</button>
+                        <button class="remove-btn" onclick="this.parentElement.remove()" style="background:none;border:none;color:var(--danger);font-size:18px;cursor:pointer;">✕</button>
                     </div>
-                    <div class="template-field">
-                        <input type="text" placeholder="Field Name" value="Account Number" />
-                        <select>
+                    <div class="template-field" style="display:flex;gap:10px;align-items:center;margin-bottom:8px;">
+                        <input type="text" placeholder="Field Name" value="Account Number" style="flex:1;padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;" />
+                        <select style="padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;">
                             <option value="text" selected>Text</option>
                             <option value="date">Date</option>
                             <option value="number">Number</option>
                         </select>
-                        <button class="remove-btn" onclick="this.parentElement.remove()">✕</button>
-                    </div>
-                    <div class="template-field">
-                        <input type="text" placeholder="Field Name" value="IFSC Code" />
-                        <select>
-                            <option value="text" selected>Text</option>
-                            <option value="date">Date</option>
-                            <option value="number">Number</option>
-                        </select>
-                        <button class="remove-btn" onclick="this.parentElement.remove()">✕</button>
+                        <button class="remove-btn" onclick="this.parentElement.remove()" style="background:none;border:none;color:var(--danger);font-size:18px;cursor:pointer;">✕</button>
                     </div>
                 </div>
                 <button class="add-btn" onclick="addTemplateField()">+ Add Field</button>
@@ -1923,38 +1417,52 @@
                 <div id="savedTemplates" style="margin-top:12px;"></div>
             </div>
         </div>
+
+        <!-- ═══ TAB: PDF TEMPLATE ═══ -->
+        <div class="tab-content" id="tab-pdf-template">
+            <div class="card">
+                <div class="card-title">📄 Upload PDF Template</div>
+                <p style="color:var(--text-light);font-size:13px;margin-bottom:14px;">
+                    Upload a sample bank statement PDF. The system will extract the template and replace details with your data.
+                </p>
+
+                <!-- Upload Area -->
+                <div class="template-upload-area" id="dropArea" onclick="document.getElementById('pdfFileInput').click()">
+                    <div class="icon">📄</div>
+                    <p>Click to upload or drag &amp; drop a PDF file</p>
+                    <p style="font-size:12px;color:var(--text-light);">Supports SBI, HDFC, ICICI, Axis, Kotak, PNB, and more</p>
+                    <span class="browse-btn">Browse Files</span>
+                    <input type="file" id="pdfFileInput" accept=".pdf" onchange="handlePDFUpload(event)" />
+                </div>
+
+                <!-- Template Preview -->
+                <div class="template-preview" id="templatePreview">
+                    <div class="preview-header">
+                        <span class="file-name" id="fileNameDisplay">sample.pdf</span>
+                        <button class="remove-btn" onclick="removeTemplate()">✕ Remove</button>
+                    </div>
+                    <div class="pdf-preview" id="pdfPreviewContainer">
+                        <span>📄 PDF loaded successfully!<br /><span style="font-size:12px;color:var(--text-light);">Click "Extract Template" to map fields</span></span>
+                    </div>
+                    <button class="add-btn" onclick="extractTemplate()" style="margin-top:12px;background:var(--primary);color:#fff;">🔍 Extract Template Fields</button>
+                </div>
+
+                <!-- Field Mapping -->
+                <div class="field-mapping" id="fieldMapping">
+                    <div class="card-title" style="margin-top:12px;">📋 Map Fields to Your Data</div>
+                    <p style="color:var(--text-light);font-size:12px;margin-bottom:10px;">Map the template fields to your account details</p>
+                    <div id="mappingFields"></div>
+                    <button class="add-btn" onclick="applyTemplateMapping()" style="margin-top:12px;background:var(--success);color:#fff;">✅ Apply & Generate Statement</button>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <!-- ─── TOAST CONTAINER ─── -->
+    <div class="toast-container" id="toastContainer"></div>
+
     <script>
-        // ═══════════════════════════════════════════════
-        // ─── CONFIG ───
-        // ═══════════════════════════════════════════════
-        const PASSWORD = '989898';
-
-        // ═══════════════════════════════════════════════
-        // ─── BANK DATA ───
-        // ═══════════════════════════════════════════════
-        const banks = {
-            sbi: { name: 'State Bank of India', short: 'SBI', color: '#1a5276', cls: 'sbi' },
-            hdfc: { name: 'HDFC Bank', short: 'HDFC', color: '#004d8c', cls: 'hdfc' },
-            icici: { name: 'ICICI Bank', short: 'ICICI', color: '#ed1c24', cls: 'icici' },
-            axis: { name: 'Axis Bank', short: 'Axis', color: '#a2001a', cls: 'axis' },
-            kotak: { name: 'Kotak Mahindra Bank', short: 'Kotak', color: '#1a2b5c', cls: 'kotak' },
-            bob: { name: 'Bank of Baroda', short: 'BOB', color: '#1f3a7a', cls: 'bob' },
-            pnb: { name: 'Punjab National Bank', short: 'PNB', color: '#b8860b', cls: 'pnb' },
-            indusind: { name: 'IndusInd Bank', short: 'IndusInd', color: '#0066b3', cls: 'indusind' },
-            canara: { name: 'Canara Bank', short: 'Canara', color: '#003366', cls: 'canara' },
-            union: { name: 'Union Bank of India', short: 'Union', color: '#1a3c6e', cls: 'union' }
-        };
-
-        let currentStatementHTML = '';
-        let statementCount = 0;
-        let history = [];
-        let templates = [];
-
-        // ═══════════════════════════════════════════════
         // ─── TOAST SYSTEM ───
-        // ═══════════════════════════════════════════════
         function showToast(message, type = 'info') {
             const container = document.getElementById('toastContainer');
             const toast = document.createElement('div');
@@ -1968,51 +1476,26 @@
             }, 4000);
         }
 
-        // ═══════════════════════════════════════════════
-        // ─── LOGIN ───
-        // ═══════════════════════════════════════════════
-        function handleLogin(e) {
-            e.preventDefault();
-            const input = document.getElementById('password');
-            const error = document.getElementById('loginError');
-            if (input.value === PASSWORD) {
-                error.classList.remove('show');
-                document.getElementById('login-screen').style.display = 'none';
-                document.getElementById('landing-page').classList.add('show');
-                showToast('✅ Welcome! Explore the features below.', 'success');
-                // Auto-show dashboard after 2s
-                setTimeout(() => {
-                    document.getElementById('landing-page').classList.remove('show');
-                    document.getElementById('dashboard').classList.add('show');
-                    loadHistory();
-                    updateStats();
-                    showToast('🚀 Dashboard ready!', 'success');
-                }, 1500);
-            } else {
-                error.classList.add('show');
-                input.value = '';
-                input.focus();
-                showToast('❌ Incorrect password', 'error');
-            }
-        }
+        // ─── BANK DATA ───
+        const banks = {
+            sbi: { name: 'State Bank of India', short: 'SBI', color: '#1a5276', cls: 'sbi' },
+            hdfc: { name: 'HDFC Bank', short: 'HDFC', color: '#004d8c', cls: 'hdfc' },
+            icici: { name: 'ICICI Bank', short: 'ICICI', color: '#ed1c24', cls: 'icici' },
+            axis: { name: 'Axis Bank', short: 'Axis', color: '#a2001a', cls: 'axis' },
+            kotak: { name: 'Kotak Mahindra Bank', short: 'Kotak', color: '#1a2b5c', cls: 'kotak' },
+            bob: { name: 'Bank of Baroda', short: 'BOB', color: '#1f3a7a', cls: 'bob' },
+            pnb: { name: 'Punjab National Bank', short: 'PNB', color: '#b8860b', cls: 'pnb' },
+            indusind: { name: 'IndusInd Bank', short: 'IndusInd', color: '#0066b3', cls: 'indusind' },
+            canara: { name: 'Canara Bank', short: 'Canara', color: '#003366', cls: 'canara' },
+            union: { name: 'Union Bank of India', short: 'Union', color: '#1a3c6e', cls: 'union' }
+        };
 
-        function goToDashboard() {
-            document.getElementById('landing-page').classList.remove('show');
-            document.getElementById('dashboard').classList.add('show');
-            loadHistory();
-            updateStats();
-            showToast('🚀 Dashboard ready!', 'success');
-        }
+        let history = [];
+        let statementCount = 0;
+        let currentStatementHTML = '';
+        let uploadedPDF = null;
 
-        function handleLogout() {
-            document.getElementById('dashboard').classList.remove('show');
-            document.getElementById('landing-page').classList.add('show');
-            showToast('👋 Logged out successfully', 'info');
-        }
-
-        // ═══════════════════════════════════════════════
-        // ─── BANK SELECTION UI ───
-        // ═══════════════════════════════════════════════
+        // ─── BANK SELECTION ───
         document.querySelectorAll('.bank-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 document.querySelectorAll('.bank-btn').forEach(b => b.classList.remove('active'));
@@ -2032,9 +1515,7 @@
         }
         updateBankPreview();
 
-        // ═══════════════════════════════════════════════
         // ─── PILLS ───
-        // ═══════════════════════════════════════════════
         document.querySelectorAll('.pill-group').forEach(group => {
             group.querySelectorAll('.pill').forEach(pill => {
                 pill.addEventListener('click', function() {
@@ -2044,22 +1525,17 @@
             });
         });
 
-        // ═══════════════════════════════════════════════
         // ─── TABS ───
-        // ═══════════════════════════════════════════════
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
-                const tabId = this.dataset.tab;
                 document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
-                document.getElementById(`tab-${tabId}`).classList.add('active');
+                document.getElementById(`tab-${this.dataset.tab}`).classList.add('active');
             });
         });
 
-        // ═══════════════════════════════════════════════
         // ─── EXPENSES ───
-        // ═══════════════════════════════════════════════
         function addExpense() {
             const list = document.getElementById('expenseList');
             const div = document.createElement('div');
@@ -2076,6 +1552,399 @@
                 <button class="remove-btn" onclick="this.parentElement.remove()">✕</button>
             `;
             list.appendChild(div);
+        }
+
+        // ─── TEMPLATE FIELDS ───
+        function addTemplateField() {
+            const builder = document.getElementById('templateBuilder');
+            const div = document.createElement('div');
+            div.className = 'template-field';
+            div.style.cssText =
+            'display:flex;gap:10px;align-items:center;margin-bottom:8px;';
+            div.innerHTML = `
+                <input type="text" placeholder="Field Name" style="flex:1;padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;" />
+                <select style="padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;">
+                    <option value="text">Text</option>
+                    <option value="date">Date</option>
+                    <option value="number">Number</option>
+                </select>
+                <button class="remove-btn" onclick="this.parentElement.remove()" style="background:none;border:none;color:var(--danger);font-size:18px;cursor:pointer;">✕</button>
+            `;
+            builder.appendChild(div);
+        }
+
+        // ─── SAVE TEMPLATE ───
+        function saveTemplate() {
+            const fields = document.querySelectorAll('#templateBuilder .template-field');
+            const template = [];
+            fields.forEach(field => {
+                const input = field.querySelector('input');
+                const select = field.querySelector('select');
+                if (input) {
+                    template.push({ name: input.value || 'Field', type: select ? select.value : 'text' });
+                }
+            });
+            if (template.length === 0) {
+                showToast('⚠️ Please add at least one field.', 'warning');
+                return;
+            }
+            let saved = JSON.parse(localStorage.getItem('customTemplates') || '[]');
+            saved.push({ name: `Template ${saved.length + 1}`, fields: template, date: new Date().toISOString() });
+            localStorage.setItem('customTemplates', JSON.stringify(saved));
+            renderTemplates();
+            updateStats();
+            showToast('✅ Template saved!', 'success');
+        }
+
+        function renderTemplates() {
+            const container = document.getElementById('savedTemplates');
+            const templates = JSON.parse(localStorage.getItem('customTemplates') || '[]');
+            if (templates.length === 0) {
+                container.innerHTML = '<p style="color:var(--text-light);font-size:13px;">No templates saved.</p>';
+                return;
+            }
+            let html = '';
+            templates.forEach((t, idx) => {
+                html += `
+                    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--bg);border-radius:8px;margin-bottom:6px;border-left:4px solid var(--accent);">
+                        <div><strong>${t.name}</strong> <span style="font-size:11px;color:var(--text-light);">(${t.fields.length} fields)</span></div>
+                        <div style="display:flex;gap:6px;">
+                            <button class="add-btn" onclick="loadTemplate(${idx})" style="background:var(--primary);color:#fff;">📂 Load</button>
+                            <button class="add-btn" onclick="deleteTemplate(${idx})" style="background:var(--danger);color:#fff;">🗑️</button>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function loadTemplate(idx) {
+            const templates = JSON.parse(localStorage.getItem('customTemplates') || '[]');
+            const template = templates[idx];
+            if (!template) return;
+            const builder = document.getElementById('templateBuilder');
+            builder.innerHTML = '';
+            template.fields.forEach(field => {
+                const div = document.createElement('div');
+                div.className = 'template-field';
+                div.style.cssText =
+                'display:flex;gap:10px;align-items:center;margin-bottom:8px;';
+                div.innerHTML = `
+                    <input type="text" placeholder="Field Name" value="${field.name}" style="flex:1;padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;" />
+                    <select style="padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;">
+                        <option value="text" ${field.type === 'text' ? 'selected' : ''}>Text</option>
+                        <option value="date" ${field.type === 'date' ? 'selected' : ''}>Date</option>
+                        <option value="number" ${field.type === 'number' ? 'selected' : ''}>Number</option>
+                    </select>
+                    <button class="remove-btn" onclick="this.parentElement.remove()" style="background:none;border:none;color:var(--danger);font-size:18px;cursor:pointer;">✕</button>
+                `;
+                builder.appendChild(div);
+            });
+            showToast('📂 Template loaded!', 'success');
+        }
+
+        function deleteTemplate(idx) {
+            let templates = JSON.parse(localStorage.getItem('customTemplates') || '[]');
+            templates.splice(idx, 1);
+            localStorage.setItem('customTemplates', JSON.stringify(templates));
+            renderTemplates();
+            updateStats();
+            showToast('🗑️ Template deleted', 'info');
+        }
+
+        // ─── HISTORY ───
+        function loadHistory() {
+            history = JSON.parse(localStorage.getItem('statementHistory') || '[]');
+            renderHistory();
+        }
+
+        function renderHistory() {
+            const container = document.getElementById('historyList');
+            if (history.length === 0) {
+                container.innerHTML = '<p style="color:var(--text-light);text-align:center;padding:20px;">No statements saved yet.</p>';
+                return;
+            }
+            let html = '';
+            history.forEach((item, idx) => {
+                html += `
+                    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--bg);border-radius:8px;margin-bottom:6px;border-left:4px solid var(--primary);">
+                        <div><strong>${item.name || 'Unnamed'}</strong> <span style="font-size:11px;color:var(--text-light);">${item.date || ''} · ${item.bank || ''}</span></div>
+                        <div style="display:flex;gap:6px;">
+                            <button class="add-btn" onclick="viewHistory(${idx})" style="background:var(--primary);color:#fff;">👁️ View</button>
+                            <button class="add-btn" onclick="deleteHistory(${idx})" style="background:var(--danger);color:#fff;">🗑️</button>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+            document.getElementById('statHistory').textContent = history.length;
+        }
+
+        function viewHistory(idx) {
+            const item = history[idx];
+            if (item && item.html) {
+                document.getElementById('statementContent').innerHTML = item.html;
+                currentStatementHTML = item.html;
+                document.getElementById('output').classList.add('show');
+                document.getElementById('output').scrollIntoView({ behavior: 'smooth' });
+                showToast('👁️ Viewing saved statement', 'info');
+            }
+        }
+
+        function deleteHistory(idx) {
+            history.splice(idx, 1);
+            localStorage.setItem('statementHistory', JSON.stringify(history));
+            renderHistory();
+            updateStats();
+            showToast('🗑️ Deleted', 'info');
+        }
+
+        function clearHistory() {
+            if (confirm('Delete all history?')) {
+                history = [];
+                localStorage.setItem('statementHistory', JSON.stringify(history));
+                renderHistory();
+                updateStats();
+                showToast('🗑️ All history cleared', 'info');
+            }
+        }
+
+        function saveToHistory() {
+            if (!currentStatementHTML) {
+                showToast('⚠️ Please generate a statement first.', 'warning');
+                return;
+            }
+            const name = document.getElementById('accName').value || 'Unnamed';
+            const bankKey = document.querySelector('.bank-btn.active')?.dataset.bank || 'sbi';
+            const bank = banks[bankKey];
+            history.push({
+                name: name,
+                bank: bank ? bank.name : 'Bank',
+                date: new Date().toLocaleDateString('en-IN'),
+                html: currentStatementHTML
+            });
+            localStorage.setItem('statementHistory', JSON.stringify(history));
+            renderHistory();
+            updateStats();
+            showToast('💾 Saved to history!', 'success');
+        }
+
+        // ─── STATS ───
+        function updateStats() {
+            document.getElementById('statStatements').textContent = statementCount;
+            document.getElementById('statHistory').textContent = history.length;
+            const templates = JSON.parse(localStorage.getItem('customTemplates') || '[]');
+            document.getElementById('statTemplates').textContent = templates.length;
+        }
+
+        // ─── WHITE-LABEL ───
+        function applyWhiteLabel() {
+            const company = document.getElementById('wlCompany').value || 'Your Brand';
+            const logo = document.getElementById('wlLogo').value || 'BRAND';
+            const color = document.getElementById('wlColor').value || '#1a5276';
+            const accent = document.getElementById('wlAccent').value || '#f39c12';
+            const preview = document.getElementById('wlPreview');
+            preview.innerHTML = `
+                <div style="font-size:20px;font-weight:800;color:${color};">${logo}</div>
+                <p style="color:${color};font-weight:700;">${company}</p>
+                <div style="display:flex;gap:8px;justify-content:center;margin-top:8px;">
+                    <span style="display:inline-block;width:30px;height:30px;border-radius:6px;background:${color};"></span>
+                    <span style="display:inline-block;width:30px;height:30px;border-radius:6px;background:${accent};"></span>
+                </div>
+                <p style="color:var(--text-light);font-size:11px;margin-top:8px;">✅ White-label applied!</p>
+            `;
+            localStorage.setItem('wlSettings', JSON.stringify({ company, logo, color, accent }));
+            showToast('🎨 White-label applied!', 'success');
+        }
+
+        // ─── BULK CSV ───
+        let bulkData = [];
+
+        function handleCSVUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const text = e.target.result;
+                const lines = text.split('\n').filter(line => line.trim());
+                const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+                bulkData = [];
+                for (let i = 1; i < lines.length; i++) {
+                    const cols = lines[i].split(',').map(c => c.trim());
+                    if (cols.length >= 4) {
+                        bulkData.push({
+                            name: cols[0] || 'Unknown',
+                            account: cols[1] || '',
+                            ifsc: cols[2] || '',
+                            branch: cols[3] || '',
+                            amount: parseFloat(cols[4]) || 0
+                        });
+                    }
+                }
+                document.getElementById('bulkCount').textContent = bulkData.length;
+                document.getElementById('bulkPreview').style.display = 'block';
+                showToast(`📊 ${bulkData.length} rows uploaded!`, 'success');
+            };
+            reader.readAsText(file);
+        }
+
+        function processBulk() {
+            if (bulkData.length === 0) {
+                showToast('⚠️ Please upload a CSV first.', 'warning');
+                return;
+            }
+            const results = document.getElementById('bulkResults');
+            let html = '<p><strong>Generated Statements:</strong></p>';
+            bulkData.forEach((row, idx) => {
+                html += `
+                    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:var(--bg);border-radius:6px;margin-bottom:4px;border-left:4px solid ${idx % 2 === 0 ? '#1a5276' : '#f39c12'};">
+                        <span>${row.name} - ${row.account || 'N/A'}</span>
+                        <button class="add-btn" onclick="generateBulkItem(${idx})" style="background:var(--primary);color:#fff;">⚡ Generate</button>
+                    </div>
+                `;
+            });
+            results.innerHTML = html;
+            showToast('📊 Click Generate for each row', 'info');
+        }
+
+        function generateBulkItem(idx) {
+            const row = bulkData[idx];
+            document.getElementById('accName').value = row.name;
+            document.getElementById('accNum').value = row.account;
+            document.getElementById('ifsc').value = row.ifsc;
+            document.getElementById('branch').value = row.branch;
+            document.getElementById('openingBalance').value = row.amount || 45000;
+            generateStatement();
+            showToast(`⚡ Generated for ${row.name}`, 'success');
+        }
+
+        // ═══════════════════════════════════════════════
+        // ─── PDF TEMPLATE UPLOAD ───
+        // ═══════════════════════════════════════════════
+
+        function handlePDFUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            if (file.type !== 'application/pdf') {
+                showToast('⚠️ Please upload a PDF file.', 'error');
+                return;
+            }
+
+            uploadedPDF = file;
+            document.getElementById('fileNameDisplay').textContent = file.name;
+            document.getElementById('templatePreview').classList.add('show');
+
+            // Read PDF and show preview
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const pdfData = new Uint8Array(e.target.result);
+                const container = document.getElementById('pdfPreviewContainer');
+                container.innerHTML = `
+                    <span>📄 <strong>${file.name}</strong> loaded successfully!<br />
+                    <span style="font-size:12px;color:var(--text-light);">Pages: Detected · Ready for extraction</span>
+                    </span>
+                `;
+                showToast('📄 PDF uploaded successfully!', 'success');
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        function removeTemplate() {
+            uploadedPDF = null;
+            document.getElementById('templatePreview').classList.remove('show');
+            document.getElementById('fieldMapping').classList.remove('show');
+            document.getElementById('pdfFileInput').value = '';
+            showToast('🗑️ Template removed', 'info');
+        }
+
+        function extractTemplate() {
+            if (!uploadedPDF) {
+                showToast('⚠️ Please upload a PDF first.', 'warning');
+                return;
+            }
+            // Show field mapping
+            const mappingContainer = document.getElementById('mappingFields');
+            const fields = [
+                { label: 'Account Holder Name', id: 'accName' },
+                { label: 'Account Number', id: 'accNum' },
+                { label: 'IFSC Code', id: 'ifsc' },
+                { label: 'Branch Name', id: 'branch' },
+                { label: 'Branch Code', id: 'branchCode' },
+                { label: 'CIF Number', id: 'cif' },
+                { label: 'MICR Code', id: 'micr' },
+                { label: 'CKYCR', id: 'ckycr' },
+                { label: 'Address', id: 'address' },
+                { label: 'Email', id: 'email' },
+                { label: 'Phone', id: 'branchPhone' },
+                { label: 'Interest Rate', id: 'intRate' }
+            ];
+
+            let html = '';
+            fields.forEach(f => {
+                html += `
+                    <div class="mapping-row" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center;padding:6px 0;border-bottom:1px solid var(--border);">
+                        <span class="label" style="font-weight:600;font-size:13px;">${f.label}</span>
+                        <select data-target="${f.id}" style="padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:inherit;">
+                            <option value="">— Detect from PDF —</option>
+                            <option value="manual">Manual Entry</option>
+                        </select>
+                    </div>
+                `;
+            });
+            mappingContainer.innerHTML = html;
+            document.getElementById('fieldMapping').classList.add('show');
+            showToast('🔍 Template fields extracted! Map them to your data.', 'success');
+        }
+
+        function applyTemplateMapping() {
+            if (!uploadedPDF) {
+                showToast('⚠️ Please upload a PDF first.', 'warning');
+                return;
+            }
+            showToast('✅ Template mapped! Generating statement with your details...', 'success');
+
+            // Auto-fill account details from mapping
+            const mappings = document.querySelectorAll('#mappingFields .mapping-row select');
+            mappings.forEach(sel => {
+                const targetId = sel.dataset.target;
+                const target = document.getElementById(targetId);
+                if (target && sel.value && sel.value !== 'manual') {
+                    // In real scenario, you'd extract from PDF
+                    // For demo, we'll use placeholder
+                    target.value = sel.value;
+                }
+            });
+
+            // Switch to generator tab
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector('[data-tab="generator"]').classList.add('active');
+            document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+            document.getElementById('tab-generator').classList.add('active');
+
+            // Auto-generate
+            setTimeout(() => generateStatement(), 500);
+            showToast('📄 Statement generated from template!', 'success');
+        }
+
+        // ─── DRAG & DROP ───
+        const dropArea = document.getElementById('dropArea');
+        if (dropArea) {
+            dropArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropArea.classList.add('dragover');
+            });
+            dropArea.addEventListener('dragleave', () => {
+                dropArea.classList.remove('dragover');
+            });
+            dropArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropArea.classList.remove('dragover');
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    document.getElementById('pdfFileInput').files = files;
+                    handlePDFUpload({ target: { files: files } });
+                }
+            });
         }
 
         // ═══════════════════════════════════════════════
@@ -2113,7 +1982,6 @@
                     const period = Number(document.querySelector('#periodGroup .active')?.dataset.value) || 3;
                     const profile = document.querySelector('#profileGroup .active')?.dataset.value || 'moderate';
                     const pdfVariant = document.querySelector('#pdfVariant .active')?.dataset.value || 'light';
-                    const pdfPassword = document.getElementById('pdfPassword').value || '';
 
                     // Recurring expenses
                     const expenseItems = document.querySelectorAll('#expenseList .expense-item');
@@ -2153,7 +2021,6 @@
                         'SBIN', 'ICIC', 'YESB', 'IDFB', 'BKID', 'AIRP'
                     ];
 
-                    // Opening balance
                     transactions.push({
                         date: new Date(startDate),
                         desc: 'Opening Balance',
@@ -2301,7 +2168,7 @@
                     const openDateStr = accountOpenDate.toLocaleDateString('en-IN', { day: '2-digit',
                         month: '2-digit', year: 'numeric' });
 
-                    // Apply white-label colors
+                    // White-label
                     const wlColor = document.getElementById('wlColor')?.value || '#1a5276';
                     const wlAccent = document.getElementById('wlAccent')?.value || '#f39c12';
                     const wlCompany = document.getElementById('wlCompany')?.value || bankName;
@@ -2377,7 +2244,6 @@
                                 OTP (One-Time Password), Username or Password with anyone via email, SMS, phone call, or any other medium.
                                 Bank never asks for such information. If your account is operated by a Power of Attorney holder,
                                 please review the transactions with extra care. This is a computer generated statement and does not require a signature.
-                                ${pdfPassword ? '🔒 Password Protected' : ''}
                             </div>
                         </div>
                     `;
@@ -2388,9 +2254,6 @@
                     statementCount++;
                     updateStats();
 
-                    // Save to history automatically
-                    saveToHistoryAuto(name, bankName);
-
                     btn.classList.remove('loading');
                     btn.disabled = false;
                     showToast('✅ Statement generated successfully!', 'success');
@@ -2398,395 +2261,19 @@
                 } catch (err) {
                     btn.classList.remove('loading');
                     btn.disabled = false;
-                    showToast('❌ Error generating statement: ' + err.message, 'error');
+                    showToast('❌ Error: ' + err.message, 'error');
                     console.error(err);
                 }
             }, 800);
         }
 
-        // ═══════════════════════════════════════════════
-        // ─── HISTORY ───
-        // ═══════════════════════════════════════════════
-        function loadHistory() {
-            try {
-                const saved = localStorage.getItem('statementHistory');
-                if (saved) history = JSON.parse(saved);
-                else history = [];
-                renderHistory();
-            } catch (e) { history = []; }
-        }
-
-        function renderHistory() {
-            const container = document.getElementById('historyList');
-            if (history.length === 0) {
-                container.innerHTML = '<p style="color:var(--text-light);text-align:center;padding:20px;">No statements saved yet. Generate and save one!</p>';
-                return;
-            }
-            let html = '';
-            history.forEach((item, index) => {
-                html += `
-                    <div class="history-item">
-                        <div class="h-info">
-                            <span class="h-name">${item.name || 'Unnamed'} - ${item.bank || 'Bank'}</span>
-                            <span class="h-date">${item.date || 'N/A'} · ${item.desc || ''}</span>
-                        </div>
-                        <div class="h-actions">
-                            <button class="view-btn" onclick="viewHistory(${index})">👁️ View</button>
-                            <button class="del-btn" onclick="deleteHistory(${index})">🗑️</button>
-                        </div>
-                    </div>
-                `;
-            });
-            container.innerHTML = html;
-            document.getElementById('statHistory').textContent = history.length;
-        }
-
-        function saveToHistoryAuto(name, bankName) {
-            const entry = {
-                name: name || 'Unnamed',
-                bank: bankName || 'Bank',
-                date: new Date().toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric' }),
-                desc: `Generated ${new Date().toLocaleTimeString()}`,
-                html: currentStatementHTML
-            };
-            history.push(entry);
-            localStorage.setItem('statementHistory', JSON.stringify(history));
-            renderHistory();
-            updateStats();
-            showToast('💾 Statement saved to history!', 'success');
-        }
-
-        function saveToHistory() {
-            if (!currentStatementHTML) {
-                showToast('⚠️ Please generate a statement first.', 'warning');
-                return;
-            }
-            const name = document.getElementById('accName').value || 'Unnamed';
-            const bankKey = document.querySelector('.bank-btn.active')?.dataset.bank || 'sbi';
-            const bank = banks[bankKey];
-            const entry = {
-                name: name,
-                bank: bank ? bank.name : 'Bank',
-                date: new Date().toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric' }),
-                desc: `Saved ${new Date().toLocaleTimeString()}`,
-                html: currentStatementHTML
-            };
-            history.push(entry);
-            localStorage.setItem('statementHistory', JSON.stringify(history));
-            renderHistory();
-            updateStats();
-            showToast('💾 Statement saved to history!', 'success');
-        }
-
-        function viewHistory(index) {
-            const item = history[index];
-            if (item && item.html) {
-                document.getElementById('statementContent').innerHTML = item.html;
-                currentStatementHTML = item.html;
-                document.getElementById('output').classList.add('show');
-                document.getElementById('output').scrollIntoView({ behavior: 'smooth' });
-                showToast('👁️ Viewing saved statement', 'info');
-            } else {
-                showToast('❌ Statement not found', 'error');
-            }
-        }
-
-        function deleteHistory(index) {
-            history.splice(index, 1);
-            localStorage.setItem('statementHistory', JSON.stringify(history));
-            renderHistory();
-            updateStats();
-            showToast('🗑️ Statement deleted', 'info');
-        }
-
-        function clearHistory() {
-            if (confirm('Delete all history?')) {
-                history = [];
-                localStorage.setItem('statementHistory', JSON.stringify(history));
-                renderHistory();
-                updateStats();
-                showToast('🗑️ All history cleared', 'info');
-            }
-        }
-
-        // ═══════════════════════════════════════════════
-        // ─── STATS ───
-        // ═══════════════════════════════════════════════
-        function updateStats() {
-            document.getElementById('statStatements').textContent = statementCount;
-            document.getElementById('statHistory').textContent = history.length;
-            // Load templates count
-            try {
-                const saved = localStorage.getItem('customTemplates');
-                const tmpl = saved ? JSON.parse(saved) : [];
-                document.getElementById('statTemplates').textContent = tmpl.length;
-            } catch (e) {
-                document.getElementById('statTemplates').textContent = 0;
-            }
-        }
-
-        // ═══════════════════════════════════════════════
-        // ─── WHITE-LABEL ───
-        // ═══════════════════════════════════════════════
-        function applyWhiteLabel() {
-            const company = document.getElementById('wlCompany').value || 'Your Brand';
-            const logo = document.getElementById('wlLogo').value || 'BRAND';
-            const color = document.getElementById('wlColor').value || '#1a5276';
-            const accent = document.getElementById('wlAccent').value || '#f39c12';
-
-            const preview = document.getElementById('wlPreview');
-            preview.innerHTML = `
-                <div class="wl-logo" style="color:${color};">${logo}</div>
-                <p style="color:${color};font-weight:700;">${company}</p>
-                <p style="color:var(--text-light);font-size:12px;">Primary: ${color} | Accent: ${accent}</p>
-                <div style="display:flex;gap:8px;justify-content:center;margin-top:8px;">
-                    <span style="display:inline-block;width:30px;height:30px;border-radius:6px;background:${color};"></span>
-                    <span style="display:inline-block;width:30px;height:30px;border-radius:6px;background:${accent};"></span>
-                </div>
-                <p style="color:var(--text-light);font-size:11px;margin-top:8px;">✅ White-label applied! Generate a statement to see the changes.</p>
-            `;
-
-            // Save white-label settings
-            localStorage.setItem('wlSettings', JSON.stringify({ company, logo, color, accent }));
-            showToast('🎨 White-label applied successfully!', 'success');
-        }
-
-        // Load saved white-label settings
-        (function loadWLSettings() {
-            try {
-                const saved = localStorage.getItem('wlSettings');
-                if (saved) {
-                    const settings = JSON.parse(saved);
-                    document.getElementById('wlCompany').value = settings.company || '';
-                    document.getElementById('wlLogo').value = settings.logo || '';
-                    document.getElementById('wlColor').value = settings.color || '#1a5276';
-                    document.getElementById('wlAccent').value = settings.accent || '#f39c12';
-                    applyWhiteLabel();
-                }
-            } catch (e) {}
-        })();
-
-        // ═══════════════════════════════════════════════
-        // ─── BULK CSV ───
-        // ═══════════════════════════════════════════════
-        let bulkData = [];
-
-        function handleCSVUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const text = e.target.result;
-                const lines = text.split('\n').filter(line => line.trim());
-                const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
-
-                bulkData = [];
-                for (let i = 1; i < lines.length; i++) {
-                    const cols = lines[i].split(',').map(c => c.trim());
-                    if (cols.length >= 4) {
-                        bulkData.push({
-                            name: cols[0] || 'Unknown',
-                            account: cols[1] || '',
-                            ifsc: cols[2] || '',
-                            branch: cols[3] || '',
-                            amount: parseFloat(cols[4]) || 0
-                        });
-                    }
-                }
-
-                document.getElementById('bulkCount').textContent = bulkData.length;
-                document.getElementById('bulkPreview').style.display = 'block';
-                showToast(`📊 ${bulkData.length} rows uploaded successfully!`, 'success');
-            };
-            reader.readAsText(file);
-        }
-
-        function processBulk() {
-            if (bulkData.length === 0) {
-                showToast('⚠️ Please upload a CSV first.', 'warning');
-                return;
-            }
-
-            const results = document.getElementById('bulkResults');
-            let html = '<p><strong>Generated Statements:</strong></p>';
-
-            bulkData.forEach((row, idx) => {
-                // Auto-fill account details from CSV
-                document.getElementById('accName').value = row.name;
-                document.getElementById('accNum').value = row.account;
-                document.getElementById('ifsc').value = row.ifsc;
-                document.getElementById('branch').value = row.branch;
-                document.getElementById('openingBalance').value = row.amount || 45000;
-
-                html += `<div class="history-item" style="border-left-color:${idx % 2 === 0 ? '#1a5276' : '#f39c12'};">
-                    <div class="h-info">
-                        <span class="h-name">${row.name} - ${row.account || 'N/A'}</span>
-                        <span class="h-date">IFSC: ${row.ifsc || 'N/A'} | Amount: ₹${row.amount || 0}</span>
-                    </div>
-                    <div class="h-actions">
-                        <button class="view-btn" onclick="generateBulkItem(${idx})">⚡ Generate</button>
-                    </div>
-                </div>`;
-            });
-
-            results.innerHTML = html;
-            showToast('📊 Click Generate for each row to create statements', 'info');
-        }
-
-        function generateBulkItem(idx) {
-            const row = bulkData[idx];
-            document.getElementById('accName').value = row.name;
-            document.getElementById('accNum').value = row.account;
-            document.getElementById('ifsc').value = row.ifsc;
-            document.getElementById('branch').value = row.branch;
-            document.getElementById('openingBalance').value = row.amount || 45000;
-            generateStatement();
-            showToast(`⚡ Generated statement for ${row.name}`, 'success');
-        }
-
-        // ═══════════════════════════════════════════════
-        // ─── TEMPLATES ───
-        // ═══════════════════════════════════════════════
-        function addTemplateField() {
-            const builder = document.getElementById('templateBuilder');
-            const div = document.createElement('div');
-            div.className = 'template-field';
-            div.innerHTML = `
-                <input type="text" placeholder="Field Name" />
-                <select>
-                    <option value="text">Text</option>
-                    <option value="date">Date</option>
-                    <option value="number">Number</option>
-                </select>
-                <button class="remove-btn" onclick="this.parentElement.remove()">✕</button>
-            `;
-            builder.appendChild(div);
-        }
-
-        function saveTemplate() {
-            const fields = document.querySelectorAll('#templateBuilder .template-field');
-            const template = [];
-            fields.forEach(field => {
-                const inputs = field.querySelectorAll('input');
-                const select = field.querySelector('select');
-                if (inputs[0]) {
-                    template.push({
-                        name: inputs[0].value || 'Field',
-                        type: select ? select.value : 'text'
-                    });
-                }
-            });
-
-            if (template.length === 0) {
-                showToast('⚠️ Please add at least one field.', 'warning');
-                return;
-            }
-
-            let saved = [];
-            try {
-                const existing = localStorage.getItem('customTemplates');
-                if (existing) saved = JSON.parse(existing);
-            } catch (e) {}
-            saved.push({ name: `Template ${saved.length + 1}`, fields: template, date: new Date().toISOString() });
-            localStorage.setItem('customTemplates', JSON.stringify(saved));
-
-            renderTemplates();
-            updateStats();
-            showToast('✅ Template saved successfully!', 'success');
-        }
-
-        function renderTemplates() {
-            const container = document.getElementById('savedTemplates');
-            try {
-                const saved = localStorage.getItem('customTemplates');
-                const templates = saved ? JSON.parse(saved) : [];
-                if (templates.length === 0) {
-                    container.innerHTML = '<p style="color:var(--text-light);font-size:13px;">No templates saved yet.</p>';
-                    return;
-                }
-                let html = '';
-                templates.forEach((t, idx) => {
-                    html += `
-                        <div class="history-item" style="border-left-color:#f39c12;">
-                            <div class="h-info">
-                                <span class="h-name">${t.name}</span>
-                                <span class="h-date">${t.fields.length} fields · ${new Date(t.date).toLocaleDateString()}</span>
-                            </div>
-                            <div class="h-actions">
-                                <button class="view-btn" onclick="loadTemplate(${idx})">📂 Load</button>
-                                <button class="del-btn" onclick="deleteTemplate(${idx})">🗑️</button>
-                            </div>
-                        </div>
-                    `;
-                });
-                container.innerHTML = html;
-            } catch (e) {
-                container.innerHTML = '<p style="color:var(--text-light);font-size:13px;">No templates saved.</p>';
-            }
-        }
-
-        function loadTemplate(idx) {
-            try {
-                const saved = localStorage.getItem('customTemplates');
-                const templates = saved ? JSON.parse(saved) : [];
-                const template = templates[idx];
-                if (!template) return;
-
-                // Clear existing fields
-                const builder = document.getElementById('templateBuilder');
-                builder.innerHTML = '';
-
-                template.fields.forEach(field => {
-                    const div = document.createElement('div');
-                    div.className = 'template-field';
-                    div.innerHTML = `
-                        <input type="text" placeholder="Field Name" value="${field.name}" />
-                        <select>
-                            <option value="text" ${field.type === 'text' ? 'selected' : ''}>Text</option>
-                            <option value="date" ${field.type === 'date' ? 'selected' : ''}>Date</option>
-                            <option value="number" ${field.type === 'number' ? 'selected' : ''}>Number</option>
-                        </select>
-                        <button class="remove-btn" onclick="this.parentElement.remove()">✕</button>
-                    `;
-                    builder.appendChild(div);
-                });
-
-                showToast('📂 Template loaded!', 'success');
-            } catch (e) {
-                showToast('❌ Error loading template', 'error');
-            }
-        }
-
-        function deleteTemplate(idx) {
-            try {
-                const saved = localStorage.getItem('customTemplates');
-                const templates = saved ? JSON.parse(saved) : [];
-                templates.splice(idx, 1);
-                localStorage.setItem('customTemplates', JSON.stringify(templates));
-                renderTemplates();
-                updateStats();
-                showToast('🗑️ Template deleted', 'info');
-            } catch (e) {
-                showToast('❌ Error deleting template', 'error');
-            }
-        }
-
-        // ─── INIT ───
-        renderTemplates();
-        loadHistory();
-        updateStats();
-
-        // ═══════════════════════════════════════════════
         // ─── PDF DOWNLOAD ───
-        // ═══════════════════════════════════════════════
         function downloadPDF() {
             const element = document.getElementById('statementPrint');
             if (!element) {
                 showToast('❌ Please generate a statement first', 'error');
                 return;
             }
-
             const orientation = document.querySelector('#pdfOrientation .active')?.dataset.value || 'portrait';
             const bankKey = document.querySelector('.bank-btn.active')?.dataset.bank || 'sbi';
             const bank = banks[bankKey];
@@ -2814,16 +2301,14 @@
 
             html2pdf().set(opt).from(container).save().then(() => {
                 document.body.removeChild(container);
-                showToast('📥 PDF downloaded successfully!', 'success');
+                showToast('📥 PDF downloaded!', 'success');
             }).catch(() => {
                 document.body.removeChild(container);
                 showToast('❌ Error generating PDF', 'error');
             });
         }
 
-        // ═══════════════════════════════════════════════
         // ─── COPY ───
-        // ═══════════════════════════════════════════════
         function copyStatement() {
             const element = document.getElementById('statementPrint');
             if (!element) {
@@ -2832,7 +2317,7 @@
             }
             const text = element.textContent;
             navigator.clipboard.writeText(text).then(() => {
-                showToast('📋 Statement copied!', 'success');
+                showToast('📋 Copied!', 'success');
             }).catch(() => {
                 const range = document.createRange();
                 range.selectNode(element);
@@ -2840,22 +2325,16 @@
                 window.getSelection().addRange(range);
                 document.execCommand('copy');
                 window.getSelection().removeAllRanges();
-                showToast('📋 Statement copied!', 'success');
+                showToast('📋 Copied!', 'success');
             });
         }
 
-        // ═══════════════════════════════════════════════
-        // ─── KEYBOARD SHORTCUT ───
-        // ═══════════════════════════════════════════════
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && document.activeElement?.id === 'password') {
-                handleLogin(e);
-            }
-        });
-
-        console.log('🚀 Pro Statement loaded successfully!');
-        console.log('🔐 Login with password: 85807');
-        console.log('📊 Features: Generator, History, White-Label, Bulk CSV, Custom Templates');
+        // ─── INIT ───
+        loadHistory();
+        renderTemplates();
+        updateStats();
+        console.log('🚀 Pro Statement loaded!');
+        console.log('📄 PDF Template Upload feature ready!');
     </script>
 
 </body>

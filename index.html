@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bank Statement - PDF Replica</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SBI Bank Statement - Official Replica</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js">
     </script>
     <style>
@@ -13,9 +13,9 @@
             box-sizing: border-box;
         }
         body {
-            font-family: 'Courier New', Courier, monospace;
-            background: #e8ecf1;
-            padding: 30px 20px;
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            background: #eef1f5;
+            padding: 25px 20px;
             display: flex;
             justify-content: center;
         }
@@ -23,18 +23,17 @@
         .app {
             max-width: 1100px;
             width: 100%;
-            background: #fff;
-            border-radius: 12px;
-            padding: 25px 30px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            background: #ffffff;
+            border-radius: 14px;
+            padding: 25px 30px 30px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
         }
 
-        /* ─── HEADER ─── */
         .app-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid #e8ecf1;
+            border-bottom: 2px solid #eef2f7;
             padding-bottom: 12px;
             margin-bottom: 18px;
             flex-wrap: wrap;
@@ -46,7 +45,9 @@
             font-weight: 700;
             color: #1a1a2e;
         }
-        .app-header h1 span { color: #1a5276; }
+        .app-header h1 span {
+            color: #1a5276;
+        }
         .app-header .badge {
             font-family: 'Segoe UI', sans-serif;
             font-size: 11px;
@@ -62,7 +63,11 @@
             grid-template-columns: 1fr 1fr;
             gap: 16px;
         }
-        @media (max-width: 780px) { .grid-2 { grid-template-columns: 1fr; } }
+        @media (max-width: 780px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
 
         .card {
             background: #f8f9fc;
@@ -93,74 +98,65 @@
             letter-spacing: 0.3px;
             margin-bottom: 1px;
         }
-        .form-group input, .form-group select {
+        .form-group input,
+        .form-group select {
             width: 100%;
             padding: 5px 10px;
             border: 1px solid #d5dbdb;
             border-radius: 5px;
             font-size: 13px;
-            font-family: 'Courier New', monospace;
+            font-family: 'Segoe UI', sans-serif;
             background: #fff;
         }
-        .form-group input:focus, .form-group select:focus {
+        .form-group input:focus,
+        .form-group select:focus {
             outline: none;
             border-color: #1a5276;
-            box-shadow: 0 0 0 3px rgba(26,82,118,0.08);
+            box-shadow: 0 0 0 3px rgba(26, 82, 118, 0.08);
         }
-        .inline { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-        .inline-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
-        @media (max-width: 500px) { .inline, .inline-3 { grid-template-columns: 1fr; } }
-
-        /* ─── BANK BUTTONS ─── */
-        .bank-grid {
+        .inline {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 4px;
-            margin-bottom: 8px;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
         }
-        .bank-btn {
-            padding: 4px 2px;
-            border: 2px solid #d5dbdb;
-            border-radius: 5px;
-            background: #fff;
-            cursor: pointer;
+        .inline-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 6px;
+        }
+        @media (max-width: 500px) {
+            .inline,
+            .inline-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pill-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3px;
+        }
+        .pill {
+            padding: 3px 12px;
+            border-radius: 20px;
             font-family: 'Segoe UI', sans-serif;
-            font-weight: 700;
             font-size: 10px;
-            transition: 0.2s;
-            text-align: center;
+            font-weight: 500;
+            background: #e8ecf1;
+            color: #2c3e50;
+            border: 1.5px solid transparent;
+            cursor: pointer;
+            transition: 0.15s;
         }
-        .bank-btn:hover { border-color: #aab7b8; }
-        .bank-btn.active {
-            border-color: #1a5276;
-            background: #eaf2f8;
-            color: #1a5276;
+        .pill:hover {
+            background: #d5dbdb;
         }
-
-        .bank-preview {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 6px 12px;
-            background: #fff;
-            border-radius: 5px;
-            border: 1px solid #d5dbdb;
-        }
-        .bank-preview .logo-box {
-            width: 30px;
-            height: 30px;
-            border-radius: 5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 9px;
+        .pill.active {
+            background: #1a5276;
             color: #fff;
+            border-color: #1a5276;
         }
-        .bank-preview .bname { font-family: 'Segoe UI', sans-serif; font-weight: 700; font-size: 13px; }
-        .bank-preview .bsub { font-family: 'Segoe UI', sans-serif; font-size: 9px; color: #7f8c8d; }
 
-        /* ─── EXPENSE ─── */
         .expense-item {
             display: grid;
             grid-template-columns: 2fr 1fr 0.8fr 0.3fr;
@@ -172,12 +168,13 @@
             margin-bottom: 4px;
             border: 1px solid #d5dbdb;
         }
-        .expense-item input, .expense-item select {
+        .expense-item input,
+        .expense-item select {
             padding: 3px 5px;
             border: 1px solid #d5dbdb;
             border-radius: 4px;
             font-size: 11px;
-            font-family: 'Courier New', monospace;
+            font-family: 'Segoe UI', sans-serif;
         }
         .expense-item .remove-btn {
             background: none;
@@ -200,30 +197,6 @@
             margin-top: 3px;
         }
 
-        .pill-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 3px;
-        }
-        .pill {
-            padding: 3px 12px;
-            border-radius: 20px;
-            font-family: 'Segoe UI', sans-serif;
-            font-size: 10px;
-            font-weight: 500;
-            background: #e8ecf1;
-            color: #2c3e50;
-            border: 1.5px solid transparent;
-            cursor: pointer;
-            transition: 0.15s;
-        }
-        .pill:hover { background: #d5dbdb; }
-        .pill.active {
-            background: #1a5276;
-            color: #fff;
-            border-color: #1a5276;
-        }
-
         .gen-btn {
             width: 100%;
             padding: 12px;
@@ -241,141 +214,266 @@
         .gen-btn:hover {
             background: #154360;
             transform: translateY(-1px);
-            box-shadow: 0 4px 20px rgba(26,82,118,0.2);
+            box-shadow: 0 4px 20px rgba(26, 82, 118, 0.2);
         }
 
         #output {
             display: none;
             margin-top: 22px;
         }
-        #output.show { display: block; }
+        #output.show {
+            display: block;
+        }
 
         /* ═══════════════════════════════════════════ */
-        /* ─── EXACT PDF REPLICA STATEMENT ─── */
+        /* ─── SBI OFFICIAL STATEMENT REPLICA ─── */
         /* ═══════════════════════════════════════════ */
-        .pdf-replica {
-            font-family: 'Courier New', Courier, monospace;
+        .sbi-statement {
+            font-family: 'Segoe UI', 'Arial', sans-serif;
             background: #ffffff;
-            padding: 20px 25px;
+            padding: 0;
             max-width: 1000px;
             margin: 0 auto;
-            font-size: 10.5px;
+            font-size: 11px;
             line-height: 1.5;
             color: #1c1c1c;
             border: 1px solid #b0b0b0;
+            border-radius: 2px;
+            overflow: hidden;
         }
 
-        /* ─── PAGE HEADER ─── */
-        .pdf-replica .page-header {
-            text-align: center;
-            border-bottom: 2px solid #1c1c1c;
-            padding-bottom: 6px;
-            margin-bottom: 10px;
+        /* ─── SBI HEADER WITH LOGO ─── */
+        .sbi-statement .sbi-header {
+            background: #1a5276;
+            color: #ffffff;
+            padding: 14px 25px 10px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border-bottom: 3px solid #f39c12;
         }
-        .pdf-replica .page-header .bank-name {
-            font-size: 22px;
+        .sbi-statement .sbi-header .sbi-logo {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            font-family: 'Arial Black', sans-serif;
+        }
+        .sbi-statement .sbi-header .sbi-logo small {
+            font-size: 10px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            opacity: 0.8;
+            display: block;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .sbi-statement .sbi-header .sbi-branch {
+            margin-left: auto;
+            text-align: right;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+        .sbi-statement .sbi-header .sbi-branch .bname {
             font-weight: 700;
-            letter-spacing: 3px;
+            font-size: 13px;
         }
-        .pdf-replica .page-header .bank-name .clr-sbi { color: #2e6b3e; }
-        .pdf-replica .page-header .bank-name .clr-hdfc { color: #004d8c; }
-        .pdf-replica .page-header .bank-name .clr-icici { color: #ed1c24; }
-        .pdf-replica .page-header .bank-name .clr-axis { color: #a2001a; }
-        .pdf-replica .page-header .bank-name .clr-kotak { color: #1a2b5c; }
-        .pdf-replica .page-header .bank-name .clr-bob { color: #1f3a7a; }
-        .pdf-replica .page-header .bank-name .clr-pnb { color: #b8860b; }
-        .pdf-replica .page-header .bank-name .clr-indusind { color: #0066b3; }
-        .pdf-replica .page-header .bank-name .clr-canara { color: #003366; }
-        .pdf-replica .page-header .bank-name .clr-union { color: #1a3c6e; }
-        .pdf-replica .page-header .sub-text {
+        .sbi-statement .sbi-header .sbi-branch .baddr {
             font-size: 9px;
-            color: #555;
-            letter-spacing: 1.5px;
+            opacity: 0.85;
         }
 
-        /* ─── ACCOUNT DETAILS ─── */
-        .pdf-replica .acc-details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1px 20px;
-            font-size: 9.5px;
-            border-bottom: 1px dashed #aaa;
-            padding-bottom: 6px;
-            margin-bottom: 8px;
+        /* ─── STATEMENT TITLE ─── */
+        .sbi-statement .stmt-title {
+            text-align: center;
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a5276;
+            padding: 12px 0 6px;
+            border-bottom: 2px solid #1a5276;
+            margin: 0 25px 8px;
+            letter-spacing: 2px;
         }
-        .pdf-replica .acc-details .lbl { font-weight: 700; }
+
+        /* ─── ACCOUNT HOLDER INFO ─── */
+        .sbi-statement .acc-info {
+            padding: 8px 25px 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .sbi-statement .acc-info .name {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1a5276;
+        }
+        .sbi-statement .acc-info .email {
+            font-size: 10px;
+            color: #555;
+        }
+        .sbi-statement .acc-info .address {
+            font-size: 10px;
+            color: #444;
+            margin-top: 2px;
+        }
+
+        /* ─── DETAILS GRID ─── */
+        .sbi-statement .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 4px 30px;
+            padding: 10px 25px;
+            font-size: 10px;
+            border-bottom: 1px solid #e0e0e0;
+            background: #fafbfc;
+        }
+        .sbi-statement .details-grid .item {
+            display: flex;
+            justify-content: space-between;
+            padding: 2px 0;
+            border-bottom: 1px dotted #eee;
+        }
+        .sbi-statement .details-grid .item .lbl {
+            font-weight: 600;
+            color: #555;
+        }
+        .sbi-statement .details-grid .item .val {
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        /* ─── BALANCE SUMMARY ROW ─── */
+        .sbi-statement .balance-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+            gap: 4px;
+            padding: 6px 25px;
+            background: #f0f5fa;
+            font-size: 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .sbi-statement .balance-row .item .lbl {
+            font-weight: 600;
+            color: #555;
+            font-size: 8.5px;
+            display: block;
+        }
+        .sbi-statement .balance-row .item .val {
+            font-weight: 700;
+            color: #1a5276;
+        }
+
+        /* ─── STATEMENT PERIOD ─── */
+        .sbi-statement .period {
+            padding: 6px 25px;
+            font-size: 10px;
+            font-weight: 600;
+            color: #1a5276;
+            border-bottom: 1px solid #e0e0e0;
+            background: #fafbfc;
+        }
 
         /* ─── TABLE ─── */
-        .pdf-replica table {
+        .sbi-statement table {
             width: 100%;
             border-collapse: collapse;
             font-size: 9.5px;
         }
-        .pdf-replica table th {
-            background: #f0f2f5;
+        .sbi-statement table th {
+            background: #1a5276;
+            color: #ffffff;
             text-align: left;
-            padding: 3px 5px;
-            border-bottom: 2px solid #1c1c1c;
-            font-weight: 700;
+            padding: 5px 8px;
+            font-weight: 600;
             font-size: 8.5px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        .pdf-replica table td {
-            padding: 2px 5px;
+        .sbi-statement table td {
+            padding: 4px 8px;
             border-bottom: 1px solid #eee;
+            font-size: 9px;
         }
-        .pdf-replica table .debit { color: #c0392b; font-weight: 700; }
-        .pdf-replica table .credit { color: #27ae60; font-weight: 700; }
-        .pdf-replica table .balance-neg { color: #c0392b; }
+        .sbi-statement table .debit {
+            color: #c0392b;
+            font-weight: 600;
+        }
+        .sbi-statement table .credit {
+            color: #27ae60;
+            font-weight: 600;
+        }
+        .sbi-statement table .balance-cr {
+            color: #27ae60;
+            font-weight: 600;
+        }
+        .sbi-statement table .balance-dr {
+            color: #c0392b;
+            font-weight: 600;
+        }
 
-        /* ─── SUMMARY BOX (like PDF) ─── */
-        .pdf-replica .summary-box {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr;
-            gap: 4px;
+        /* ─── FOOTER ─── */
+        .sbi-statement .sbi-footer {
+            padding: 10px 25px 12px;
             background: #f8f9fa;
-            padding: 6px 10px;
-            border-radius: 3px;
-            margin-top: 8px;
-            font-size: 9.5px;
-            border: 1px solid #d5dbdb;
-        }
-        .pdf-replica .summary-box strong { font-weight: 700; }
-
-        /* ─── FOOTER (exact PDF warning) ─── */
-        .pdf-replica .footer {
-            margin-top: 10px;
-            border-top: 2px solid #1c1c1c;
-            padding-top: 6px;
-            font-size: 7.5px;
+            border-top: 2px solid #1a5276;
+            font-size: 8px;
             color: #555;
             text-align: center;
-            letter-spacing: 0.2px;
-            line-height: 1.6;
+            line-height: 1.7;
+        }
+        .sbi-statement .sbi-footer strong {
+            color: #1a5276;
         }
 
         /* ─── DARK VARIANT ─── */
-        .pdf-replica.dark {
+        .sbi-statement.dark {
             background: #1a1a2e;
             color: #e8e8e8;
             border-color: #444;
         }
-        .pdf-replica.dark .page-header { border-bottom-color: #555; }
-        .pdf-replica.dark .page-header .sub-text { color: #aaa; }
-        .pdf-replica.dark table th {
-            background: #2a2a4a;
-            color: #e8e8e8;
-            border-bottom-color: #555;
+        .sbi-statement.dark .sbi-header {
+            background: #0d2b44;
         }
-        .pdf-replica.dark table td { border-bottom-color: #333; }
-        .pdf-replica.dark .acc-details { border-bottom-color: #444; }
-        .pdf-replica.dark .summary-box {
+        .sbi-statement.dark .stmt-title {
+            color: #f39c12;
+            border-bottom-color: #f39c12;
+        }
+        .sbi-statement.dark .acc-info .name {
+            color: #f39c12;
+        }
+        .sbi-statement.dark .details-grid {
             background: #24243e;
-            border-color: #444;
+            border-bottom-color: #333;
+        }
+        .sbi-statement.dark .details-grid .item {
+            border-bottom-color: #333;
+        }
+        .sbi-statement.dark .details-grid .item .val {
             color: #e8e8e8;
         }
-        .pdf-replica.dark .footer { border-top-color: #555; color: #999; }
+        .sbi-statement.dark .balance-row {
+            background: #1a1a3e;
+            border-bottom-color: #333;
+        }
+        .sbi-statement.dark .balance-row .item .val {
+            color: #f39c12;
+        }
+        .sbi-statement.dark .period {
+            background: #24243e;
+            border-bottom-color: #333;
+            color: #f39c12;
+        }
+        .sbi-statement.dark table th {
+            background: #0d2b44;
+            color: #f39c12;
+        }
+        .sbi-statement.dark table td {
+            border-bottom-color: #333;
+        }
+        .sbi-statement.dark .sbi-footer {
+            background: #24243e;
+            border-top-color: #f39c12;
+            color: #999;
+        }
+        .sbi-statement.dark .sbi-footer strong {
+            color: #f39c12;
+        }
 
         .btn-group {
             display: flex;
@@ -394,10 +492,20 @@
             cursor: pointer;
             min-width: 80px;
         }
-        .btn-primary { background: #1a5276; color: #fff; }
-        .btn-primary:hover { background: #154360; }
-        .btn-secondary { background: #e8ecf1; color: #2c3e50; }
-        .btn-secondary:hover { background: #d5dbdb; }
+        .btn-primary {
+            background: #1a5276;
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background: #154360;
+        }
+        .btn-secondary {
+            background: #e8ecf1;
+            color: #2c3e50;
+        }
+        .btn-secondary:hover {
+            background: #d5dbdb;
+        }
 
         .toast {
             position: fixed;
@@ -409,110 +517,163 @@
             border-radius: 6px;
             font-family: 'Segoe UI', sans-serif;
             font-size: 12px;
-            box-shadow: 0 6px 25px rgba(0,0,0,0.2);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
             opacity: 0;
             transform: translateY(20px);
             transition: 0.3s;
             z-index: 999;
         }
-        .toast.show { opacity: 1; transform: translateY(0); }
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ─── SBI LOGO TEXT ─── */
+        .sbi-logo-text {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .sbi-logo-text .logo-icon {
+            background: #f39c12;
+            color: #1a5276;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 16px;
+            font-family: 'Arial Black', sans-serif;
+        }
 
         @media (max-width: 600px) {
-            .app { padding: 10px; }
-            .pdf-replica { padding: 10px; font-size: 8px; }
-            .pdf-replica .acc-details { grid-template-columns: 1fr; }
-            .pdf-replica .summary-box { grid-template-columns: 1fr 1fr; }
-            .pdf-replica table { font-size: 7.5px; }
-            .bank-grid { grid-template-columns: repeat(3, 1fr); }
+            .app {
+                padding: 10px;
+            }
+            .sbi-statement {
+                font-size: 9px;
+            }
+            .sbi-statement .sbi-header {
+                flex-wrap: wrap;
+                padding: 10px 15px;
+            }
+            .sbi-statement .sbi-header .sbi-branch {
+                text-align: left;
+                margin-left: 0;
+                width: 100%;
+            }
+            .sbi-statement .details-grid {
+                grid-template-columns: 1fr 1fr;
+                padding: 8px 15px;
+            }
+            .sbi-statement .balance-row {
+                grid-template-columns: 1fr 1fr 1fr;
+                padding: 6px 15px;
+            }
+            .sbi-statement .acc-info {
+                padding: 6px 15px;
+            }
+            .sbi-statement .stmt-title {
+                margin: 0 15px 6px;
+                font-size: 13px;
+            }
+            .sbi-statement .period {
+                padding: 4px 15px;
+            }
+            .sbi-statement table {
+                font-size: 7.5px;
+            }
+            .sbi-statement table th,
+            .sbi-statement table td {
+                padding: 2px 4px;
+            }
+            .sbi-statement .sbi-footer {
+                padding: 6px 15px;
+                font-size: 7px;
+            }
         }
     </style>
 </head>
 <body>
 
-<div class="app">
+    <div class="app">
 
-    <div class="app-header">
-        <h1>🏦 Bank <span>Statement</span> Generator</h1>
-        <span class="badge">📄 PDF Replica</span>
-    </div>
-
-    <!-- BANK SELECTION -->
-    <div class="card" style="margin-bottom:12px;">
-        <div class="card-title">🏛️ Select Bank</div>
-        <div class="bank-grid" id="bankGrid">
-            <button class="bank-btn active" data-bank="sbi">SBI</button>
-            <button class="bank-btn" data-bank="hdfc">HDFC</button>
-            <button class="bank-btn" data-bank="icici">ICICI</button>
-            <button class="bank-btn" data-bank="axis">Axis</button>
-            <button class="bank-btn" data-bank="kotak">Kotak</button>
-            <button class="bank-btn" data-bank="bob">BOB</button>
-            <button class="bank-btn" data-bank="pnb">PNB</button>
-            <button class="bank-btn" data-bank="indusind">IndusInd</button>
-            <button class="bank-btn" data-bank="canara">Canara</button>
-            <button class="bank-btn" data-bank="union">Union</button>
+        <div class="app-header">
+            <h1>🏦 SBI <span>Statement</span> Generator</h1>
+            <span class="badge">📄 Official SBI Replica</span>
         </div>
-        <div class="bank-preview">
-            <div class="logo-box" id="logoBox" style="background:#2e6b3e;">SBI</div>
+
+        <div class="grid-2">
+
+            <!-- LEFT -->
             <div>
-                <div class="bname" id="bankNameDisplay">State Bank of India</div>
-                <div class="bsub">Selected bank format</div>
+                <div class="card">
+                    <div class="card-title">👤 Account Details</div>
+                    <div class="form-group">
+                        <label>Account Holder Name</label>
+                        <input type="text" id="accName" value="Mr. ABHISHEK REKVAR" />
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" id="email" value="example@email.com" />
+                    </div>
+                    <div class="form-group">
+                        <label>Address</label>
+                        <input type="text" id="address" value="WARD NO 14 HINOTIYA VIDISHA MADHYA PRADESH" />
+                    </div>
+                    <div class="inline">
+                        <div class="form-group">
+                            <label>Account Number</label>
+                            <input type="text" id="accNum" value="45222567869" />
+                        </div>
+                        <div class="form-group">
+                            <label>IFSC Code</label>
+                            <input type="text" id="ifsc" value="SBIN0012193" />
+                        </div>
+                    </div>
+                    <div class="inline">
+                        <div class="form-group">
+                            <label>Branch Name</label>
+                            <input type="text" id="branch" value="SATI VIDISHA" />
+                        </div>
+                        <div class="form-group">
+                            <label>Branch Code</label>
+                            <input type="text" id="branchCode" value="12193" />
+                        </div>
+                    </div>
+                    <div class="inline-3">
+                        <div class="form-group">
+                            <label>CIF Number</label>
+                            <input type="text" id="cif" value="92445569679" />
+                        </div>
+                        <div class="form-group">
+                            <label>MICR Code</label>
+                            <input type="text" id="micr" value="464002202" />
+                        </div>
+                        <div class="form-group">
+                            <label>CKYCR</label>
+                            <input type="text" id="ckycr" value="50046100545797" />
+                        </div>
+                    </div>
+                    <div class="inline">
+                        <div class="form-group">
+                            <label>Branch Phone</label>
+                            <input type="text" id="branchPhone" value="123456789" />
+                        </div>
+                        <div class="form-group">
+                            <label>Interest Rate</label>
+                            <input type="text" id="intRate" value="2.50" />
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
-    <div class="grid-2">
-
-        <!-- LEFT -->
-        <div>
-            <div class="card">
-                <div class="card-title">👤 Account Details</div>
-                <div class="form-group">
-                    <label>Account Holder Name</label>
-                    <input type="text" id="accName" value="Mr. BADAL SINGH" />
-                </div>
-                <div class="inline">
-                    <div class="form-group">
-                        <label>Account Number</label>
-                        <input type="text" id="accNum" value="00000040858739275" />
-                    </div>
-                    <div class="form-group">
-                        <label>IFSC Code</label>
-                        <input type="text" id="ifsc" value="SBIN0061102" />
-                    </div>
-                </div>
-                <div class="inline">
-                    <div class="form-group">
-                        <label>Branch Name</label>
-                        <input type="text" id="branch" value="URALIKANCHSN" />
-                    </div>
-                    <div class="form-group">
-                        <label>MICR Code</label>
-                        <input type="text" id="micr" value="411002043" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Address</label>
-                    <input type="text" id="address" value="H No 2564, SHIV NAGAR" />
-                </div>
-                <div class="inline-3">
-                    <div class="form-group">
-                        <label>CIF No.</label>
-                        <input type="text" id="cif" value="92076074822" />
-                    </div>
-                    <div class="form-group">
-                        <label>CKYCR</label>
-                        <input type="text" id="ckycr" value="XXXXXXXXXX1234" />
-                    </div>
-                    <div class="form-group">
-                        <label>Interest Rate</label>
-                        <input type="text" id="intRate" value="2.5" />
-                    </div>
-                </div>
-            </div>
-
-            <div class="card" style="margin-top:10px;">
-                <div class="card-title">💼 Income &amp; Period</div>
-                <div class="inline">
+            <!-- RIGHT -->
+            <div>
+                <div class="card">
+                    <div class="card-title">💼 Income &amp; Period</div>
                     <div class="form-group">
                         <label>Monthly Income (INR)</label>
                         <input type="number" id="monthlyIncome" value="195000" />
@@ -521,516 +682,508 @@
                         <label>Employer</label>
                         <input type="text" id="employer" value="TATA STEEL LIMITED" />
                     </div>
-                </div>
-                <div class="inline">
-                    <div class="form-group">
-                        <label>Salary Day</label>
-                        <input type="number" id="salaryDay" value="1" min="1" max="28" />
+                    <div class="inline">
+                        <div class="form-group">
+                            <label>Salary Day</label>
+                            <input type="number" id="salaryDay" value="1" min="1" max="28" />
+                        </div>
+                        <div class="form-group">
+                            <label>Opening Balance</label>
+                            <input type="number" id="openingBalance" value="45000" />
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label>Opening Balance</label>
-                        <input type="number" id="openingBalance" value="45000" />
+                        <label>Statement Period</label>
+                        <div class="pill-group" id="periodGroup">
+                            <span class="pill active" data-value="3">3 Months</span>
+                            <span class="pill" data-value="6">6 Months</span>
+                            <span class="pill" data-value="12">12 Months</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Spending Profile</label>
+                        <div class="pill-group" id="profileGroup">
+                            <span class="pill" data-value="conservative">Conservative</span>
+                            <span class="pill active" data-value="moderate">Moderate</span>
+                            <span class="pill" data-value="lavish">Lavish</span>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label>Statement Period</label>
-                    <div class="pill-group" id="periodGroup">
-                        <span class="pill active" data-value="3">3 Months</span>
-                        <span class="pill" data-value="6">6 Months</span>
-                        <span class="pill" data-value="12">12 Months</span>
+
+                <div class="card" style="margin-top:10px;">
+                    <div class="card-title">🔄 Recurring Expenses</div>
+                    <div id="expenseList">
+                        <div class="expense-item">
+                            <input type="text" placeholder="Name" value="HOME LOAN EMI" />
+                            <input type="number" placeholder="Amount" value="15000" />
+                            <select>
+                                <option value="5" selected>Day 5</option>
+                                <option value="10">Day 10</option>
+                                <option value="15">Day 15</option>
+                                <option value="20">Day 20</option>
+                            </select>
+                            <button class="remove-btn" onclick="this.parentElement.remove()">✕</button>
+                        </div>
+                        <div class="expense-item">
+                            <input type="text" placeholder="Name" value="MUTUAL FUND SIP" />
+                            <input type="number" placeholder="Amount" value="8000" />
+                            <select>
+                                <option value="5">Day 5</option>
+                                <option value="10" selected>Day 10</option>
+                                <option value="15">Day 15</option>
+                                <option value="20">Day 20</option>
+                            </select>
+                            <button class="remove-btn" onclick="this.parentElement.remove()">✕</button>
+                        </div>
                     </div>
+                    <button class="add-btn" onclick="addExpense()">+ Add Recurring Expense</button>
                 </div>
-                <div class="form-group">
-                    <label>Spending Profile</label>
-                    <div class="pill-group" id="profileGroup">
-                        <span class="pill" data-value="conservative">Conservative</span>
-                        <span class="pill active" data-value="moderate">Moderate</span>
-                        <span class="pill" data-value="lavish">Lavish</span>
+
+                <div class="card" style="margin-top:10px;">
+                    <div class="card-title">⚙️ PDF Settings</div>
+                    <div class="inline">
+                        <div class="form-group">
+                            <label>Variant</label>
+                            <div class="pill-group" id="pdfVariant">
+                                <span class="pill active" data-value="light">Light</span>
+                                <span class="pill" data-value="dark">Dark</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Orientation</label>
+                            <div class="pill-group" id="pdfOrientation">
+                                <span class="pill active" data-value="portrait">Portrait</span>
+                                <span class="pill" data-value="landscape">Landscape</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>PDF Password (optional)</label>
+                        <input type="text" id="pdfPassword" placeholder="Leave empty" />
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- RIGHT -->
-        <div>
-            <div class="card">
-                <div class="card-title">🔄 Recurring Expenses</div>
-                <div id="expenseList">
-                    <div class="expense-item">
-                        <input type="text" placeholder="Name" value="HOME LOAN EMI" />
-                        <input type="number" placeholder="Amount" value="15000" />
-                        <select>
-                            <option value="5" selected>Day 5</option>
-                            <option value="10">Day 10</option>
-                            <option value="15">Day 15</option>
-                            <option value="20">Day 20</option>
-                        </select>
-                        <button class="remove-btn" onclick="this.parentElement.remove()">✕</button>
-                    </div>
-                    <div class="expense-item">
-                        <input type="text" placeholder="Name" value="MUTUAL FUND SIP" />
-                        <input type="number" placeholder="Amount" value="8000" />
-                        <select>
-                            <option value="5">Day 5</option>
-                            <option value="10" selected>Day 10</option>
-                            <option value="15">Day 15</option>
-                            <option value="20">Day 20</option>
-                        </select>
-                        <button class="remove-btn" onclick="this.parentElement.remove()">✕</button>
-                    </div>
-                </div>
-                <button class="add-btn" onclick="addExpense()">+ Add Recurring Expense</button>
-            </div>
+        <button class="gen-btn" onclick="generateStatement()">⚡ Generate SBI Statement</button>
 
-            <div class="card" style="margin-top:10px;">
-                <div class="card-title">⚙️ PDF Settings</div>
-                <div class="inline">
-                    <div class="form-group">
-                        <label>Variant</label>
-                        <div class="pill-group" id="pdfVariant">
-                            <span class="pill active" data-value="light">Light</span>
-                            <span class="pill" data-value="dark">Dark</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Orientation</label>
-                        <div class="pill-group" id="pdfOrientation">
-                            <span class="pill active" data-value="portrait">Portrait</span>
-                            <span class="pill" data-value="landscape">Landscape</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>PDF Password (optional)</label>
-                    <input type="text" id="pdfPassword" placeholder="Leave empty" />
-                </div>
-            </div>
-
-            <div style="background:#f8f9fa;border-radius:6px;padding:8px 12px;margin-top:10px;border:1px solid #d5dbdb;font-family:'Segoe UI',sans-serif;font-size:11px;">
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px 12px;">
-                    <span style="color:#7f8c8d;font-weight:600;">Bank</span><span id="prevBank" style="font-weight:700;">SBI</span>
-                    <span style="color:#7f8c8d;font-weight:600;">Name</span><span id="prevName" style="font-weight:700;">Mr. BADAL SINGH</span>
-                    <span style="color:#7f8c8d;font-weight:600;">Income</span><span id="prevIncome" style="font-weight:700;">₹1,95,000</span>
-                    <span style="color:#7f8c8d;font-weight:600;">Period</span><span id="prevPeriod" style="font-weight:700;">3 Months</span>
-                </div>
+        <div id="output">
+            <div id="statementContent"></div>
+            <div class="btn-group">
+                <button class="btn-primary" onclick="downloadPDF()">📥 Download PDF</button>
+                <button class="btn-secondary" onclick="copyStatement()">📋 Copy</button>
             </div>
         </div>
     </div>
 
-    <button class="gen-btn" onclick="generateStatement()">⚡ Generate Statement</button>
+    <div class="toast" id="toast"></div>
 
-    <div id="output">
-        <div id="statementContent"></div>
-        <div class="btn-group">
-            <button class="btn-primary" onclick="downloadPDF()">📥 Download PDF</button>
-            <button class="btn-secondary" onclick="copyStatement()">📋 Copy</button>
-        </div>
-    </div>
-</div>
-
-<div class="toast" id="toast"></div>
-
-<script>
-    // ─── BANK DATA ───
-    const banks = {
-        sbi: { name: 'State Bank of India', short: 'SBI', color: '#2e6b3e', cls: 'sbi' },
-        hdfc: { name: 'HDFC Bank', short: 'HDFC', color: '#004d8c', cls: 'hdfc' },
-        icici: { name: 'ICICI Bank', short: 'ICICI', color: '#ed1c24', cls: 'icici' },
-        axis: { name: 'Axis Bank', short: 'Axis', color: '#a2001a', cls: 'axis' },
-        kotak: { name: 'Kotak Mahindra Bank', short: 'Kotak', color: '#1a2b5c', cls: 'kotak' },
-        bob: { name: 'Bank of Baroda', short: 'BOB', color: '#1f3a7a', cls: 'bob' },
-        pnb: { name: 'Punjab National Bank', short: 'PNB', color: '#b8860b', cls: 'pnb' },
-        indusind: { name: 'IndusInd Bank', short: 'IndusInd', color: '#0066b3', cls: 'indusind' },
-        canara: { name: 'Canara Bank', short: 'Canara', color: '#003366', cls: 'canara' },
-        union: { name: 'Union Bank of India', short: 'Union', color: '#1a3c6e', cls: 'union' }
-    };
-
-    // ─── BANK SELECTION ───
-    document.querySelectorAll('.bank-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            document.querySelectorAll('.bank-btn').forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            updateBankPreview();
-            updatePreview();
+    <script>
+        // ─── PILLS ───
+        document.querySelectorAll('.pill-group').forEach(group => {
+            group.querySelectorAll('.pill').forEach(pill => {
+                pill.addEventListener('click', function() {
+                    group.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
         });
-    });
 
-    function updateBankPreview() {
-        const key = document.querySelector('.bank-btn.active')?.dataset.bank || 'sbi';
-        const bank = banks[key];
-        if (bank) {
-            document.getElementById('logoBox').textContent = bank.short;
-            document.getElementById('logoBox').style.background = bank.color;
-            document.getElementById('bankNameDisplay').textContent = bank.name;
+        function addExpense() {
+            const list = document.getElementById('expenseList');
+            const div = document.createElement('div');
+            div.className = 'expense-item';
+            div.innerHTML = `
+                <input type="text" placeholder="Name" />
+                <input type="number" placeholder="Amount" />
+                <select>
+                    <option value="5">Day 5</option>
+                    <option value="10">Day 10</option>
+                    <option value="15">Day 15</option>
+                    <option value="20">Day 20</option>
+                </select>
+                <button class="remove-btn" onclick="this.parentElement.remove()">✕</button>
+            `;
+            list.appendChild(div);
         }
-    }
-    updateBankPreview();
 
-    // ─── PILLS ───
-    document.querySelectorAll('.pill-group').forEach(group => {
-        group.querySelectorAll('.pill').forEach(pill => {
-            pill.addEventListener('click', function() {
-                group.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
-                this.classList.add('active');
-                updatePreview();
-            });
-        });
-    });
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            clearTimeout(t._timeout);
+            t._timeout = setTimeout(() => t.classList.remove('show'), 3000);
+        }
 
-    document.querySelectorAll('input, select').forEach(el => {
-        el.addEventListener('input', updatePreview);
-        el.addEventListener('change', updatePreview);
-    });
+        // ─── GENERATE SBI STATEMENT ───
+        function generateStatement() {
+            const name = document.getElementById('accName').value || 'Customer';
+            const email = document.getElementById('email').value || '—';
+            const address = document.getElementById('address').value || '—';
+            const accNum = document.getElementById('accNum').value || '00000000000';
+            const ifsc = document.getElementById('ifsc').value || 'SBIN0000000';
+            const branch = document.getElementById('branch').value || 'MAIN BRANCH';
+            const branchCode = document.getElementById('branchCode').value || '00000';
+            const cif = document.getElementById('cif').value || '00000000000';
+            const micr = document.getElementById('micr').value || '000000000';
+            const ckycr = document.getElementById('ckycr').value || '00000000000000';
+            const branchPhone = document.getElementById('branchPhone').value || '—';
+            const intRate = document.getElementById('intRate').value || '2.50';
 
-    function updatePreview() {
-        const key = document.querySelector('.bank-btn.active')?.dataset.bank || 'sbi';
-        const bank = banks[key];
-        const name = document.getElementById('accName').value || '—';
-        const income = document.getElementById('monthlyIncome').value || '0';
-        const period = document.querySelector('#periodGroup .active')?.dataset.value || '3';
+            const monthlyIncome = Number(document.getElementById('monthlyIncome').value) || 0;
+            const employer = document.getElementById('employer').value || '—';
+            const salaryDay = Number(document.getElementById('salaryDay').value) || 1;
+            let openingBal = Number(document.getElementById('openingBalance').value);
+            if (!openingBal || openingBal < 0) openingBal = Math.floor(Math.random() * 50000) + 25000;
 
-        document.getElementById('prevBank').textContent = bank ? bank.short : 'SBI';
-        document.getElementById('prevName').textContent = name;
-        document.getElementById('prevIncome').textContent = '₹' + Number(income).toLocaleString();
-        document.getElementById('prevPeriod').textContent = period + ' Months';
-    }
-    updatePreview();
+            const period = Number(document.querySelector('#periodGroup .active')?.dataset.value) || 3;
+            const profile = document.querySelector('#profileGroup .active')?.dataset.value || 'moderate';
+            const pdfVariant = document.querySelector('#pdfVariant .active')?.dataset.value || 'light';
+            const pdfPassword = document.getElementById('pdfPassword').value || '';
 
-    function addExpense() {
-        const list = document.getElementById('expenseList');
-        const div = document.createElement('div');
-        div.className = 'expense-item';
-        div.innerHTML = `
-            <input type="text" placeholder="Name" />
-            <input type="number" placeholder="Amount" />
-            <select>
-                <option value="5">Day 5</option>
-                <option value="10">Day 10</option>
-                <option value="15">Day 15</option>
-                <option value="20">Day 20</option>
-            </select>
-            <button class="remove-btn" onclick="this.parentElement.remove()">✕</button>
-        `;
-        list.appendChild(div);
-    }
-
-    function showToast(msg) {
-        const t = document.getElementById('toast');
-        t.textContent = msg;
-        t.classList.add('show');
-        clearTimeout(t._timeout);
-        t._timeout = setTimeout(() => t.classList.remove('show'), 3000);
-    }
-
-    // ─── GENERATE STATEMENT ───
-    function generateStatement() {
-        const bankKey = document.querySelector('.bank-btn.active')?.dataset.bank || 'sbi';
-        const bank = banks[bankKey];
-
-        const name = document.getElementById('accName').value || 'Customer';
-        const accNum = document.getElementById('accNum').value || '00000000000000000';
-        const ifsc = document.getElementById('ifsc').value || 'SBIN0000000';
-        const branch = document.getElementById('branch').value || 'MAIN BRANCH';
-        const address = document.getElementById('address').value || '—';
-        const micr = document.getElementById('micr').value || '000000000';
-        const cif = document.getElementById('cif').value || '00000000000';
-        const ckycr = document.getElementById('ckycr').value || 'XXXXXXXXXX0000';
-        const intRate = document.getElementById('intRate').value || '2.5';
-
-        const monthlyIncome = Number(document.getElementById('monthlyIncome').value) || 0;
-        const employer = document.getElementById('employer').value || '—';
-        const salaryDay = Number(document.getElementById('salaryDay').value) || 1;
-        let openingBal = Number(document.getElementById('openingBalance').value);
-        if (!openingBal || openingBal < 0) openingBal = Math.floor(Math.random() * 50000) + 25000;
-
-        const period = Number(document.querySelector('#periodGroup .active')?.dataset.value) || 3;
-        const profile = document.querySelector('#profileGroup .active')?.dataset.value || 'moderate';
-        const pdfVariant = document.querySelector('#pdfVariant .active')?.dataset.value || 'light';
-        const pdfPassword = document.getElementById('pdfPassword').value || '';
-
-        // Recurring expenses
-        const expenseItems = document.querySelectorAll('#expenseList .expense-item');
-        const recurring = [];
-        expenseItems.forEach(item => {
-            const inputs = item.querySelectorAll('input');
-            const sel = item.querySelector('select');
-            if (inputs[0] && inputs[1] && sel) {
-                const nameVal = inputs[0].value.trim() || 'Expense';
-                const amt = Number(inputs[1].value) || 0;
-                const day = Number(sel.value) || 5;
-                if (amt > 0) recurring.push({ name: nameVal, amount: amt, day });
-            }
-        });
-
-        // ─── Build transactions ───
-        const startDate = new Date();
-        startDate.setMonth(startDate.getMonth() - period);
-        startDate.setDate(1);
-
-        let balance = openingBal;
-        const transactions = [];
-        const today = new Date();
-
-        const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
-        let spendMult = 1;
-        if (profile === 'conservative') spendMult = 0.55;
-        else if (profile === 'lavish') spendMult = 1.9;
-
-        const upiNames = ['HARISH','KIRANS','KOMALR','GAURAV','POOJAM','SUMITS','DIVYAR','ANILR','LATAC','SHAHID','SOHAIL','AJAYG','KIRANT','DEEPAK','DIVYAB','RAHULS','SHOEHA','FAHEEM','SWATIT','ROHITD','SANTOS','ASHISH','PRAVEE','AMITS','NITINP','ARIFM','KANCHA','GEETAS','SURESH','IRFANM','MADHUR','MAHESH','PRIYAS','PANKAJ','POONAM','SAVITA','VINODS','BHAVNA','USHAK'];
-        const bankCodes = ['UBIN','PUNB','UTIB','KKBK','INDB','CBIN','IDIB','HDFC','CNRB','BARB','SBIN','ICIC','YESB','IDFB','BKID','AIRP'];
-
-        for (let m = 0; m < period; m++) {
-            const date = new Date(startDate);
-            date.setMonth(date.getMonth() + m);
-            const month = date.getMonth();
-            const year = date.getFullYear();
-
-            // Salary
-            if (monthlyIncome > 0) {
-                const salDate = new Date(year, month, salaryDay);
-                if (salDate <= today) {
-                    balance += monthlyIncome;
-                    transactions.push({
-                        date: salDate,
-                        desc: `BY TRANSFER-SALARY/${employer}`,
-                        credit: monthlyIncome,
-                        debit: 0,
-                        balance: balance,
-                        ref: `SAL/${String(rand(1000, 9999))}`
-                    });
-                }
-            }
-
-            // Recurring
-            recurring.forEach(exp => {
-                const expDate = new Date(year, month, exp.day);
-                if (expDate <= today) {
-                    balance -= exp.amount;
-                    transactions.push({
-                        date: expDate,
-                        desc: `TO TRANSFER-AUTO/${exp.name}`,
-                        credit: 0,
-                        debit: exp.amount,
-                        balance: balance,
-                        ref: `AUTO/${String(rand(1000, 9999))}`
-                    });
+            // Recurring expenses
+            const expenseItems = document.querySelectorAll('#expenseList .expense-item');
+            const recurring = [];
+            expenseItems.forEach(item => {
+                const inputs = item.querySelectorAll('input');
+                const sel = item.querySelector('select');
+                if (inputs[0] && inputs[1] && sel) {
+                    const nameVal = inputs[0].value.trim() || 'Expense';
+                    const amt = Number(inputs[1].value) || 0;
+                    const day = Number(sel.value) || 5;
+                    if (amt > 0) recurring.push({ name: nameVal, amount: amt, day });
                 }
             });
 
-            // Random daily transactions
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
-            for (let d = 1; d <= daysInMonth; d++) {
-                const curDate = new Date(year, month, d);
-                if (curDate > today) continue;
+            // ─── Build transactions ───
+            const startDate = new Date();
+            startDate.setMonth(startDate.getMonth() - period);
+            startDate.setDate(1);
 
-                const isWeekend = (curDate.getDay() === 0 || curDate.getDay() === 6);
-                let prob = isWeekend ? 0.50 * spendMult : 0.28 * spendMult;
-                const isFestival = (d >= 10 && d <= 15) || (d >= 22 && d <= 28);
-                if (isFestival) prob *= 1.3;
+            let balance = openingBal;
+            const transactions = [];
+            const today = new Date();
 
-                if (Math.random() < prob) {
-                    const amt = Math.round((rand(200, 5000) * spendMult) / 100) * 100;
-                    const name1 = upiNames[rand(0, upiNames.length - 1)];
-                    const bank1 = bankCodes[rand(0, bankCodes.length - 1)];
-                    const refNum = String(rand(100000000000, 999999999999));
-                    const isDebit = Math.random() < 0.6;
+            const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+            let spendMult = 1;
+            if (profile === 'conservative') spendMult = 0.55;
+            else if (profile === 'lavish') spendMult = 1.9;
 
-                    if (isDebit) {
-                        balance -= amt;
+            const upiNames = ['HARISH', 'KIRANS', 'KOMALR', 'GAURAV', 'POOJAM', 'SUMITS', 'DIVYAR', 'ANILR', 'LATAC',
+                'SHAHID', 'SOHAIL', 'AJAYG', 'KIRANT', 'DEEPAK', 'DIVYAB', 'RAHULS', 'SHOEHA', 'FAHEEM', 'SWATIT',
+                'ROHITD', 'SANTOS', 'ASHISH', 'PRAVEE', 'AMITS', 'NITINP', 'ARIFM', 'KANCHA', 'GEETAS', 'SURESH',
+                'IRFANM', 'MADHUR', 'MAHESH', 'PRIYAS', 'PANKAJ', 'POONAM', 'SAVITA', 'VINODS', 'BHAVNA', 'USHAK'
+            ];
+            const bankCodes = ['UBIN', 'PUNB', 'UTIB', 'KKBK', 'INDB', 'CBIN', 'IDIB', 'HDFC', 'CNRB', 'BARB', 'SBIN',
+                'ICIC', 'YESB', 'IDFB', 'BKID', 'AIRP'
+            ];
+
+            // Add opening balance as first transaction
+            transactions.push({
+                date: new Date(startDate),
+                desc: 'Opening Balance',
+                credit: openingBal,
+                debit: 0,
+                balance: openingBal,
+                ref: '—',
+                isOpening: true
+            });
+
+            for (let m = 0; m < period; m++) {
+                const date = new Date(startDate);
+                date.setMonth(date.getMonth() + m);
+                const month = date.getMonth();
+                const year = date.getFullYear();
+
+                // Salary
+                if (monthlyIncome > 0) {
+                    const salDate = new Date(year, month, salaryDay);
+                    if (salDate <= today) {
+                        balance += monthlyIncome;
                         transactions.push({
-                            date: curDate,
-                            desc: `TO TRANSFER-UPI/DR/${refNum}/${name1}/${bank1}/${String(rand(1000000000, 9999999999))}/Payme`,
-                            credit: 0,
-                            debit: amt,
-                            balance: balance,
-                            ref: refNum
-                        });
-                    } else {
-                        balance += amt;
-                        transactions.push({
-                            date: curDate,
-                            desc: `BY TRANSFER-UPI/CR/${refNum}/${name1}/${bank1}/${String(rand(1000000000, 9999999999))}/Payme`,
-                            credit: amt,
+                            date: salDate,
+                            desc: `BY TRANSFER-SALARY/${employer}`,
+                            credit: monthlyIncome,
                             debit: 0,
                             balance: balance,
-                            ref: refNum
+                            ref: `SAL/${String(rand(1000, 9999))}`,
+                            isOpening: false
                         });
                     }
                 }
+
+                // Recurring
+                recurring.forEach(exp => {
+                    const expDate = new Date(year, month, exp.day);
+                    if (expDate <= today) {
+                        balance -= exp.amount;
+                        transactions.push({
+                            date: expDate,
+                            desc: `TO TRANSFER-AUTO/${exp.name}`,
+                            credit: 0,
+                            debit: exp.amount,
+                            balance: balance,
+                            ref: `AUTO/${String(rand(1000, 9999))}`,
+                            isOpening: false
+                        });
+                    }
+                });
+
+                // Random daily transactions
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+                for (let d = 1; d <= daysInMonth; d++) {
+                    const curDate = new Date(year, month, d);
+                    if (curDate <= new Date(startDate)) continue;
+                    if (curDate > today) continue;
+
+                    const isWeekend = (curDate.getDay() === 0 || curDate.getDay() === 6);
+                    let prob = isWeekend ? 0.50 * spendMult : 0.28 * spendMult;
+                    const isFestival = (d >= 10 && d <= 15) || (d >= 22 && d <= 28);
+                    if (isFestival) prob *= 1.3;
+
+                    if (Math.random() < prob) {
+                        const amt = Math.round((rand(200, 5000) * spendMult) / 100) * 100;
+                        const name1 = upiNames[rand(0, upiNames.length - 1)];
+                        const bank1 = bankCodes[rand(0, bankCodes.length - 1)];
+                        const refNum = String(rand(100000000000, 999999999999));
+                        const isDebit = Math.random() < 0.6;
+
+                        if (isDebit) {
+                            balance -= amt;
+                            transactions.push({
+                                date: curDate,
+                                desc: `TO TRANSFER-UPI/DR/${refNum}/${name1}/${bank1}/${String(rand(1000000000, 9999999999))}/Payme`,
+                                credit: 0,
+                                debit: amt,
+                                balance: balance,
+                                ref: refNum,
+                                isOpening: false
+                            });
+                        } else {
+                            balance += amt;
+                            transactions.push({
+                                date: curDate,
+                                desc: `BY TRANSFER-UPI/CR/${refNum}/${name1}/${bank1}/${String(rand(1000000000, 9999999999))}/Payme`,
+                                credit: amt,
+                                debit: 0,
+                                balance: balance,
+                                ref: refNum,
+                                isOpening: false
+                            });
+                        }
+                    }
+                }
             }
+
+            // Sort by date
+            transactions.sort((a, b) => a.date - b.date);
+
+            // ─── Build HTML ───
+            const variantClass = pdfVariant === 'dark' ? 'dark' : '';
+
+            let rows = '';
+            let totalDebits = 0,
+                totalCredits = 0;
+
+            transactions.forEach((t, index) => {
+                const dateStr = t.date.toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit',
+                    year: 'numeric' });
+                const debitStr = t.debit > 0 ? t.debit.toLocaleString() : '—';
+                const creditStr = t.credit > 0 ? t.credit.toLocaleString() : '—';
+                const balStr = Math.round(t.balance).toLocaleString();
+
+                // Check if balance is CR or DR
+                const isCredit = t.balance >= 0;
+                const balDisplay = isCredit ? balStr : balStr;
+                const balClass = isCredit ? 'balance-cr' : 'balance-dr';
+
+                if (t.debit > 0) totalDebits += t.debit;
+                if (t.credit > 0) totalCredits += t.credit;
+
+                const isOpening = t.isOpening || false;
+                const rowStyle = isOpening ? 'font-weight:700;background:#f8f9fa;' : '';
+
+                rows += `
+                    <tr style="${rowStyle}">
+                        <td>${dateStr}</td>
+                        <td>${dateStr}</td>
+                        <td style="font-size:8px;">${t.desc}</td>
+                        <td style="font-size:8px;">${t.ref || '—'}</td>
+                        <td class="${t.debit > 0 ? 'debit' : ''}">${debitStr}</td>
+                        <td class="${t.credit > 0 ? 'credit' : ''}">${creditStr}</td>
+                        <td class="${balClass}">${balDisplay}</td>
+                    </tr>
+                `;
+            });
+
+            const closingBal = transactions.length > 0 ? Math.round(transactions[transactions.length - 1].balance) :
+            openingBal;
+            const closingDisplay = closingBal.toLocaleString();
+            const closingClass = closingBal >= 0 ? 'balance-cr' : 'balance-dr';
+
+            const periodStart = new Date(startDate);
+            const periodEnd = new Date(today);
+            const periodStr =
+                `${periodStart.toLocaleDateString('en-IN', {day:'2-digit',month:'2-digit',year:'numeric'})} to ${periodEnd.toLocaleDateString('en-IN', {day:'2-digit',month:'2-digit',year:'numeric'})}`;
+            const genDate = today.toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            const accountOpenDate = new Date(startDate);
+            accountOpenDate.setFullYear(accountOpenDate.getFullYear() - 3);
+            const openDateStr = accountOpenDate.toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit',
+                year: 'numeric' });
+
+            const html = `
+                <div class="sbi-statement ${variantClass}" id="statementPrint">
+                    <!-- SBI HEADER -->
+                    <div class="sbi-header">
+                        <div class="sbi-logo-text">
+                            <div class="logo-icon">SBI</div>
+                            <div>
+                                <div class="sbi-logo">STATE BANK OF INDIA<small>Corporate Centre</small></div>
+                            </div>
+                        </div>
+                        <div class="sbi-branch">
+                            <div class="bname">${branch}</div>
+                            <div class="baddr">SATI CAMPUS SAGAR ROAD VIDISHA 464001</div>
+                            <div class="baddr">Branch Code: ${branchCode} | Phone: ${branchPhone}</div>
+                        </div>
+                    </div>
+
+                    <!-- STATEMENT TITLE -->
+                    <div class="stmt-title">STATEMENT OF ACCOUNT</div>
+
+                    <!-- ACCOUNT HOLDER -->
+                    <div class="acc-info">
+                        <div class="name">${name}</div>
+                        <div class="email">${email}</div>
+                        <div class="address">${address}</div>
+                    </div>
+
+                    <!-- DETAILS GRID -->
+                    <div class="details-grid">
+                        <div class="item"><span class="lbl">Date of Statement</span><span class="val">${genDate}</span></div>
+                        <div class="item"><span class="lbl">Clear Balance</span><span class="val">${openingBal.toLocaleString()}CR</span></div>
+                        <div class="item"><span class="lbl">Uncleared Amount</span><span class="val">0.00</span></div>
+                        <div class="item"><span class="lbl">MOD Bal</span><span class="val">0.00</span></div>
+                        <div class="item"><span class="lbl">Lien</span><span class="val">0.0</span></div>
+                        <div class="item"><span class="lbl">Limit</span><span class="val">0.00</span></div>
+                        <div class="item"><span class="lbl">Monthly Avg Balance</span><span class="val">0.00</span></div>
+                        <div class="item"><span class="lbl">Interest Rate</span><span class="val">${intRate} % p.a.</span></div>
+                        <div class="item"><span class="lbl">Drawing Power</span><span class="val">0.00</span></div>
+                    </div>
+
+                    <!-- BALANCE ROW -->
+                    <div class="balance-row">
+                        <div class="item"><span class="lbl">CIF Number</span><span class="val">${cif}</span></div>
+                        <div class="item"><span class="lbl">Account Number</span><span class="val">${accNum}</span></div>
+                        <div class="item"><span class="lbl">Product</span><span class="val">-</span></div>
+                        <div class="item"><span class="lbl">IFSC Code</span><span class="val">${ifsc}</span></div>
+                        <div class="item"><span class="lbl">Currency</span><span class="val">INR</span></div>
+                        <div class="item"><span class="lbl">Account Status</span><span class="val">OPEN</span></div>
+                        <div class="item"><span class="lbl">CKYCR Number</span><span class="val">${ckycr}</span></div>
+                    </div>
+
+                    <!-- ACCOUNT OPEN DATE -->
+                    <div class="period">
+                        Account open Date: ${openDateStr} &nbsp;|&nbsp; Statement From: ${periodStr}
+                    </div>
+
+                    <!-- TRANSACTION TABLE -->
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Value Date</th>
+                                <th>Post Date</th>
+                                <th>Details</th>
+                                <th>Ref No/Cheque No</th>
+                                <th>Debit</th>
+                                <th>Credit</th>
+                                <th>Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${rows}
+                            <tr style="font-weight:700;border-top:2px solid #1a5276;background:#f0f5fa;">
+                                <td colspan="4" style="text-align:right;">TOTAL</td>
+                                <td class="debit">${Math.round(totalDebits).toLocaleString()}</td>
+                                <td class="credit">${Math.round(totalCredits).toLocaleString()}</td>
+                                <td class="${closingClass}">${closingDisplay}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- FOOTER -->
+                    <div class="sbi-footer">
+                        <strong>State Bank of India</strong> · ${branch} · ${ifsc}<br />
+                        Please do not share your ATM, Debit/Credit Card number, PIN (Personal Identification number),
+                        OTP (One-Time Password), Username or Password with anyone via email, SMS, phone call, or any other medium.
+                        Bank never asks for such information. If your account is operated by a Power of Attorney holder,
+                        please review the transactions with extra care. This is a computer generated statement and does not require a signature.
+                        ${pdfPassword ? '🔒 Password Protected' : ''}
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('statementContent').innerHTML = html;
+            document.getElementById('output').classList.add('show');
+            document.getElementById('output').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            showToast('✅ SBI Statement generated successfully!');
         }
 
-        // Sort by date
-        transactions.sort((a, b) => a.date - b.date);
+        // ─── DOWNLOAD PDF ───
+        function downloadPDF() {
+            const element = document.getElementById('statementPrint');
+            if (!element) { showToast('❌ Please generate a statement first'); return; }
 
-        // ─── Build HTML ───
-        const variantClass = pdfVariant === 'dark' ? 'dark' : '';
-        const bankCls = bank ? bank.cls : 'sbi';
-        const bankName = bank ? bank.name : 'Bank';
+            const orientation = document.querySelector('#pdfOrientation .active')?.dataset.value || 'portrait';
+            const fileName =
+                `SBI_Statement_${new Date().toISOString().slice(0,10)}.pdf`;
 
-        let rows = '';
-        let totalDebits = 0, totalCredits = 0;
+            const opt = {
+                margin: [0.4, 0.4, 0.4, 0.4],
+                filename: fileName,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: 'in', format: 'a4', orientation: orientation },
+                pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+            };
 
-        // Opening balance row - like PDF
-        rows += `
-            <tr style="font-weight:700;background:#f8f9fa;">
-                <td colspan="4">Opening Balance</td>
-                <td>—</td>
-                <td>—</td>
-                <td>${openingBal.toLocaleString()}</td>
-            </tr>
-        `;
+            const clone = element.cloneNode(true);
+            clone.style.width = '100%';
+            clone.style.maxWidth = '100%';
+            clone.style.margin = '0 auto';
 
-        transactions.forEach(t => {
-            const dateStr = t.date.toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric' });
-            const debitStr = t.debit > 0 ? t.debit.toLocaleString() : '—';
-            const creditStr = t.credit > 0 ? t.credit.toLocaleString() : '—';
-            const balStr = Math.round(t.balance).toLocaleString();
-            if (t.debit > 0) totalDebits += t.debit;
-            if (t.credit > 0) totalCredits += t.credit;
+            const container = document.createElement('div');
+            container.style.cssText = 'background:#fff;padding:0;max-width:1000px;margin:0 auto;';
+            container.appendChild(clone);
+            document.body.appendChild(container);
 
-            // Balance negative? Add minus sign like PDF
-            const balDisplay = t.balance < 0 ? `-${Math.abs(Math.round(t.balance)).toLocaleString()}` : balStr;
-            const balClass = t.balance < 0 ? 'balance-neg' : '';
+            html2pdf().set(opt).from(container).save().then(() => {
+                document.body.removeChild(container);
+                showToast('📥 PDF downloaded successfully!');
+            }).catch(() => {
+                document.body.removeChild(container);
+                showToast('❌ Error generating PDF');
+            });
+        }
 
-            rows += `
-                <tr>
-                    <td>${dateStr}</td>
-                    <td>${dateStr}</td>
-                    <td style="font-size:8.5px;">${t.desc}</td>
-                    <td style="font-size:8.5px;">${t.ref || '—'}</td>
-                    <td class="${t.debit > 0 ? 'debit' : ''}">${debitStr}</td>
-                    <td class="${t.credit > 0 ? 'credit' : ''}">${creditStr}</td>
-                    <td class="${balClass}">${balDisplay}</td>
-                </tr>
-            `;
-        });
-
-        const closingBal = transactions.length > 0 ? Math.round(transactions[transactions.length - 1].balance) : openingBal;
-        const closingDisplay = closingBal < 0 ? `-${Math.abs(closingBal).toLocaleString()}` : closingBal.toLocaleString();
-
-        const periodStart = new Date(startDate);
-        const periodEnd = new Date(today);
-        const periodStr = `${periodStart.toLocaleDateString('en-IN', {day:'2-digit',month:'2-digit',year:'numeric'})} To ${periodEnd.toLocaleDateString('en-IN', {day:'2-digit',month:'2-digit',year:'numeric'})}`;
-        const genDate = today.toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric' });
-
-        const html = `
-            <div class="pdf-replica ${variantClass}" id="statementPrint">
-                <div class="page-header">
-                    <div class="bank-name">
-                        <span class="clr-${bankCls}">${bankName}</span>
-                    </div>
-                    <div class="sub-text">BANK STATEMENT</div>
-                </div>
-                <div class="acc-details">
-                    <span><span class="lbl">Account Holder:</span> ${name}</span>
-                    <span><span class="lbl">Account No:</span> ${accNum}</span>
-                    <span><span class="lbl">IFSC:</span> ${ifsc}</span>
-                    <span><span class="lbl">Branch:</span> ${branch}</span>
-                    <span><span class="lbl">MICR:</span> ${micr}</span>
-                    <span><span class="lbl">CIF No:</span> ${cif}</span>
-                    <span style="grid-column:1/-1;"><span class="lbl">Address:</span> ${address}</span>
-                </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Value Date</th>
-                            <th>Post Date</th>
-                            <th>Details</th>
-                            <th>Ref No/Cheque No</th>
-                            <th>Debit</th>
-                            <th>Credit</th>
-                            <th>Balance</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${rows}
-                        <tr style="font-weight:700;border-top:2px solid #1c1c1c;background:#f8f9fa;">
-                            <td colspan="4" style="text-align:right;">TOTAL</td>
-                            <td class="debit">${Math.round(totalDebits).toLocaleString()}</td>
-                            <td class="credit">${Math.round(totalCredits).toLocaleString()}</td>
-                            <td>${closingDisplay}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="summary-box">
-                    <span><strong>Opening Balance:</strong> ${openingBal.toLocaleString()}</span>
-                    <span><strong>Total Debits:</strong> ${Math.round(totalDebits).toLocaleString()}</span>
-                    <span><strong>Total Credits:</strong> ${Math.round(totalCredits).toLocaleString()}</span>
-                    <span><strong>Closing Balance:</strong> ${closingDisplay}</span>
-                </div>
-                <div class="footer">
-                    <strong>Statement Period:</strong> ${periodStr} &nbsp;|&nbsp; <strong>Generated on:</strong> ${genDate}
-                    <br />
-                    Please do not share your ATM, Debit/Credit Card number, PIN (Personal Identification number), OTP (One-Time Password), Username or Password with anyone via email, SMS, phone call, or any other medium. Bank never asks for such information. If your account is operated by a Power of Attorney holder, please review the transactions with extra care. This is a computer generated statement and does not require a signature.
-                    ${pdfPassword ? '🔒 Password Protected' : ''}
-                </div>
-            </div>
-        `;
-
-        document.getElementById('statementContent').innerHTML = html;
-        document.getElementById('output').classList.add('show');
-        document.getElementById('output').scrollIntoView({ behavior: 'smooth', block: 'start' });
-        showToast('✅ Statement generated successfully!');
-    }
-
-    // ─── DOWNLOAD PDF ───
-    function downloadPDF() {
-        const element = document.getElementById('statementPrint');
-        if (!element) { showToast('❌ Please generate a statement first'); return; }
-
-        const orientation = document.querySelector('#pdfOrientation .active')?.dataset.value || 'portrait';
-        const bankKey = document.querySelector('.bank-btn.active')?.dataset.bank || 'sbi';
-        const bank = banks[bankKey];
-        const fileName = `Bank_Statement_${bank ? bank.short : 'Bank'}_${new Date().toISOString().slice(0,10)}.pdf`;
-
-        const opt = {
-            margin: [0.4, 0.4, 0.4, 0.4],
-            filename: fileName,
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, useCORS: true },
-            jsPDF: { unit: 'in', format: 'a4', orientation: orientation },
-            pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
-        };
-
-        const clone = element.cloneNode(true);
-        clone.style.width = '100%';
-        clone.style.maxWidth = '100%';
-        clone.style.margin = '0 auto';
-        clone.style.padding = '15px';
-
-        const container = document.createElement('div');
-        container.style.cssText = 'background:#fff;padding:15px;max-width:1000px;margin:0 auto;';
-        container.appendChild(clone);
-        document.body.appendChild(container);
-
-        html2pdf().set(opt).from(container).save().then(() => {
-            document.body.removeChild(container);
-            showToast('📥 PDF downloaded successfully!');
-        }).catch(() => {
-            document.body.removeChild(container);
-            showToast('❌ Error generating PDF');
-        });
-    }
-
-    // ─── COPY ───
-    function copyStatement() {
-        const element = document.getElementById('statementPrint');
-        if (!element) { showToast('❌ Please generate a statement first'); return; }
-        const text = element.textContent;
-        navigator.clipboard.writeText(text).then(() => {
-            showToast('📋 Statement copied!');
-        }).catch(() => {
-            const range = document.createRange();
-            range.selectNode(element);
-            window.getSelection().removeAllRanges();
-            window.getSelection().addRange(range);
-            document.execCommand('copy');
-            window.getSelection().removeAllRanges();
-            showToast('📋 Statement copied!');
-        });
-    }
-</script>
+        // ─── COPY ───
+        function copyStatement() {
+            const element = document.getElementById('statementPrint');
+            if (!element) { showToast('❌ Please generate a statement first'); return; }
+            const text = element.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('📋 Statement copied!');
+            }).catch(() => {
+                const range = document.createRange();
+                range.selectNode(element);
+                window.getSelection().removeAllRanges();
+                window.getSelection().addRange(range);
+                document.execCommand('copy');
+                window.getSelection().removeAllRanges();
+                showToast('📋 Statement copied!');
+            });
+        }
+    </script>
 
 </body>
 </html>

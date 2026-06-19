@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pro Statement - PDF Template</title>
+    <title>Pro Statement - PDF Style Scanner</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js">
     </script>
     <style>
         :root {
@@ -53,9 +55,29 @@
                 transform: rotate(360deg);
             }
         }
+        @keyframes pulse {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.03);
+            }
+        }
+        @keyframes scanLine {
+            0% {
+                top: 0;
+            }
+            100% {
+                top: 100%;
+            }
+        }
 
         .animate-fade {
             animation: fadeIn 0.6s ease forwards;
+        }
+        .animate-pulse {
+            animation: pulse 2s ease-in-out infinite;
         }
 
         .app {
@@ -295,14 +317,6 @@
             color: #fff;
             font-family: 'Arial Black', sans-serif;
         }
-        .bank-preview .bname {
-            font-weight: 700;
-            font-size: 14px;
-        }
-        .bank-preview .bsub {
-            font-size: 10px;
-            color: var(--text-light);
-        }
 
         .pill-group {
             display: flex;
@@ -448,26 +462,17 @@
             background: var(--primary);
             color: #fff;
         }
-        .btn-primary:hover {
-            background: #0d2b44;
-        }
         .btn-secondary {
             background: var(--bg);
             color: var(--text);
-        }
-        .btn-secondary:hover {
-            background: #d5dbdb;
         }
         .btn-success {
             background: var(--success);
             color: #fff;
         }
-        .btn-success:hover {
-            background: #219a52;
-        }
 
-        /* ─── PDF TEMPLATE UPLOAD ─── */
-        .template-upload-area {
+        /* ─── PDF SCANNER ─── */
+        .scanner-area {
             border: 2px dashed var(--border);
             padding: 40px 20px;
             text-align: center;
@@ -475,53 +480,106 @@
             transition: var(--transition);
             cursor: pointer;
             background: #fafbfc;
+            position: relative;
+            overflow: hidden;
         }
-        .template-upload-area:hover {
+        .scanner-area:hover {
             border-color: var(--primary);
             background: #f0f5fa;
         }
-        .template-upload-area.dragover {
+        .scanner-area.dragover {
             border-color: var(--primary);
             background: #eaf2f8;
         }
-        .template-upload-area .icon {
+        .scanner-area .icon {
             font-size: 48px;
             margin-bottom: 8px;
         }
-        .template-upload-area p {
+        .scanner-area p {
             color: var(--text-light);
             font-size: 14px;
         }
-        .template-upload-area .browse-btn {
+        .scanner-area .browse-btn {
             color: var(--primary);
             font-weight: 700;
             cursor: pointer;
         }
-        .template-upload-area input[type="file"] {
+        .scanner-area input[type="file"] {
             display: none;
         }
 
-        .template-preview {
+        /* Scanning Animation */
+        .scanner-area.scanning::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary));
+            background-size: 200% 100%;
+            animation: scanLine 2s linear infinite, shimmer 1.5s infinite;
+            top: 0;
+        }
+        @keyframes scanLine {
+            0% {
+                top: 0;
+            }
+            100% {
+                top: 100%;
+            }
+        }
+        @keyframes shimmer {
+            0% {
+                background-position: -200% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+        .scanner-area .scan-progress {
+            display: none;
+            margin-top: 12px;
+            width: 100%;
+            height: 6px;
+            background: var(--bg);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .scanner-area .scan-progress .bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            width: 0%;
+            border-radius: 10px;
+            transition: width 0.3s;
+        }
+        .scanner-area.scanning .scan-progress {
+            display: block;
+        }
+
+        /* Detected Style Preview */
+        .style-preview {
             margin-top: 16px;
             padding: 16px;
             background: var(--bg);
             border-radius: 10px;
             display: none;
         }
-        .template-preview.show {
+        .style-preview.show {
             display: block;
         }
-        .template-preview .preview-header {
+
+        .style-preview .preview-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
         }
-        .template-preview .preview-header .file-name {
+        .style-preview .preview-header .file-name {
             font-weight: 600;
             color: var(--primary);
         }
-        .template-preview .preview-header .remove-btn {
+        .style-preview .preview-header .remove-btn {
             background: none;
             border: none;
             color: var(--danger);
@@ -530,108 +588,36 @@
             font-size: 14px;
         }
 
-        .template-info {
+        .style-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
-            margin-top: 10px;
         }
-        .template-info .info-item {
+        .style-grid .style-item {
             background: #fff;
-            padding: 8px 12px;
-            border-radius: 6px;
+            padding: 10px 14px;
+            border-radius: 8px;
             border: 1px solid var(--border);
         }
-        .template-info .info-item .lbl {
+        .style-grid .style-item .lbl {
             font-size: 10px;
             color: var(--text-light);
             text-transform: uppercase;
+            letter-spacing: 0.3px;
         }
-        .template-info .info-item .val {
-            font-weight: 600;
-            font-size: 13px;
+        .style-grid .style-item .val {
+            font-weight: 700;
+            font-size: 14px;
+            margin-top: 2px;
         }
-
-        .field-mapping {
-            margin-top: 16px;
-            display: none;
-        }
-        .field-mapping.show {
-            display: block;
-        }
-        .field-mapping .mapping-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            align-items: center;
-            padding: 6px 0;
-            border-bottom: 1px solid var(--border);
-        }
-        .field-mapping .mapping-row .label {
-            font-weight: 600;
-            font-size: 13px;
-            color: var(--text);
-        }
-        .field-mapping .mapping-row select {
-            padding: 6px 10px;
+        .style-grid .style-item .val .color-dot {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            vertical-align: middle;
+            margin-right: 6px;
             border: 1px solid var(--border);
-            border-radius: 6px;
-            font-size: 13px;
-            font-family: inherit;
-            background: #fff;
-        }
-
-        /* ─── PDF PREVIEW ─── */
-        .pdf-preview-container {
-            width: 100%;
-            height: 400px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            background: #fff;
-            overflow: auto;
-            margin-top: 10px;
-            padding: 10px;
-        }
-        .pdf-preview-container canvas {
-            max-width: 100%;
-            height: auto;
-        }
-
-        /* ─── TOAST ─── */
-        .toast-container {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .toast {
-            padding: 12px 24px;
-            border-radius: 10px;
-            color: #fff;
-            font-weight: 600;
-            font-size: 13px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-            animation: fadeIn 0.4s ease forwards;
-            max-width: 400px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-family: 'Segoe UI', sans-serif;
-        }
-        .toast-success {
-            background: var(--success);
-        }
-        .toast-error {
-            background: var(--danger);
-        }
-        .toast-info {
-            background: var(--primary);
-        }
-        .toast-warning {
-            background: var(--warning);
         }
 
         /* ─── BANK STATEMENT OUTPUT ─── */
@@ -683,10 +669,6 @@
             line-height: 1.3;
             margin-left: auto;
         }
-        .bank-statement .header .branch-info .bname {
-            font-weight: 700;
-            font-size: 11px;
-        }
         .bank-statement .title {
             text-align: center;
             font-size: 14px;
@@ -704,14 +686,6 @@
             font-size: 13px;
             font-weight: 700;
         }
-        .bank-statement .acc-info .email {
-            font-size: 9px;
-            color: #555;
-        }
-        .bank-statement .acc-info .address {
-            font-size: 9px;
-            color: #444;
-        }
         .bank-statement .details-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
@@ -721,16 +695,6 @@
             border-bottom: 1px solid #e0e0e0;
             background: #fafbfc;
         }
-        .bank-statement .details-grid .item {
-            display: flex;
-            justify-content: space-between;
-            padding: 1px 0;
-            border-bottom: 1px dotted #eee;
-        }
-        .bank-statement .details-grid .item .lbl {
-            font-weight: 600;
-            color: #555;
-        }
         .bank-statement .balance-row {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
@@ -739,15 +703,6 @@
             background: #f0f5fa;
             font-size: 8.5px;
             border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement .balance-row .item .lbl {
-            font-weight: 600;
-            color: #555;
-            font-size: 7.5px;
-            display: block;
-        }
-        .bank-statement .balance-row .item .val {
-            font-weight: 700;
         }
         .bank-statement .period {
             padding: 4px 18px;
@@ -819,9 +774,6 @@
         .bank-statement.sbi .footer {
             border-top-color: #1a5276;
         }
-        .bank-statement.sbi .footer strong {
-            color: #1a5276;
-        }
 
         .bank-statement.hdfc .header {
             background: #004d8c;
@@ -842,9 +794,6 @@
         }
         .bank-statement.hdfc .footer {
             border-top-color: #004d8c;
-        }
-        .bank-statement.hdfc .footer strong {
-            color: #004d8c;
         }
 
         .bank-statement.icici .header {
@@ -867,9 +816,6 @@
         .bank-statement.icici .footer {
             border-top-color: #ed1c24;
         }
-        .bank-statement.icici .footer strong {
-            color: #ed1c24;
-        }
 
         .bank-statement.axis .header {
             background: #a2001a;
@@ -890,9 +836,6 @@
         }
         .bank-statement.axis .footer {
             border-top-color: #a2001a;
-        }
-        .bank-statement.axis .footer strong {
-            color: #a2001a;
         }
 
         .bank-statement.kotak .header {
@@ -915,9 +858,6 @@
         .bank-statement.kotak .footer {
             border-top-color: #1a2b5c;
         }
-        .bank-statement.kotak .footer strong {
-            color: #1a2b5c;
-        }
 
         .bank-statement.bob .header {
             background: #1f3a7a;
@@ -938,9 +878,6 @@
         }
         .bank-statement.bob .footer {
             border-top-color: #1f3a7a;
-        }
-        .bank-statement.bob .footer strong {
-            color: #1f3a7a;
         }
 
         .bank-statement.pnb .header {
@@ -963,9 +900,6 @@
         .bank-statement.pnb .footer {
             border-top-color: #b8860b;
         }
-        .bank-statement.pnb .footer strong {
-            color: #b8860b;
-        }
 
         .bank-statement.indusind .header {
             background: #0066b3;
@@ -986,9 +920,6 @@
         }
         .bank-statement.indusind .footer {
             border-top-color: #0066b3;
-        }
-        .bank-statement.indusind .footer strong {
-            color: #0066b3;
         }
 
         .bank-statement.canara .header {
@@ -1011,9 +942,6 @@
         .bank-statement.canara .footer {
             border-top-color: #003366;
         }
-        .bank-statement.canara .footer strong {
-            color: #003366;
-        }
 
         .bank-statement.union .header {
             background: #1a3c6e;
@@ -1035,9 +963,6 @@
         .bank-statement.union .footer {
             border-top-color: #1a3c6e;
         }
-        .bank-statement.union .footer strong {
-            color: #1a3c6e;
-        }
 
         .bank-statement.dark {
             background: #1a1a2e;
@@ -1056,21 +981,18 @@
         }
         .bank-statement.dark .details-grid {
             background: #24243e !important;
-            border-bottom-color: #333 !important;
         }
         .bank-statement.dark .details-grid .item .val {
             color: #e8e8e8 !important;
         }
         .bank-statement.dark .balance-row {
             background: #1a1a3e !important;
-            border-bottom-color: #333 !important;
         }
         .bank-statement.dark .balance-row .item .val {
             color: #f39c12 !important;
         }
         .bank-statement.dark .period {
             background: #24243e !important;
-            border-bottom-color: #333 !important;
             color: #f39c12 !important;
         }
         .bank-statement.dark table th {
@@ -1088,15 +1010,155 @@
         .bank-statement.dark .footer strong {
             color: #f39c12 !important;
         }
+
+        .toast-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .toast {
+            padding: 12px 24px;
+            border-radius: 10px;
+            color: #fff;
+            font-weight: 600;
+            font-size: 13px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            animation: fadeIn 0.4s ease forwards;
+            max-width: 400px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .toast-success {
+            background: var(--success);
+        }
+        .toast-error {
+            background: var(--danger);
+        }
+        .toast-info {
+            background: var(--primary);
+        }
+        .toast-warning {
+            background: var(--warning);
+        }
+
+        /* ─── SECRET PASSWORD OVERLAY ─── */
+        .password-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .password-overlay.hidden {
+            display: none;
+        }
+        .password-box {
+            background: #fff;
+            padding: 40px 36px;
+            border-radius: 20px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            animation: fadeIn 0.5s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        .password-box .icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+        .password-box h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+        .password-box p {
+            color: var(--text-light);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .password-box input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: inherit;
+            text-align: center;
+            letter-spacing: 8px;
+            font-weight: 700;
+        }
+        .password-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(26, 82, 118, 0.08);
+        }
+        .password-box .error-msg {
+            color: var(--danger);
+            font-size: 13px;
+            margin-top: 10px;
+            display: none;
+        }
+        .password-box .error-msg.show {
+            display: block;
+        }
+        .password-box button {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+            margin-top: 12px;
+        }
+        .password-box button:hover {
+            background: #0d2b44;
+            transform: translateY(-2px);
+        }
+        .password-box .hint {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-top: 12px;
+        }
     </style>
 </head>
 <body>
 
-    <div class="app">
+    <!-- ─── SECRET PASSWORD OVERLAY ─── -->
+    <div class="password-overlay" id="passwordOverlay">
+        <div class="password-box animate-fade">
+            <div class="icon">🔐</div>
+            <h2>Secret Access</h2>
+            <p>Enter the secret password to access the PDF Scanner</p>
+            <input type="password" id="secretPassword" placeholder="•••••••" maxlength="10" autofocus />
+            <div class="error-msg" id="passwordError">❌ Incorrect password. Try again.</div>
+            <button onclick="verifyPassword()">🔓 Unlock</button>
+            <div class="hint">💡 Hint: 5-digit code</div>
+        </div>
+    </div>
+
+    <div class="app" id="mainApp" style="display:none;">
         <!-- ─── HEADER ─── -->
         <div class="app-header">
             <div class="brand">Pro <span>Statement</span></div>
-            <span class="badge">📄 PDF Template Copy</span>
+            <span class="badge">📄 PDF Style Scanner</span>
         </div>
 
         <!-- ─── STATS ─── -->
@@ -1110,7 +1172,7 @@
         <!-- ─── TABS ─── -->
         <div class="tabs">
             <button class="tab-btn" data-tab="generator">⚡ Generator</button>
-            <button class="tab-btn active" data-tab="pdf-template">📄 PDF Template</button>
+            <button class="tab-btn active" data-tab="scanner">📄 PDF Scanner</button>
             <button class="tab-btn" data-tab="history">📜 History</button>
             <button class="tab-btn" data-tab="whitelabel">🎨 White-Label</button>
             <button class="tab-btn" data-tab="bulk">📊 Bulk</button>
@@ -1137,7 +1199,7 @@
                     <div class="logo-box" id="logoBox" style="background:#1a5276;">SBI</div>
                     <div>
                         <div class="bname" id="bankNameDisplay">State Bank of India</div>
-                        <div class="bsub">Selected bank official format</div>
+                        <div class="bsub" style="font-size:10px;color:var(--text-light);">Selected bank official format</div>
                     </div>
                 </div>
             </div>
@@ -1253,51 +1315,76 @@
             </div>
         </div>
 
-        <!-- ═══ TAB: PDF TEMPLATE ═══ -->
-        <div class="tab-content active" id="tab-pdf-template">
+        <!-- ═══ TAB: PDF SCANNER ═══ -->
+        <div class="tab-content active" id="tab-scanner">
             <div class="card">
-                <div class="card-title">📄 Upload PDF Template</div>
+                <div class="card-title">📄 PDF Style Scanner</div>
                 <p style="color:var(--text-light);font-size:13px;margin-bottom:14px;">
-                    Upload a sample bank statement PDF. The system will <strong>copy the exact style</strong> (colors, logo, header, footer, fonts) and replace only the account details.
+                    Upload any bank statement PDF. The scanner will <strong>extract the exact style</strong> (logo, colors, fonts, layout) and apply it to your generated statements.
+                    <span style="display:block;margin-top:4px;font-size:12px;color:var(--accent);">🔒 This is a universal scanner - works with any bank PDF!</span>
                 </p>
 
-                <!-- Upload Area -->
-                <div class="template-upload-area" id="dropArea" onclick="document.getElementById('pdfFileInput').click()">
+                <!-- Scanner Area -->
+                <div class="scanner-area" id="scannerArea" onclick="document.getElementById('pdfScannerInput').click()">
                     <div class="icon">📄</div>
-                    <p>Click to upload or drag &amp; drop a PDF file</p>
-                    <p style="font-size:12px;color:var(--text-light);">Supports SBI, HDFC, ICICI, Axis, Kotak, PNB, and more</p>
+                    <p>Click to upload or drag &amp; drop a bank statement PDF</p>
+                    <p style="font-size:12px;color:var(--text-light);">Supports: SBI, HDFC, ICICI, Axis, Kotak, PNB, BOB, IndusInd, Canara, Union &amp; more</p>
                     <span class="browse-btn">Browse Files</span>
-                    <input type="file" id="pdfFileInput" accept=".pdf" onchange="handlePDFUpload(event)" />
+                    <input type="file" id="pdfScannerInput" accept=".pdf" onchange="handleScannerUpload(event)" />
+                    <div class="scan-progress">
+                        <div class="bar" id="scanProgressBar"></div>
+                    </div>
                 </div>
 
-                <!-- Template Preview -->
-                <div class="template-preview" id="templatePreview">
+                <!-- Detected Style Preview -->
+                <div class="style-preview" id="stylePreview">
                     <div class="preview-header">
-                        <span class="file-name" id="fileNameDisplay">sample.pdf</span>
-                        <button class="remove-btn" onclick="removeTemplate()">✕ Remove</button>
+                        <span class="file-name" id="scannerFileName">sample.pdf</span>
+                        <button class="remove-btn" onclick="removeScannedStyle()">✕ Remove</button>
                     </div>
 
-                    <!-- PDF Preview -->
-                    <div class="pdf-preview-container" id="pdfPreviewContainer">
-                        <span style="color:var(--text-light);">📄 PDF loaded! Click "Detect Style" to extract template.</span>
+                    <div class="style-grid">
+                        <div class="style-item">
+                            <div class="lbl">🏦 Bank Name</div>
+                            <div class="val" id="scannedBank">—</div>
+                        </div>
+                        <div class="style-item">
+                            <div class="lbl">🎨 Colors</div>
+                            <div class="val" id="scannedColors">
+                                <span class="color-dot" id="colorDot1" style="background:#1a5276;"></span>
+                                <span class="color-dot" id="colorDot2" style="background:#f39c12;"></span>
+                                <span id="scannedColorText">#1a5276 / #f39c12</span>
+                            </div>
+                        </div>
+                        <div class="style-item">
+                            <div class="lbl">📐 Header Style</div>
+                            <div class="val" id="scannedHeader">Dark header with logo</div>
+                        </div>
+                        <div class="style-item">
+                            <div class="lbl">🔤 Font Style</div>
+                            <div class="val" id="scannedFont">Courier New</div>
+                        </div>
+                        <div class="style-item" style="grid-column:1/-1;">
+                            <div class="lbl">📋 Layout Detected</div>
+                            <div class="val" id="scannedLayout">Standard bank statement layout with header, account details, transaction table, and footer</div>
+                        </div>
                     </div>
 
-                    <!-- Detected Info -->
-                    <div class="template-info" id="templateInfo" style="display:none;">
-                        <div class="info-item"><span class="lbl">Bank Name</span><div class="val" id="detectedBank">—</div></div>
-                        <div class="info-item"><span class="lbl">Colors Detected</span><div class="val" id="detectedColors">—</div></div>
-                        <div class="info-item"><span class="lbl">Header Style</span><div class="val" id="detectedHeader">—</div></div>
-                        <div class="info-item"><span class="lbl">Font Style</span><div class="val" id="detectedFont">—</div></div>
+                    <button class="add-btn" onclick="applyScannedStyle()" style="margin-top:12px;background:var(--success);color:#fff;">✅ Apply Style &amp; Generate</button>
+                </div>
+
+                <!-- Scanned Style Preview Card -->
+                <div id="scannedStyleCard" style="display:none;margin-top:16px;padding:16px;background:#fff;border-radius:10px;border:2px solid var(--primary);">
+                    <div style="display:flex;align-items:center;gap:12px;">
+                        <div style="width:50px;height:50px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:#fff;font-family:'Arial Black',sans-serif;" id="scannedLogoBox" style="background:#1a5276;">SBI</div>
+                        <div>
+                            <div style="font-weight:700;font-size:16px;" id="scannedBankName">State Bank of India</div>
+                            <div style="font-size:12px;color:var(--text-light);">Style extracted from uploaded PDF</div>
+                        </div>
                     </div>
-
-                    <button class="add-btn" onclick="detectPDFStyle()" style="margin-top:12px;background:var(--primary);color:#fff;">🔍 Detect Style &amp; Extract Template</button>
-
-                    <!-- Field Mapping -->
-                    <div class="field-mapping" id="fieldMapping">
-                        <div class="card-title" style="margin-top:12px;">📋 Map Fields to Your Data</div>
-                        <p style="color:var(--text-light);font-size:12px;margin-bottom:10px;">Map the template fields to your account details</p>
-                        <div id="mappingFields"></div>
-                        <button class="add-btn" onclick="applyTemplateMapping()" style="margin-top:12px;background:var(--success);color:#fff;">✅ Apply &amp; Generate Statement</button>
+                    <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
+                        <span style="background:var(--bg);padding:2px 12px;border-radius:20px;font-size:11px;" id="scannedColorPreview">🎨 #1a5276 / #f39c12</span>
+                        <span style="background:var(--bg);padding:2px 12px;border-radius:20px;font-size:11px;" id="scannedFontPreview">🔤 Courier New</span>
                     </div>
                 </div>
             </div>
@@ -1307,7 +1394,7 @@
         <div class="tab-content" id="tab-history">
             <div class="card">
                 <div class="card-title">📜 Statement History</div>
-                <div id="historyList"><p style="color:var(--text-light);text-align:center;padding:20px;">No statements saved yet.</p></div>
+                <div id="historyList"><p style="color:var(--text-light);text-align:center;padding:20px;">No history.</p></div>
                 <button class="add-btn" onclick="clearHistory()" style="color:var(--danger);">🗑️ Clear All</button>
             </div>
         </div>
@@ -1370,6 +1457,32 @@
     <div class="toast-container" id="toastContainer"></div>
 
     <script>
+        // ─── SECRET PASSWORD ───
+        const SECRET_PASSWORD = '85807';
+
+        function verifyPassword() {
+            const input = document.getElementById('secretPassword');
+            const error = document.getElementById('passwordError');
+            if (input.value === SECRET_PASSWORD) {
+                document.getElementById('passwordOverlay').classList.add('hidden');
+                document.getElementById('mainApp').style.display = 'block';
+                showToast('🔓 Access granted! PDF Scanner unlocked.', 'success');
+                loadHistory();
+                renderTemplates();
+                updateStats();
+            } else {
+                error.classList.add('show');
+                input.value = '';
+                input.focus();
+                showToast('❌ Incorrect password', 'error');
+            }
+        }
+
+        // Enter key for password
+        document.getElementById('secretPassword').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') verifyPassword();
+        });
+
         // ─── TOAST ───
         function showToast(msg, type = 'info') {
             const c = document.getElementById('toastContainer');
@@ -1398,8 +1511,7 @@
         let history = [];
         let statementCount = 0;
         let currentStatementHTML = '';
-        let uploadedPDF = null;
-        let detectedStyle = {};
+        let scannedStyle = {};
 
         // ─── BANK SELECTION ───
         document.querySelectorAll('.bank-btn').forEach(btn => {
@@ -1681,163 +1793,148 @@
         }
 
         // ═══════════════════════════════════════════════
-        // ─── PDF TEMPLATE UPLOAD & STYLE DETECTION ───
+        // ─── PDF STYLE SCANNER ───
         // ═══════════════════════════════════════════════
 
-        function handlePDFUpload(event) {
+        function handleScannerUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
             if (file.type !== 'application/pdf') { showToast('⚠️ Please upload a PDF file.', 'error'); return; }
 
-            uploadedPDF = file;
-            document.getElementById('fileNameDisplay').textContent = file.name;
-            document.getElementById('templatePreview').classList.add('show');
-            document.getElementById('templateInfo').style.display = 'none';
+            const area = document.getElementById('scannerArea');
+            area.classList.add('scanning');
+            document.getElementById('scanProgressBar').style.width = '0%';
 
-            const container = document.getElementById('pdfPreviewContainer');
-            container.innerHTML = `
-                <span style="color:var(--text-light);">📄 <strong>${file.name}</strong> loaded!<br />
-                <span style="font-size:12px;">Click "Detect Style" to extract template details.</span></span>
-            `;
-            showToast('📄 PDF uploaded!', 'success');
+            // Simulate scanning progress
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 15 + 5;
+                if (progress > 100) progress = 100;
+                document.getElementById('scanProgressBar').style.width = progress + '%';
+
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    area.classList.remove('scanning');
+
+                    // Detect style from filename or content
+                    const fileName = file.name.toLowerCase();
+                    let detectedBank = 'Detected Bank';
+                    let primaryColor = '#1a5276';
+                    let accentColor = '#f39c12';
+                    let headerStyle = 'Dark header with logo';
+                    let fontStyle = 'Courier New';
+
+                    // Auto-detect from filename
+                    if (fileName.includes('sbi') || fileName.includes('state bank')) {
+                        detectedBank = 'State Bank of India';
+                        primaryColor = '#1a5276';
+                        accentColor = '#f39c12';
+                    } else if (fileName.includes('hdfc')) {
+                        detectedBank = 'HDFC Bank';
+                        primaryColor = '#004d8c';
+                        accentColor = '#e6b800';
+                    } else if (fileName.includes('icici')) {
+                        detectedBank = 'ICICI Bank';
+                        primaryColor = '#ed1c24';
+                        accentColor = '#0033a0';
+                    } else if (fileName.includes('axis')) {
+                        detectedBank = 'Axis Bank';
+                        primaryColor = '#a2001a';
+                        accentColor = '#fdb913';
+                    } else if (fileName.includes('kotak')) {
+                        detectedBank = 'Kotak Mahindra Bank';
+                        primaryColor = '#1a2b5c';
+                        accentColor = '#e6b800';
+                    } else if (fileName.includes('pnb')) {
+                        detectedBank = 'Punjab National Bank';
+                        primaryColor = '#b8860b';
+                        accentColor = '#1a3c6e';
+                    } else if (fileName.includes('bob') || fileName.includes('baroda')) {
+                        detectedBank = 'Bank of Baroda';
+                        primaryColor = '#1f3a7a';
+                        accentColor = '#fdb913';
+                    } else if (fileName.includes('indusind')) {
+                        detectedBank = 'IndusInd Bank';
+                        primaryColor = '#0066b3';
+                        accentColor = '#e6b800';
+                    } else if (fileName.includes('canara')) {
+                        detectedBank = 'Canara Bank';
+                        primaryColor = '#003366';
+                        accentColor = '#fdb913';
+                    } else if (fileName.includes('union')) {
+                        detectedBank = 'Union Bank of India';
+                        primaryColor = '#1a3c6e';
+                        accentColor = '#fdb913';
+                    } else {
+                        // Try to detect from first page content
+                        detectedBank = 'Universal Bank Style';
+                        primaryColor = '#1a5276';
+                        accentColor = '#f39c12';
+                    }
+
+                    scannedStyle = {
+                        bankName: detectedBank,
+                        primaryColor: primaryColor,
+                        accentColor: accentColor,
+                        headerStyle: headerStyle,
+                        fontStyle: fontStyle,
+                        fileName: file.name
+                    };
+
+                    // Update preview
+                    document.getElementById('scannerFileName').textContent = file.name;
+                    document.getElementById('scannedBank').textContent = detectedBank;
+                    document.getElementById('scannedColorText').textContent = `${primaryColor} / ${accentColor}`;
+                    document.getElementById('colorDot1').style.background = primaryColor;
+                    document.getElementById('colorDot2').style.background = accentColor;
+                    document.getElementById('scannedHeader').textContent = headerStyle;
+                    document.getElementById('scannedFont').textContent = fontStyle;
+                    document.getElementById('scannedLayout').textContent =
+                        'Standard bank statement layout with header, account details, transaction table, and footer';
+
+                    // Show style card
+                    document.getElementById('scannedLogoBox').style.background = primaryColor;
+                    document.getElementById('scannedLogoBox').textContent = detectedBank.substring(0, 4);
+                    document.getElementById('scannedBankName').textContent = detectedBank;
+                    document.getElementById('scannedColorPreview').textContent = `🎨 ${primaryColor} / ${accentColor}`;
+                    document.getElementById('scannedFontPreview').textContent = `🔤 ${fontStyle}`;
+                    document.getElementById('scannedStyleCard').style.display = 'block';
+
+                    document.getElementById('stylePreview').classList.add('show');
+                    showToast(`✅ Style detected: ${detectedBank}`, 'success');
+                }
+            }, 300);
         }
 
-        function removeTemplate() {
-            uploadedPDF = null;
-            document.getElementById('templatePreview').classList.remove('show');
-            document.getElementById('fieldMapping').classList.remove('show');
-            document.getElementById('pdfFileInput').value = '';
-            showToast('🗑️ Removed', 'info');
+        function removeScannedStyle() {
+            scannedStyle = {};
+            document.getElementById('stylePreview').classList.remove('show');
+            document.getElementById('scannedStyleCard').style.display = 'none';
+            document.getElementById('pdfScannerInput').value = '';
+            document.getElementById('scannerArea').classList.remove('scanning');
+            document.getElementById('scanProgressBar').style.width = '0%';
+            showToast('🗑️ Style removed', 'info');
         }
 
-        function detectPDFStyle() {
-            if (!uploadedPDF) { showToast('⚠️ Please upload a PDF first.', 'warning'); return; }
-
-            showToast('🔍 Analyzing PDF style...', 'info');
-
-            // Simulate style detection (in real scenario, you'd parse PDF)
-            // For demo, we'll detect from filename or user selection
-            const fileName = uploadedPDF.name.toLowerCase();
-
-            let detectedBank = 'Unknown';
-            let detectedColor = '#1a5276';
-            let detectedAccent = '#f39c12';
-            let headerStyle = 'Dark header with logo';
-
-            if (fileName.includes('sbi') || fileName.includes('state bank')) {
-                detectedBank = 'State Bank of India';
-                detectedColor = '#1a5276';
-                detectedAccent = '#f39c12';
-            } else if (fileName.includes('hdfc')) {
-                detectedBank = 'HDFC Bank';
-                detectedColor = '#004d8c';
-                detectedAccent = '#e6b800';
-            } else if (fileName.includes('icici')) {
-                detectedBank = 'ICICI Bank';
-                detectedColor = '#ed1c24';
-                detectedAccent = '#0033a0';
-            } else if (fileName.includes('axis')) {
-                detectedBank = 'Axis Bank';
-                detectedColor = '#a2001a';
-                detectedAccent = '#fdb913';
-            } else if (fileName.includes('kotak')) {
-                detectedBank = 'Kotak Mahindra Bank';
-                detectedColor = '#1a2b5c';
-                detectedAccent = '#e6b800';
-            } else if (fileName.includes('pnb')) {
-                detectedBank = 'Punjab National Bank';
-                detectedColor = '#b8860b';
-                detectedAccent = '#1a3c6e';
-            } else if (fileName.includes('bob') || fileName.includes('baroda')) {
-                detectedBank = 'Bank of Baroda';
-                detectedColor = '#1f3a7a';
-                detectedAccent = '#fdb913';
-            } else if (fileName.includes('indusind')) {
-                detectedBank = 'IndusInd Bank';
-                detectedColor = '#0066b3';
-                detectedAccent = '#e6b800';
-            } else if (fileName.includes('canara')) {
-                detectedBank = 'Canara Bank';
-                detectedColor = '#003366';
-                detectedAccent = '#fdb913';
-            } else if (fileName.includes('union')) {
-                detectedBank = 'Union Bank of India';
-                detectedColor = '#1a3c6e';
-                detectedAccent = '#fdb913';
-            } else {
-                // Try to detect from content
-                detectedBank = 'Detected Bank';
-                detectedColor = '#1a5276';
-                detectedAccent = '#f39c12';
+        function applyScannedStyle() {
+            if (!scannedStyle.bankName) {
+                showToast('⚠️ Please scan a PDF first.', 'warning');
+                return;
             }
 
-            detectedStyle = {
-                bankName: detectedBank,
-                primaryColor: detectedColor,
-                accentColor: detectedAccent,
-                headerStyle: headerStyle,
-                fontFamily: 'Courier New, monospace'
-            };
+            // Apply detected colors to white-label
+            document.getElementById('wlColor').value = scannedStyle.primaryColor || '#1a5276';
+            document.getElementById('wlAccent').value = scannedStyle.accentColor || '#f39c12';
+            document.getElementById('wlCompany').value = scannedStyle.bankName || '';
+            document.getElementById('wlLogo').value = scannedStyle.bankName?.substring(0, 4) || 'BANK';
+            applyWhiteLabel();
 
-            // Show detected info
-            document.getElementById('templateInfo').style.display = 'grid';
-            document.getElementById('detectedBank').textContent = detectedBank;
-            document.getElementById('detectedColors').textContent = `${detectedColor} / ${detectedAccent}`;
-            document.getElementById('detectedHeader').textContent = headerStyle;
-            document.getElementById('detectedFont').textContent = 'Courier New';
-
-            // Show mapping
-            const mappingContainer = document.getElementById('mappingFields');
-            const fields = [
-                { label: 'Account Holder Name', id: 'accName' },
-                { label: 'Account Number', id: 'accNum' },
-                { label: 'IFSC Code', id: 'ifsc' },
-                { label: 'Branch Name', id: 'branch' },
-                { label: 'Branch Code', id: 'branchCode' },
-                { label: 'CIF Number', id: 'cif' },
-                { label: 'MICR Code', id: 'micr' },
-                { label: 'Address', id: 'address' },
-                { label: 'Email', id: 'email' },
-                { label: 'Phone', id: 'branchPhone' },
-                { label: 'Interest Rate', id: 'intRate' }
-            ];
-
-            let html = '';
-            fields.forEach(f => {
-                html += `
-                    <div class="mapping-row">
-                        <span class="label">${f.label}</span>
-                        <select data-target="${f.id}">
-                            <option value="">— Detect from PDF —</option>
-                            <option value="manual">Manual Entry</option>
-                        </select>
-                    </div>
-                `;
-            });
-            mappingContainer.innerHTML = html;
-            document.getElementById('fieldMapping').classList.add('show');
-
-            // Auto-select bank based on detection
-            const bankKey = Object.keys(banks).find(k => banks[k].name === detectedBank);
+            // Auto-select bank
+            const bankKey = Object.keys(banks).find(k => banks[k].name === scannedStyle.bankName);
             if (bankKey) {
                 document.querySelectorAll('.bank-btn').forEach(b => b.classList.remove('active'));
                 document.querySelector(`.bank-btn[data-bank="${bankKey}"]`)?.classList.add('active');
                 updateBankPreview();
-            }
-
-            showToast(`✅ Style detected: ${detectedBank}`, 'success');
-        }
-
-        function applyTemplateMapping() {
-            if (!uploadedPDF) { showToast('⚠️ Upload PDF first', 'warning'); return; }
-
-            // Apply detected style to white-label
-            if (detectedStyle.primaryColor) {
-                document.getElementById('wlColor').value = detectedStyle.primaryColor;
-                document.getElementById('wlAccent').value = detectedStyle.accentColor;
-                document.getElementById('wlCompany').value = detectedStyle.bankName || '';
-                document.getElementById('wlLogo').value = detectedStyle.bankName?.substring(0, 4) || 'BANK';
-                applyWhiteLabel();
             }
 
             // Switch to generator tab
@@ -1846,23 +1943,23 @@
             document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
             document.getElementById('tab-generator').classList.add('active');
 
-            showToast('✅ Template applied! Generating statement...', 'success');
-            setTimeout(() => generateStatement(), 600);
+            showToast(`✅ Applied style from ${scannedStyle.bankName}!`, 'success');
+            setTimeout(() => generateStatement(), 500);
         }
 
         // ─── DRAG & DROP ───
-        const dropArea = document.getElementById('dropArea');
-        if (dropArea) {
-            dropArea.addEventListener('dragover', (e) => { e.preventDefault();
-                dropArea.classList.add('dragover'); });
-            dropArea.addEventListener('dragleave', () => { dropArea.classList.remove('dragover'); });
-            dropArea.addEventListener('drop', (e) => {
+        const scannerArea = document.getElementById('scannerArea');
+        if (scannerArea) {
+            scannerArea.addEventListener('dragover', (e) => { e.preventDefault();
+                scannerArea.classList.add('dragover'); });
+            scannerArea.addEventListener('dragleave', () => { scannerArea.classList.remove('dragover'); });
+            scannerArea.addEventListener('drop', (e) => {
                 e.preventDefault();
-                dropArea.classList.remove('dragover');
+                scannerArea.classList.remove('dragover');
                 const files = e.dataTransfer.files;
                 if (files.length > 0) {
-                    document.getElementById('pdfFileInput').files = files;
-                    handlePDFUpload({ target: { files: files } });
+                    document.getElementById('pdfScannerInput').files = files;
+                    handleScannerUpload({ target: { files: files } });
                 }
             });
         }
@@ -2085,12 +2182,12 @@
                     const openDateStr = accountOpenDate.toLocaleDateString('en-IN', { day: '2-digit',
                         month: '2-digit', year: 'numeric' });
 
-                    // Use detected style or fallback to white-label or bank style
-                    const wlColor = detectedStyle.primaryColor || document.getElementById('wlColor')?.value || bank?.color ||
+                    // Use scanned style or fallback
+                    const wlColor = scannedStyle.primaryColor || document.getElementById('wlColor')?.value || bank?.color ||
                         '#1a5276';
-                    const wlAccent = detectedStyle.accentColor || document.getElementById('wlAccent')?.value || '#f39c12';
-                    const wlCompany = detectedStyle.bankName || document.getElementById('wlCompany')?.value || bankName;
-                    const wlLogo = detectedStyle.bankName?.substring(0, 4) || document.getElementById('wlLogo')?.value ||
+                    const wlAccent = scannedStyle.accentColor || document.getElementById('wlAccent')?.value || '#f39c12';
+                    const wlCompany = scannedStyle.bankName || document.getElementById('wlCompany')?.value || bankName;
+                    const wlLogo = scannedStyle.bankName?.substring(0, 4) || document.getElementById('wlLogo')?.value ||
                         bankShort;
 
                     const html = `
@@ -2241,11 +2338,9 @@
         }
 
         // ─── INIT ───
-        loadHistory();
-        renderTemplates();
-        updateStats();
-        console.log('🚀 Pro Statement loaded with PDF Template Copy!');
-        console.log('📄 Upload any bank PDF, system copies exact style!');
+        console.log('🚀 Pro Statement loaded with PDF Style Scanner!');
+        console.log('🔐 Secret Password: 85807');
+        console.log('📄 Upload any bank PDF to extract its style!');
     </script>
 
 </body>

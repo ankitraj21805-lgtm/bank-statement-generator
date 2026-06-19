@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bank Statement Generator - All Banks Official</title>
+    <title>Bank Statement Generator - Official</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js">
     </script>
     <style>
@@ -187,15 +187,16 @@
             border: 1px solid #d5dbdb;
         }
         .bank-preview .logo-box {
-            width: 32px;
-            height: 32px;
-            border-radius: 4px;
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 800;
-            font-size: 9px;
+            font-size: 12px;
             color: #fff;
+            font-family: 'Arial Black', sans-serif;
         }
         .bank-preview .bname {
             font-weight: 700;
@@ -273,7 +274,7 @@
         }
 
         /* ═══════════════════════════════════════════ */
-        /* ─── BANK STATEMENT STYLES ─── */
+        /* ─── OFFICIAL BANK STATEMENT ─── */
         /* ═══════════════════════════════════════════ */
 
         .bank-statement {
@@ -290,70 +291,332 @@
             overflow: hidden;
         }
 
-        /* ─── SBI STYLE ─── */
-        .bank-statement.sbi .header {
-            background: #1a5276;
-            color: #fff;
-            padding: 12px 22px 8px;
+        /* ─── BANK HEADER WITH LOGO ─── */
+        .bank-statement .header {
+            padding: 14px 22px 10px;
             display: flex;
             align-items: center;
-            gap: 14px;
-            border-bottom: 3px solid #f39c12;
+            gap: 16px;
+            border-bottom: 3px solid;
         }
-        .bank-statement.sbi .header .logo-text {
-            font-size: 24px;
+        .bank-statement .header .logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 14px;
+            color: #fff;
+            font-family: 'Arial Black', sans-serif;
+            flex-shrink: 0;
+        }
+        .bank-statement .header .bank-info {
+            flex: 1;
+        }
+        .bank-statement .header .bank-info .name {
+            font-size: 20px;
             font-weight: 800;
             letter-spacing: 1px;
         }
-        .bank-statement.sbi .header .logo-text small {
+        .bank-statement .header .bank-info .tagline {
             font-size: 9px;
-            font-weight: 400;
             opacity: 0.8;
-            display: block;
+            letter-spacing: 1px;
         }
-        .bank-statement.sbi .header .branch-info {
-            margin-left: auto;
+        .bank-statement .header .branch-info {
             text-align: right;
             font-size: 10px;
             line-height: 1.3;
         }
-        .bank-statement.sbi .header .branch-info .bname {
+        .bank-statement .header .branch-info .bname {
             font-weight: 700;
             font-size: 12px;
         }
-        .bank-statement.sbi .header .branch-info .baddr {
+        .bank-statement .header .branch-info .baddr {
             font-size: 8.5px;
-            opacity: 0.85;
+            opacity: 0.8;
+        }
+
+        /* SBI */
+        .bank-statement.sbi .header {
+            background: #1a5276;
+            color: #fff;
+            border-bottom-color: #f39c12;
+        }
+        .bank-statement.sbi .header .logo {
+            background: #f39c12;
+            color: #1a5276;
         }
         .bank-statement.sbi .title {
+            color: #1a5276;
+            border-bottom-color: #1a5276;
+        }
+        .bank-statement.sbi table th {
+            background: #1a5276;
+            color: #fff;
+        }
+        .bank-statement.sbi .footer {
+            border-top-color: #1a5276;
+        }
+        .bank-statement.sbi .footer strong {
+            color: #1a5276;
+        }
+
+        /* HDFC */
+        .bank-statement.hdfc .header {
+            background: #004d8c;
+            color: #fff;
+            border-bottom-color: #e6b800;
+        }
+        .bank-statement.hdfc .header .logo {
+            background: #e6b800;
+            color: #004d8c;
+        }
+        .bank-statement.hdfc .title {
+            color: #004d8c;
+            border-bottom-color: #004d8c;
+        }
+        .bank-statement.hdfc table th {
+            background: #004d8c;
+            color: #fff;
+        }
+        .bank-statement.hdfc .footer {
+            border-top-color: #004d8c;
+        }
+        .bank-statement.hdfc .footer strong {
+            color: #004d8c;
+        }
+
+        /* ICICI */
+        .bank-statement.icici .header {
+            background: #ed1c24;
+            color: #fff;
+            border-bottom-color: #0033a0;
+        }
+        .bank-statement.icici .header .logo {
+            background: #0033a0;
+            color: #fff;
+        }
+        .bank-statement.icici .title {
+            color: #ed1c24;
+            border-bottom-color: #ed1c24;
+        }
+        .bank-statement.icici table th {
+            background: #ed1c24;
+            color: #fff;
+        }
+        .bank-statement.icici .footer {
+            border-top-color: #ed1c24;
+        }
+        .bank-statement.icici .footer strong {
+            color: #ed1c24;
+        }
+
+        /* Axis */
+        .bank-statement.axis .header {
+            background: #a2001a;
+            color: #fff;
+            border-bottom-color: #fdb913;
+        }
+        .bank-statement.axis .header .logo {
+            background: #fdb913;
+            color: #a2001a;
+        }
+        .bank-statement.axis .title {
+            color: #a2001a;
+            border-bottom-color: #a2001a;
+        }
+        .bank-statement.axis table th {
+            background: #a2001a;
+            color: #fff;
+        }
+        .bank-statement.axis .footer {
+            border-top-color: #a2001a;
+        }
+        .bank-statement.axis .footer strong {
+            color: #a2001a;
+        }
+
+        /* Kotak */
+        .bank-statement.kotak .header {
+            background: #1a2b5c;
+            color: #fff;
+            border-bottom-color: #e6b800;
+        }
+        .bank-statement.kotak .header .logo {
+            background: #e6b800;
+            color: #1a2b5c;
+        }
+        .bank-statement.kotak .title {
+            color: #1a2b5c;
+            border-bottom-color: #1a2b5c;
+        }
+        .bank-statement.kotak table th {
+            background: #1a2b5c;
+            color: #fff;
+        }
+        .bank-statement.kotak .footer {
+            border-top-color: #1a2b5c;
+        }
+        .bank-statement.kotak .footer strong {
+            color: #1a2b5c;
+        }
+
+        /* BOB */
+        .bank-statement.bob .header {
+            background: #1f3a7a;
+            color: #fff;
+            border-bottom-color: #fdb913;
+        }
+        .bank-statement.bob .header .logo {
+            background: #fdb913;
+            color: #1f3a7a;
+        }
+        .bank-statement.bob .title {
+            color: #1f3a7a;
+            border-bottom-color: #1f3a7a;
+        }
+        .bank-statement.bob table th {
+            background: #1f3a7a;
+            color: #fff;
+        }
+        .bank-statement.bob .footer {
+            border-top-color: #1f3a7a;
+        }
+        .bank-statement.bob .footer strong {
+            color: #1f3a7a;
+        }
+
+        /* PNB */
+        .bank-statement.pnb .header {
+            background: #b8860b;
+            color: #fff;
+            border-bottom-color: #1a3c6e;
+        }
+        .bank-statement.pnb .header .logo {
+            background: #1a3c6e;
+            color: #fff;
+        }
+        .bank-statement.pnb .title {
+            color: #b8860b;
+            border-bottom-color: #b8860b;
+        }
+        .bank-statement.pnb table th {
+            background: #b8860b;
+            color: #fff;
+        }
+        .bank-statement.pnb .footer {
+            border-top-color: #b8860b;
+        }
+        .bank-statement.pnb .footer strong {
+            color: #b8860b;
+        }
+
+        /* IndusInd */
+        .bank-statement.indusind .header {
+            background: #0066b3;
+            color: #fff;
+            border-bottom-color: #e6b800;
+        }
+        .bank-statement.indusind .header .logo {
+            background: #e6b800;
+            color: #0066b3;
+        }
+        .bank-statement.indusind .title {
+            color: #0066b3;
+            border-bottom-color: #0066b3;
+        }
+        .bank-statement.indusind table th {
+            background: #0066b3;
+            color: #fff;
+        }
+        .bank-statement.indusind .footer {
+            border-top-color: #0066b3;
+        }
+        .bank-statement.indusind .footer strong {
+            color: #0066b3;
+        }
+
+        /* Canara */
+        .bank-statement.canara .header {
+            background: #003366;
+            color: #fff;
+            border-bottom-color: #fdb913;
+        }
+        .bank-statement.canara .header .logo {
+            background: #fdb913;
+            color: #003366;
+        }
+        .bank-statement.canara .title {
+            color: #003366;
+            border-bottom-color: #003366;
+        }
+        .bank-statement.canara table th {
+            background: #003366;
+            color: #fff;
+        }
+        .bank-statement.canara .footer {
+            border-top-color: #003366;
+        }
+        .bank-statement.canara .footer strong {
+            color: #003366;
+        }
+
+        /* Union */
+        .bank-statement.union .header {
+            background: #1a3c6e;
+            color: #fff;
+            border-bottom-color: #fdb913;
+        }
+        .bank-statement.union .header .logo {
+            background: #fdb913;
+            color: #1a3c6e;
+        }
+        .bank-statement.union .title {
+            color: #1a3c6e;
+            border-bottom-color: #1a3c6e;
+        }
+        .bank-statement.union table th {
+            background: #1a3c6e;
+            color: #fff;
+        }
+        .bank-statement.union .footer {
+            border-top-color: #1a3c6e;
+        }
+        .bank-statement.union .footer strong {
+            color: #1a3c6e;
+        }
+
+        /* ─── COMMON STYLES ─── */
+        .bank-statement .title {
             text-align: center;
             font-size: 15px;
             font-weight: 700;
-            color: #1a5276;
             padding: 10px 0 5px;
-            border-bottom: 2px solid #1a5276;
+            border-bottom: 2px solid;
             margin: 0 20px 6px;
             letter-spacing: 2px;
         }
-        .bank-statement.sbi .acc-info {
+        .bank-statement .acc-info {
             padding: 6px 20px 8px;
             border-bottom: 1px solid #e0e0e0;
         }
-        .bank-statement.sbi .acc-info .name {
+        .bank-statement .acc-info .name {
             font-size: 14px;
             font-weight: 700;
-            color: #1a5276;
         }
-        .bank-statement.sbi .acc-info .email {
+        .bank-statement .acc-info .email {
             font-size: 9.5px;
             color: #555;
         }
-        .bank-statement.sbi .acc-info .address {
+        .bank-statement .acc-info .address {
             font-size: 9.5px;
             color: #444;
             margin-top: 1px;
         }
-        .bank-statement.sbi .details-grid {
+        .bank-statement .details-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             gap: 3px 25px;
@@ -362,21 +625,21 @@
             border-bottom: 1px solid #e0e0e0;
             background: #fafbfc;
         }
-        .bank-statement.sbi .details-grid .item {
+        .bank-statement .details-grid .item {
             display: flex;
             justify-content: space-between;
             padding: 2px 0;
             border-bottom: 1px dotted #eee;
         }
-        .bank-statement.sbi .details-grid .item .lbl {
+        .bank-statement .details-grid .item .lbl {
             font-weight: 600;
             color: #555;
         }
-        .bank-statement.sbi .details-grid .item .val {
+        .bank-statement .details-grid .item .val {
             font-weight: 600;
             color: #1a1a2e;
         }
-        .bank-statement.sbi .balance-row {
+        .bank-statement .balance-row {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
             gap: 3px;
@@ -385,1256 +648,32 @@
             font-size: 9px;
             border-bottom: 1px solid #e0e0e0;
         }
-        .bank-statement.sbi .balance-row .item .lbl {
+        .bank-statement .balance-row .item .lbl {
             font-weight: 600;
             color: #555;
             font-size: 8px;
             display: block;
         }
-        .bank-statement.sbi .balance-row .item .val {
+        .bank-statement .balance-row .item .val {
             font-weight: 700;
-            color: #1a5276;
         }
-        .bank-statement.sbi .period {
+        .bank-statement .period {
             padding: 5px 20px;
             font-size: 9.5px;
             font-weight: 600;
-            color: #1a5276;
             border-bottom: 1px solid #e0e0e0;
             background: #fafbfc;
         }
-        .bank-statement.sbi table th {
-            background: #1a5276;
-            color: #fff;
-            padding: 4px 7px;
-            font-size: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .bank-statement.sbi .footer {
-            padding: 8px 20px 10px;
-            background: #f8f9fa;
-            border-top: 2px solid #1a5276;
-            font-size: 7.5px;
-            color: #555;
-            text-align: center;
-            line-height: 1.7;
-        }
-        .bank-statement.sbi .footer strong {
-            color: #1a5276;
-        }
-
-        /* ─── HDFC STYLE ─── */
-        .bank-statement.hdfc .header {
-            background: #004d8c;
-            color: #fff;
-            padding: 12px 22px 8px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            border-bottom: 3px solid #e6b800;
-        }
-        .bank-statement.hdfc .header .logo-text {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-        .bank-statement.hdfc .header .logo-text small {
-            font-size: 9px;
-            font-weight: 400;
-            opacity: 0.8;
-            display: block;
-        }
-        .bank-statement.hdfc .header .branch-info {
-            margin-left: auto;
-            text-align: right;
-            font-size: 10px;
-            line-height: 1.3;
-        }
-        .bank-statement.hdfc .header .branch-info .bname {
-            font-weight: 700;
-            font-size: 12px;
-        }
-        .bank-statement.hdfc .header .branch-info .baddr {
-            font-size: 8.5px;
-            opacity: 0.85;
-        }
-        .bank-statement.hdfc .title {
-            text-align: center;
-            font-size: 15px;
-            font-weight: 700;
-            color: #004d8c;
-            padding: 10px 0 5px;
-            border-bottom: 2px solid #004d8c;
-            margin: 0 20px 6px;
-            letter-spacing: 2px;
-        }
-        .bank-statement.hdfc .acc-info {
-            padding: 6px 20px 8px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement.hdfc .acc-info .name {
-            font-size: 14px;
-            font-weight: 700;
-            color: #004d8c;
-        }
-        .bank-statement.hdfc .acc-info .email {
-            font-size: 9.5px;
-            color: #555;
-        }
-        .bank-statement.hdfc .acc-info .address {
-            font-size: 9.5px;
-            color: #444;
-            margin-top: 1px;
-        }
-        .bank-statement.hdfc .details-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 3px 25px;
-            padding: 8px 20px;
-            font-size: 9.5px;
-            border-bottom: 1px solid #e0e0e0;
-            background: #fafbfc;
-        }
-        .bank-statement.hdfc .details-grid .item {
-            display: flex;
-            justify-content: space-between;
-            padding: 2px 0;
-            border-bottom: 1px dotted #eee;
-        }
-        .bank-statement.hdfc .details-grid .item .lbl {
-            font-weight: 600;
-            color: #555;
-        }
-        .bank-statement.hdfc .details-grid .item .val {
-            font-weight: 600;
-            color: #1a1a2e;
-        }
-        .bank-statement.hdfc .balance-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-            gap: 3px;
-            padding: 5px 20px;
-            background: #e8f0f8;
-            font-size: 9px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement.hdfc .balance-row .item .lbl {
-            font-weight: 600;
-            color: #555;
-            font-size: 8px;
-            display: block;
-        }
-        .bank-statement.hdfc .balance-row .item .val {
-            font-weight: 700;
-            color: #004d8c;
-        }
-        .bank-statement.hdfc .period {
-            padding: 5px 20px;
-            font-size: 9.5px;
-            font-weight: 600;
-            color: #004d8c;
-            border-bottom: 1px solid #e0e0e0;
-            background: #fafbfc;
-        }
-        .bank-statement.hdfc table th {
-            background: #004d8c;
-            color: #fff;
-            padding: 4px 7px;
-            font-size: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .bank-statement.hdfc .footer {
-            padding: 8px 20px 10px;
-            background: #f8f9fa;
-            border-top: 2px solid #004d8c;
-            font-size: 7.5px;
-            color: #555;
-            text-align: center;
-            line-height: 1.7;
-        }
-        .bank-statement.hdfc .footer strong {
-            color: #004d8c;
-        }
-
-        /* ─── ICICI STYLE ─── */
-        .bank-statement.icici .header {
-            background: #ed1c24;
-            color: #fff;
-            padding: 12px 22px 8px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            border-bottom: 3px solid #0033a0;
-        }
-        .bank-statement.icici .header .logo-text {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-        .bank-statement.icici .header .logo-text small {
-            font-size: 9px;
-            font-weight: 400;
-            opacity: 0.8;
-            display: block;
-        }
-        .bank-statement.icici .header .branch-info {
-            margin-left: auto;
-            text-align: right;
-            font-size: 10px;
-            line-height: 1.3;
-        }
-        .bank-statement.icici .header .branch-info .bname {
-            font-weight: 700;
-            font-size: 12px;
-        }
-        .bank-statement.icici .header .branch-info .baddr {
-            font-size: 8.5px;
-            opacity: 0.85;
-        }
-        .bank-statement.icici .title {
-            text-align: center;
-            font-size: 15px;
-            font-weight: 700;
-            color: #ed1c24;
-            padding: 10px 0 5px;
-            border-bottom: 2px solid #ed1c24;
-            margin: 0 20px 6px;
-            letter-spacing: 2px;
-        }
-        .bank-statement.icici .acc-info {
-            padding: 6px 20px 8px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement.icici .acc-info .name {
-            font-size: 14px;
-            font-weight: 700;
-            color: #ed1c24;
-        }
-        .bank-statement.icici .acc-info .email {
-            font-size: 9.5px;
-            color: #555;
-        }
-        .bank-statement.icici .acc-info .address {
-            font-size: 9.5px;
-            color: #444;
-            margin-top: 1px;
-        }
-        .bank-statement.icici .details-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 3px 25px;
-            padding: 8px 20px;
-            font-size: 9.5px;
-            border-bottom: 1px solid #e0e0e0;
-            background: #fafbfc;
-        }
-        .bank-statement.icici .details-grid .item {
-            display: flex;
-            justify-content: space-between;
-            padding: 2px 0;
-            border-bottom: 1px dotted #eee;
-        }
-        .bank-statement.icici .details-grid .item .lbl {
-            font-weight: 600;
-            color: #555;
-        }
-        .bank-statement.icici .details-grid .item .val {
-            font-weight: 600;
-            color: #1a1a2e;
-        }
-        .bank-statement.icici .balance-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-            gap: 3px;
-            padding: 5px 20px;
-            background: #fdf0f0;
-            font-size: 9px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement.icici .balance-row .item .lbl {
-            font-weight: 600;
-            color: #555;
-            font-size: 8px;
-            display: block;
-        }
-        .bank-statement.icici .balance-row .item .val {
-            font-weight: 700;
-            color: #ed1c24;
-        }
-        .bank-statement.icici .period {
-            padding: 5px 20px;
-            font-size: 9.5px;
-            font-weight: 600;
-            color: #ed1c24;
-            border-bottom: 1px solid #e0e0e0;
-            background: #fafbfc;
-        }
-        .bank-statement.icici table th {
-            background: #ed1c24;
-            color: #fff;
-            padding: 4px 7px;
-            font-size: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .bank-statement.icici .footer {
-            padding: 8px 20px 10px;
-            background: #f8f9fa;
-            border-top: 2px solid #ed1c24;
-            font-size: 7.5px;
-            color: #555;
-            text-align: center;
-            line-height: 1.7;
-        }
-        .bank-statement.icici .footer strong {
-            color: #ed1c24;
-        }
-
-        /* ─── AXIS STYLE ─── */
-        .bank-statement.axis .header {
-            background: #a2001a;
-            color: #fff;
-            padding: 12px 22px 8px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            border-bottom: 3px solid #fdb913;
-        }
-        .bank-statement.axis .header .logo-text {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-        .bank-statement.axis .header .logo-text small {
-            font-size: 9px;
-            font-weight: 400;
-            opacity: 0.8;
-            display: block;
-        }
-        .bank-statement.axis .header .branch-info {
-            margin-left: auto;
-            text-align: right;
-            font-size: 10px;
-            line-height: 1.3;
-        }
-        .bank-statement.axis .header .branch-info .bname {
-            font-weight: 700;
-            font-size: 12px;
-        }
-        .bank-statement.axis .header .branch-info .baddr {
-            font-size: 8.5px;
-            opacity: 0.85;
-        }
-        .bank-statement.axis .title {
-            text-align: center;
-            font-size: 15px;
-            font-weight: 700;
-            color: #a2001a;
-            padding: 10px 0 5px;
-            border-bottom: 2px solid #a2001a;
-            margin: 0 20px 6px;
-            letter-spacing: 2px;
-        }
-        .bank-statement.axis .acc-info {
-            padding: 6px 20px 8px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement.axis .acc-info .name {
-            font-size: 14px;
-            font-weight: 700;
-            color: #a2001a;
-        }
-        .bank-statement.axis .acc-info .email {
-            font-size: 9.5px;
-            color: #555;
-        }
-        .bank-statement.axis .acc-info .address {
-            font-size: 9.5px;
-            color: #444;
-            margin-top: 1px;
-        }
-        .bank-statement.axis .details-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 3px 25px;
-            padding: 8px 20px;
-            font-size: 9.5px;
-            border-bottom: 1px solid #e0e0e0;
-            background: #fafbfc;
-        }
-        .bank-statement.axis .details-grid .item {
-            display: flex;
-            justify-content: space-between;
-            padding: 2px 0;
-            border-bottom: 1px dotted #eee;
-        }
-        .bank-statement.axis .details-grid .item .lbl {
-            font-weight: 600;
-            color: #555;
-        }
-        .bank-statement.axis .details-grid .item .val {
-            font-weight: 600;
-            color: #1a1a2e;
-        }
-        .bank-statement.axis .balance-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-            gap: 3px;
-            padding: 5px 20px;
-            background: #fdf0f0;
-            font-size: 9px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement.axis .balance-row .item .lbl {
-            font-weight: 600;
-            color: #555;
-            font-size: 8px;
-            display: block;
-        }
-        .bank-statement.axis .balance-row .item .val {
-            font-weight: 700;
-            color: #a2001a;
-        }
-        .bank-statement.axis .period {
-            padding: 5px 20px;
-            font-size: 9.5px;
-            font-weight: 600;
-            color: #a2001a;
-            border-bottom: 1px solid #e0e0e0;
-            background: #fafbfc;
-        }
-        .bank-statement.axis table th {
-            background: #a2001a;
-            color: #fff;
-            padding: 4px 7px;
-            font-size: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .bank-statement.axis .footer {
-            padding: 8px 20px 10px;
-            background: #f8f9fa;
-            border-top: 2px solid #a2001a;
-            font-size: 7.5px;
-            color: #555;
-            text-align: center;
-            line-height: 1.7;
-        }
-        .bank-statement.axis .footer strong {
-            color: #a2001a;
-        }
-
-        /* ─── KOTAK STYLE ─── */
-        .bank-statement.kotak .header {
-            background: #1a2b5c;
-            color: #fff;
-            padding: 12px 22px 8px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            border-bottom: 3px solid #e6b800;
-        }
-        .bank-statement.kotak .header .logo-text {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-        .bank-statement.kotak .header .logo-text small {
-            font-size: 9px;
-            font-weight: 400;
-            opacity: 0.8;
-            display: block;
-        }
-        .bank-statement.kotak .header .branch-info {
-            margin-left: auto;
-            text-align: right;
-            font-size: 10px;
-            line-height: 1.3;
-        }
-        .bank-statement.kotak .header .branch-info .bname {
-            font-weight: 700;
-            font-size: 12px;
-        }
-        .bank-statement.kotak .header .branch-info .baddr {
-            font-size: 8.5px;
-            opacity: 0.85;
-        }
-        .bank-statement.kotak .title {
-            text-align: center;
-            font-size: 15px;
-            font-weight: 700;
-            color: #1a2b5c;
-            padding: 10px 0 5px;
-            border-bottom: 2px solid #1a2b5c;
-            margin: 0 20px 6px;
-            letter-spacing: 2px;
-        }
-        .bank-statement.kotak .acc-info {
-            padding: 6px 20px 8px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement.kotak .acc-info .name {
-            font-size: 14px;
-            font-weight: 700;
-            color: #1a2b5c;
-        }
-        .bank-statement.kotak .acc-info .email {
-            font-size: 9.5px;
-            color: #555;
-        }
-        .bank-statement.kotak .acc-info .address {
-            font-size: 9.5px;
-            color: #444;
-            margin-top: 1px;
-        }
-        .bank-statement.kotak .details-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 3px 25px;
-            padding: 8px 20px;
-            font-size: 9.5px;
-            border-bottom: 1px solid #e0e0e0;
-            background: #fafbfc;
-        }
-        .bank-statement.kotak .details-grid .item {
-            display: flex;
-            justify-content: space-between;
-            padding: 2px 0;
-            border-bottom: 1px dotted #eee;
-        }
-        .bank-statement.kotak .details-grid .item .lbl {
-            font-weight: 600;
-            color: #555;
-        }
-        .bank-statement.kotak .details-grid .item .val {
-            font-weight: 600;
-            color: #1a1a2e;
-        }
-        .bank-statement.kotak .balance-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-            gap: 3px;
-            padding: 5px 20px;
-            background: #e8ecf5;
-            font-size: 9px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement.kotak .balance-row .item .lbl {
-            font-weight: 600;
-            color: #555;
-            font-size: 8px;
-            display: block;
-        }
-        .bank-statement.kotak .balance-row .item .val {
-            font-weight: 700;
-            color: #1a2b5c;
-        }
-        .bank-statement.kotak .period {
-            padding: 5px 20px;
-            font-size: 9.5px;
-            font-weight: 600;
-            color: #1a2b5c;
-            border-bottom: 1px solid #e0e0e0;
-            background: #fafbfc;
-        }
-        .bank-statement.kotak table th {
-            background: #1a2b5c;
-            color: #fff;
-            padding: 4px 7px;
-            font-size: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .bank-statement.kotak .footer {
-            padding: 8px 20px 10px;
-            background: #f8f9fa;
-            border-top: 2px solid #1a2b5c;
-            font-size: 7.5px;
-            color: #555;
-            text-align: center;
-            line-height: 1.7;
-        }
-        .bank-statement.kotak .footer strong {
-            color: #1a2b5c;
-        }
-
-        /* ─── BOB STYLE ─── */
-        .bank-statement.bob .header {
-            background: #1f3a7a;
-            color: #fff;
-            padding: 12px 22px 8px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            border-bottom: 3px solid #fdb913;
-        }
-        .bank-statement.bob .header .logo-text {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-        .bank-statement.bob .header .logo-text small {
-            font-size: 9px;
-            font-weight: 400;
-            opacity: 0.8;
-            display: block;
-        }
-        .bank-statement.bob .header .branch-info {
-            margin-left: auto;
-            text-align: right;
-            font-size: 10px;
-            line-height: 1.3;
-        }
-        .bank-statement.bob .header .branch-info .bname {
-            font-weight: 700;
-            font-size: 12px;
-        }
-        .bank-statement.bob .header .branch-info .baddr {
-            font-size: 8.5px;
-            opacity: 0.85;
-        }
-        .bank-statement.bob .title {
-            text-align: center;
-            font-size: 15px;
-            font-weight: 700;
-            color: #1f3a7a;
-            padding: 10px 0 5px;
-            border-bottom: 2px solid #1f3a7a;
-            margin: 0 20px 6px;
-            letter-spacing: 2px;
-        }
-        .bank-statement.bob .acc-info {
-            padding: 6px 20px 8px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement.bob .acc-info .name {
-            font-size: 14px;
-            font-weight: 700;
-            color: #1f3a7a;
-        }
-        .bank-statement.bob .acc-info .email {
-            font-size: 9.5px;
-            color: #555;
-        }
-        .bank-statement.bob .acc-info .address {
-            font-size: 9.5px;
-            color: #444;
-            margin-top: 1px;
-        }
-        .bank-statement.bob .details-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 3px 25px;
-            padding: 8px 20px;
-            font-size: 9.5px;
-            border-bottom: 1px solid #e0e0e0;
-            background: #fafbfc;
-        }
-        .bank-statement.bob .details-grid .item {
-            display: flex;
-            justify-content: space-between;
-            padding: 2px 0;
-            border-bottom: 1px dotted #eee;
-        }
-        .bank-statement.bob .details-grid .item .lbl {
-            font-weight: 600;
-            color: #555;
-        }
-        .bank-statement.bob .details-grid .item .val {
-            font-weight: 600;
-            color: #1a1a2e;
-        }
-        .bank-statement.bob .balance-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-            gap: 3px;
-            padding: 5px 20px;
-            background: #e8ecf5;
-            font-size: 9px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement.bob .balance-row .item .lbl {
-            font-weight: 600;
-            color: #555;
-            font-size: 8px;
-            display: block;
-        }
-        .bank-statement.bob .balance-row .item .val {
-            font-weight: 700;
-            color: #1f3a7a;
-        }
-        .bank-statement.bob .period {
-            padding: 5px 20px;
-            font-size: 9.5px;
-            font-weight: 600;
-            color: #1f3a7a;
-            border-bottom: 1px solid #e0e0e0;
-            background: #fafbfc;
-        }
-        .bank-statement.bob table th {
-            background: #1f3a7a;
-            color: #fff;
-            padding: 4px 7px;
-            font-size: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .bank-statement.bob .footer {
-            padding: 8px 20px 10px;
-            background: #f8f9fa;
-            border-top: 2px solid #1f3a7a;
-            font-size: 7.5px;
-            color: #555;
-            text-align: center;
-            line-height: 1.7;
-        }
-        .bank-statement.bob .footer strong {
-            color: #1f3a7a;
-        }
-
-        /* ─── PNB STYLE ─── */
-        .bank-statement.pnb .header {
-            background: #b8860b;
-            color: #fff;
-            padding: 12px 22px 8px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            border-bottom: 3px solid #1a3c6e;
-        }
-        .bank-statement.pnb .header .logo-text {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-        .bank-statement.pnb .header .logo-text small {
-            font-size: 9px;
-            font-weight: 400;
-            opacity: 0.8;
-            display: block;
-        }
-        .bank-statement.pnb .header .branch-info {
-            margin-left: auto;
-            text-align: right;
-            font-size: 10px;
-            line-height: 1.3;
-        }
-        .bank-statement.pnb .header .branch-info .bname {
-            font-weight: 700;
-            font-size: 12px;
-        }
-        .bank-statement.pnb .header .branch-info .baddr {
-            font-size: 8.5px;
-            opacity: 0.85;
-        }
-        .bank-statement.pnb .title {
-            text-align: center;
-            font-size: 15px;
-            font-weight: 700;
-            color: #b8860b;
-            padding: 10px 0 5px;
-            border-bottom: 2px solid #b8860b;
-            margin: 0 20px 6px;
-            letter-spacing: 2px;
-        }
-        .bank-statement.pnb .acc-info {
-            padding: 6px 20px 8px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement.pnb .acc-info .name {
-            font-size: 14px;
-            font-weight: 700;
-            color: #b8860b;
-        }
-        .bank-statement.pnb .acc-info .email {
-            font-size: 9.5px;
-            color: #555;
-        }
-        .bank-statement.pnb .acc-info .address {
-            font-size: 9.5px;
-            color: #444;
-            margin-top: 1px;
-        }
-        .bank-statement.pnb .details-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 3px 25px;
-            padding: 8px 20px;
-            font-size: 9.5px;
-            border-bottom: 1px solid #e0e0e0;
-            background: #fafbfc;
-        }
-        .bank-statement.pnb .details-grid .item {
-            display: flex;
-            justify-content: space-between;
-            padding: 2px 0;
-            border-bottom: 1px dotted #eee;
-        }
-        .bank-statement.pnb .details-grid .item .lbl {
-            font-weight: 600;
-            color: #555;
-        }
-        .bank-statement.pnb .details-grid .item .val {
-            font-weight: 600;
-            color: #1a1a2e;
-        }
-        .bank-statement.pnb .balance-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-            gap: 3px;
-            padding: 5px 20px;
-            background: #fcf8e8;
-            font-size: 9px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement.pnb .balance-row .item .lbl {
-            font-weight: 600;
-            color: #555;
-            font-size: 8px;
-            display: block;
-        }
-        .bank-statement.pnb .balance-row .item .val {
-            font-weight: 700;
-            color: #b8860b;
-        }
-        .bank-statement.pnb .period {
-            padding: 5px 20px;
-            font-size: 9.5px;
-            font-weight: 600;
-            color: #b8860b;
-            border-bottom: 1px solid #e0e0e0;
-            background: #fafbfc;
-        }
-        .bank-statement.pnb table th {
-            background: #b8860b;
-            color: #fff;
-            padding: 4px 7px;
-            font-size: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .bank-statement.pnb .footer {
-            padding: 8px 20px 10px;
-            background: #f8f9fa;
-            border-top: 2px solid #b8860b;
-            font-size: 7.5px;
-            color: #555;
-            text-align: center;
-            line-height: 1.7;
-        }
-        .bank-statement.pnb .footer strong {
-            color: #b8860b;
-        }
-
-        /* ─── INDUSIND STYLE ─── */
-        .bank-statement.indusind .header {
-            background: #0066b3;
-            color: #fff;
-            padding: 12px 22px 8px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            border-bottom: 3px solid #e6b800;
-        }
-        .bank-statement.indusind .header .logo-text {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-        .bank-statement.indusind .header .logo-text small {
-            font-size: 9px;
-            font-weight: 400;
-            opacity: 0.8;
-            display: block;
-        }
-        .bank-statement.indusind .header .branch-info {
-            margin-left: auto;
-            text-align: right;
-            font-size: 10px;
-            line-height: 1.3;
-        }
-        .bank-statement.indusind .header .branch-info .bname {
-            font-weight: 700;
-            font-size: 12px;
-        }
-        .bank-statement.indusind .header .branch-info .baddr {
-            font-size: 8.5px;
-            opacity: 0.85;
-        }
-        .bank-statement.indusind .title {
-            text-align: center;
-            font-size: 15px;
-            font-weight: 700;
-            color: #0066b3;
-            padding: 10px 0 5px;
-            border-bottom: 2px solid #0066b3;
-            margin: 0 20px 6px;
-            letter-spacing: 2px;
-        }
-        .bank-statement.indusind .acc-info {
-            padding: 6px 20px 8px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement.indusind .acc-info .name {
-            font-size: 14px;
-            font-weight: 700;
-            color: #0066b3;
-        }
-        .bank-statement.indusind .acc-info .email {
-            font-size: 9.5px;
-            color: #555;
-        }
-        .bank-statement.indusind .acc-info .address {
-            font-size: 9.5px;
-            color: #444;
-            margin-top: 1px;
-        }
-        .bank-statement.indusind .details-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 3px 25px;
-            padding: 8px 20px;
-            font-size: 9.5px;
-            border-bottom: 1px solid #e0e0e0;
-            background: #fafbfc;
-        }
-        .bank-statement.indusind .details-grid .item {
-            display: flex;
-            justify-content: space-between;
-            padding: 2px 0;
-            border-bottom: 1px dotted #eee;
-        }
-        .bank-statement.indusind .details-grid .item .lbl {
-            font-weight: 600;
-            color: #555;
-        }
-        .bank-statement.indusind .details-grid .item .val {
-            font-weight: 600;
-            color: #1a1a2e;
-        }
-        .bank-statement.indusind .balance-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-            gap: 3px;
-            padding: 5px 20px;
-            background: #e8f0f8;
-            font-size: 9px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement.indusind .balance-row .item .lbl {
-            font-weight: 600;
-            color: #555;
-            font-size: 8px;
-            display: block;
-        }
-        .bank-statement.indusind .balance-row .item .val {
-            font-weight: 700;
-            color: #0066b3;
-        }
-        .bank-statement.indusind .period {
-            padding: 5px 20px;
-            font-size: 9.5px;
-            font-weight: 600;
-            color: #0066b3;
-            border-bottom: 1px solid #e0e0e0;
-            background: #fafbfc;
-        }
-        .bank-statement.indusind table th {
-            background: #0066b3;
-            color: #fff;
-            padding: 4px 7px;
-            font-size: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .bank-statement.indusind .footer {
-            padding: 8px 20px 10px;
-            background: #f8f9fa;
-            border-top: 2px solid #0066b3;
-            font-size: 7.5px;
-            color: #555;
-            text-align: center;
-            line-height: 1.7;
-        }
-        .bank-statement.indusind .footer strong {
-            color: #0066b3;
-        }
-
-        /* ─── CANARA STYLE ─── */
-        .bank-statement.canara .header {
-            background: #003366;
-            color: #fff;
-            padding: 12px 22px 8px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            border-bottom: 3px solid #fdb913;
-        }
-        .bank-statement.canara .header .logo-text {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-        .bank-statement.canara .header .logo-text small {
-            font-size: 9px;
-            font-weight: 400;
-            opacity: 0.8;
-            display: block;
-        }
-        .bank-statement.canara .header .branch-info {
-            margin-left: auto;
-            text-align: right;
-            font-size: 10px;
-            line-height: 1.3;
-        }
-        .bank-statement.canara .header .branch-info .bname {
-            font-weight: 700;
-            font-size: 12px;
-        }
-        .bank-statement.canara .header .branch-info .baddr {
-            font-size: 8.5px;
-            opacity: 0.85;
-        }
-        .bank-statement.canara .title {
-            text-align: center;
-            font-size: 15px;
-            font-weight: 700;
-            color: #003366;
-            padding: 10px 0 5px;
-            border-bottom: 2px solid #003366;
-            margin: 0 20px 6px;
-            letter-spacing: 2px;
-        }
-        .bank-statement.canara .acc-info {
-            padding: 6px 20px 8px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement.canara .acc-info .name {
-            font-size: 14px;
-            font-weight: 700;
-            color: #003366;
-        }
-        .bank-statement.canara .acc-info .email {
-            font-size: 9.5px;
-            color: #555;
-        }
-        .bank-statement.canara .acc-info .address {
-            font-size: 9.5px;
-            color: #444;
-            margin-top: 1px;
-        }
-        .bank-statement.canara .details-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 3px 25px;
-            padding: 8px 20px;
-            font-size: 9.5px;
-            border-bottom: 1px solid #e0e0e0;
-            background: #fafbfc;
-        }
-        .bank-statement.canara .details-grid .item {
-            display: flex;
-            justify-content: space-between;
-            padding: 2px 0;
-            border-bottom: 1px dotted #eee;
-        }
-        .bank-statement.canara .details-grid .item .lbl {
-            font-weight: 600;
-            color: #555;
-        }
-        .bank-statement.canara .details-grid .item .val {
-            font-weight: 600;
-            color: #1a1a2e;
-        }
-        .bank-statement.canara .balance-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-            gap: 3px;
-            padding: 5px 20px;
-            background: #e8ecf5;
-            font-size: 9px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement.canara .balance-row .item .lbl {
-            font-weight: 600;
-            color: #555;
-            font-size: 8px;
-            display: block;
-        }
-        .bank-statement.canara .balance-row .item .val {
-            font-weight: 700;
-            color: #003366;
-        }
-        .bank-statement.canara .period {
-            padding: 5px 20px;
-            font-size: 9.5px;
-            font-weight: 600;
-            color: #003366;
-            border-bottom: 1px solid #e0e0e0;
-            background: #fafbfc;
-        }
-        .bank-statement.canara table th {
-            background: #003366;
-            color: #fff;
-            padding: 4px 7px;
-            font-size: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .bank-statement.canara .footer {
-            padding: 8px 20px 10px;
-            background: #f8f9fa;
-            border-top: 2px solid #003366;
-            font-size: 7.5px;
-            color: #555;
-            text-align: center;
-            line-height: 1.7;
-        }
-        .bank-statement.canara .footer strong {
-            color: #003366;
-        }
-
-        /* ─── UNION STYLE ─── */
-        .bank-statement.union .header {
-            background: #1a3c6e;
-            color: #fff;
-            padding: 12px 22px 8px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            border-bottom: 3px solid #fdb913;
-        }
-        .bank-statement.union .header .logo-text {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-        .bank-statement.union .header .logo-text small {
-            font-size: 9px;
-            font-weight: 400;
-            opacity: 0.8;
-            display: block;
-        }
-        .bank-statement.union .header .branch-info {
-            margin-left: auto;
-            text-align: right;
-            font-size: 10px;
-            line-height: 1.3;
-        }
-        .bank-statement.union .header .branch-info .bname {
-            font-weight: 700;
-            font-size: 12px;
-        }
-        .bank-statement.union .header .branch-info .baddr {
-            font-size: 8.5px;
-            opacity: 0.85;
-        }
-        .bank-statement.union .title {
-            text-align: center;
-            font-size: 15px;
-            font-weight: 700;
-            color: #1a3c6e;
-            padding: 10px 0 5px;
-            border-bottom: 2px solid #1a3c6e;
-            margin: 0 20px 6px;
-            letter-spacing: 2px;
-        }
-        .bank-statement.union .acc-info {
-            padding: 6px 20px 8px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement.union .acc-info .name {
-            font-size: 14px;
-            font-weight: 700;
-            color: #1a3c6e;
-        }
-        .bank-statement.union .acc-info .email {
-            font-size: 9.5px;
-            color: #555;
-        }
-        .bank-statement.union .acc-info .address {
-            font-size: 9.5px;
-            color: #444;
-            margin-top: 1px;
-        }
-        .bank-statement.union .details-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 3px 25px;
-            padding: 8px 20px;
-            font-size: 9.5px;
-            border-bottom: 1px solid #e0e0e0;
-            background: #fafbfc;
-        }
-        .bank-statement.union .details-grid .item {
-            display: flex;
-            justify-content: space-between;
-            padding: 2px 0;
-            border-bottom: 1px dotted #eee;
-        }
-        .bank-statement.union .details-grid .item .lbl {
-            font-weight: 600;
-            color: #555;
-        }
-        .bank-statement.union .details-grid .item .val {
-            font-weight: 600;
-            color: #1a1a2e;
-        }
-        .bank-statement.union .balance-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-            gap: 3px;
-            padding: 5px 20px;
-            background: #e8ecf5;
-            font-size: 9px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement.union .balance-row .item .lbl {
-            font-weight: 600;
-            color: #555;
-            font-size: 8px;
-            display: block;
-        }
-        .bank-statement.union .balance-row .item .val {
-            font-weight: 700;
-            color: #1a3c6e;
-        }
-        .bank-statement.union .period {
-            padding: 5px 20px;
-            font-size: 9.5px;
-            font-weight: 600;
-            color: #1a3c6e;
-            border-bottom: 1px solid #e0e0e0;
-            background: #fafbfc;
-        }
-        .bank-statement.union table th {
-            background: #1a3c6e;
-            color: #fff;
-            padding: 4px 7px;
-            font-size: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .bank-statement.union .footer {
-            padding: 8px 20px 10px;
-            background: #f8f9fa;
-            border-top: 2px solid #1a3c6e;
-            font-size: 7.5px;
-            color: #555;
-            text-align: center;
-            line-height: 1.7;
-        }
-        .bank-statement.union .footer strong {
-            color: #1a3c6e;
-        }
-
-        /* ─── COMMON TABLE STYLES ─── */
         .bank-statement table {
             width: 100%;
             border-collapse: collapse;
             font-size: 9px;
+        }
+        .bank-statement table th {
+            padding: 4px 7px;
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         .bank-statement table td {
             padding: 3px 7px;
@@ -1657,6 +696,18 @@
             color: #c0392b;
             font-weight: 600;
         }
+        .bank-statement .footer {
+            padding: 8px 20px 10px;
+            background: #f8f9fa;
+            border-top: 2px solid;
+            font-size: 7.5px;
+            color: #555;
+            text-align: center;
+            line-height: 1.7;
+        }
+        .bank-statement .footer strong {
+            font-weight: 700;
+        }
 
         /* ─── DARK VARIANT ─── */
         .bank-statement.dark {
@@ -1673,6 +724,12 @@
         }
         .bank-statement.dark .acc-info .name {
             color: #f39c12 !important;
+        }
+        .bank-statement.dark .acc-info .email {
+            color: #aaa !important;
+        }
+        .bank-statement.dark .acc-info .address {
+            color: #aaa !important;
         }
         .bank-statement.dark .details-grid {
             background: #24243e !important;
@@ -1774,11 +831,10 @@
             }
             .bank-statement .header {
                 flex-wrap: wrap;
-                padding: 8px 12px !important;
+                padding: 10px 12px !important;
             }
             .bank-statement .header .branch-info {
                 text-align: left;
-                margin-left: 0;
                 width: 100%;
             }
             .bank-statement .details-grid {
@@ -1852,61 +908,61 @@
             <!-- LEFT -->
             <div>
                 <div class="card">
-                    <div class="card-title">👤 Account Details</div>
+                    <div class="card-title">👤 Account Details <span style="color:#999;font-weight:400;font-size:8px;">(Leave blank to fill manually)</span></div>
                     <div class="form-group">
                         <label>Account Holder Name</label>
-                        <input type="text" id="accName" value="Mr. ABHISHEK REKVAR" />
+                        <input type="text" id="accName" placeholder="Enter name" value="" />
                     </div>
                     <div class="form-group">
                         <label>Email</label>
-                        <input type="text" id="email" value="example@email.com" />
+                        <input type="text" id="email" placeholder="Enter email" value="" />
                     </div>
                     <div class="form-group">
                         <label>Address</label>
-                        <input type="text" id="address" value="WARD NO 14 HINOTIYA VIDISHA MADHYA PRADESH" />
+                        <input type="text" id="address" placeholder="Enter address" value="" />
                     </div>
                     <div class="inline">
                         <div class="form-group">
                             <label>Account Number</label>
-                            <input type="text" id="accNum" value="45222567869" />
+                            <input type="text" id="accNum" placeholder="Enter account number" value="" />
                         </div>
                         <div class="form-group">
                             <label>IFSC Code</label>
-                            <input type="text" id="ifsc" value="SBIN0012193" />
+                            <input type="text" id="ifsc" placeholder="Enter IFSC" value="" />
                         </div>
                     </div>
                     <div class="inline">
                         <div class="form-group">
                             <label>Branch Name</label>
-                            <input type="text" id="branch" value="SATI VIDISHA" />
+                            <input type="text" id="branch" placeholder="Enter branch" value="" />
                         </div>
                         <div class="form-group">
                             <label>Branch Code</label>
-                            <input type="text" id="branchCode" value="12193" />
+                            <input type="text" id="branchCode" placeholder="Enter code" value="" />
                         </div>
                     </div>
                     <div class="inline-3">
                         <div class="form-group">
                             <label>CIF Number</label>
-                            <input type="text" id="cif" value="92445569679" />
+                            <input type="text" id="cif" placeholder="Enter CIF" value="" />
                         </div>
                         <div class="form-group">
                             <label>MICR Code</label>
-                            <input type="text" id="micr" value="464002202" />
+                            <input type="text" id="micr" placeholder="Enter MICR" value="" />
                         </div>
                         <div class="form-group">
                             <label>CKYCR</label>
-                            <input type="text" id="ckycr" value="50046100545797" />
+                            <input type="text" id="ckycr" placeholder="Enter CKYCR" value="" />
                         </div>
                     </div>
                     <div class="inline">
                         <div class="form-group">
                             <label>Branch Phone</label>
-                            <input type="text" id="branchPhone" value="123456789" />
+                            <input type="text" id="branchPhone" placeholder="Enter phone" value="" />
                         </div>
                         <div class="form-group">
                             <label>Interest Rate</label>
-                            <input type="text" id="intRate" value="2.50" />
+                            <input type="text" id="intRate" placeholder="2.50" value="2.50" />
                         </div>
                     </div>
                 </div>
@@ -2096,17 +1152,18 @@
             const bankKey = document.querySelector('.bank-btn.active')?.dataset.bank || 'sbi';
             const bank = banks[bankKey];
 
-            const name = document.getElementById('accName').value || 'Customer';
-            const email = document.getElementById('email').value || '—';
-            const address = document.getElementById('address').value || '—';
-            const accNum = document.getElementById('accNum').value || '00000000000';
-            const ifsc = document.getElementById('ifsc').value || 'SBIN0000000';
-            const branch = document.getElementById('branch').value || 'MAIN BRANCH';
-            const branchCode = document.getElementById('branchCode').value || '00000';
-            const cif = document.getElementById('cif').value || '00000000000';
-            const micr = document.getElementById('micr').value || '000000000';
-            const ckycr = document.getElementById('ckycr').value || '00000000000000';
-            const branchPhone = document.getElementById('branchPhone').value || '—';
+            // Get values - if empty, show placeholder
+            const name = document.getElementById('accName').value || '_____________';
+            const email = document.getElementById('email').value || '_____________';
+            const address = document.getElementById('address').value || '_____________';
+            const accNum = document.getElementById('accNum').value || '_____________';
+            const ifsc = document.getElementById('ifsc').value || '_____________';
+            const branch = document.getElementById('branch').value || '_____________';
+            const branchCode = document.getElementById('branchCode').value || '_____________';
+            const cif = document.getElementById('cif').value || '_____________';
+            const micr = document.getElementById('micr').value || '_____________';
+            const ckycr = document.getElementById('ckycr').value || '_____________';
+            const branchPhone = document.getElementById('branchPhone').value || '_____________';
             const intRate = document.getElementById('intRate').value || '2.50';
 
             const monthlyIncome = Number(document.getElementById('monthlyIncome').value) || 0;
@@ -2174,7 +1231,6 @@
                 const month = date.getMonth();
                 const year = date.getFullYear();
 
-                // Salary
                 if (monthlyIncome > 0) {
                     const salDate = new Date(year, month, salaryDay);
                     if (salDate <= today) {
@@ -2191,7 +1247,6 @@
                     }
                 }
 
-                // Recurring
                 recurring.forEach(exp => {
                     const expDate = new Date(year, month, exp.day);
                     if (expDate <= today) {
@@ -2208,7 +1263,6 @@
                     }
                 });
 
-                // Random daily transactions
                 const daysInMonth = new Date(year, month + 1, 0).getDate();
                 for (let d = 1; d <= daysInMonth; d++) {
                     const curDate = new Date(year, month, d);
@@ -2254,7 +1308,6 @@
                 }
             }
 
-            // Sort by date
             transactions.sort((a, b) => a.date - b.date);
 
             // ─── Build HTML ───
@@ -2262,27 +1315,23 @@
             const bankCls = bank ? bank.cls : 'sbi';
             const bankName = bank ? bank.name : 'Bank';
             const bankShort = bank ? bank.short : 'SBI';
-            const bankColor = bank ? bank.color : '#1a5276';
 
             let rows = '';
             let totalDebits = 0,
                 totalCredits = 0;
 
-            transactions.forEach((t, index) => {
+            transactions.forEach((t) => {
                 const dateStr = t.date.toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit',
                     year: 'numeric' });
                 const debitStr = t.debit > 0 ? t.debit.toLocaleString() : '—';
                 const creditStr = t.credit > 0 ? t.credit.toLocaleString() : '—';
                 const balStr = Math.round(t.balance).toLocaleString();
-
-                const isCredit = t.balance >= 0;
-                const balClass = isCredit ? 'balance-cr' : 'balance-dr';
+                const balClass = t.balance >= 0 ? 'balance-cr' : 'balance-dr';
 
                 if (t.debit > 0) totalDebits += t.debit;
                 if (t.credit > 0) totalCredits += t.credit;
 
-                const isOpening = t.isOpening || false;
-                const rowStyle = isOpening ? 'font-weight:700;background:#f8f9fa;' : '';
+                const rowStyle = t.isOpening ? 'font-weight:700;background:#f8f9fa;' : '';
 
                 rows += `
                     <tr style="${rowStyle}">
@@ -2314,2479 +1363,12 @@
 
             const html = `
                 <div class="bank-statement ${bankCls} ${variantClass}" id="statementPrint">
-                    <!-- HEADER -->
+                    <!-- HEADER WITH LOGO -->
                     <div class="header">
-                        <div class="logo-text">
-                            ${bankName}
-                            <small>${bankShort} Bank</small>
-                        </div>
-                        <div class="branch-info">
-                            <div class="bname">${branch}</div>
-                            <div class="baddr">Branch Code: ${branchCode} | Phone: ${branchPhone}</div>
-                        </div>
-                    </div>
-
-                    <!-- TITLE -->
-                    <div class="title">STATEMENT OF ACCOUNT</div>
-
-                    <!-- ACCOUNT INFO -->
-                    <div class="acc-info">
-                        <div class="name">${name}</div>
-                        <div class="email">${email}</div>
-                        <div class="address">${address}</div>
-                    </div>
-
-                    <!-- DETAILS GRID -->
-                    <div class="details-grid">
-                        <div class="item"><span class="lbl">Date of Statement</span><span class="val">${genDate}</span></div>
-                        <div class="item"><span class="lbl">Clear Balance</span><span class="val">${openingBal.toLocaleString()}CR</span></div>
-                        <div class="item"><span class="lbl">Uncleared Amount</span><span class="val">0.00</span></div>
-                        <div class="item"><span class="lbl">MOD Bal</span><span class="val">0.00</span></div>
-                        <div class="item"><span class="lbl">Lien</span><span class="val">0.0</span></div>
-                        <div class="item"><span class="lbl">Limit</span><span class="val">0.00</span></div>
-                        <div class="item"><span class="lbl">Monthly Avg Balance</span><span class="val">0.00</span></div>
-                        <div class="item"><span class="lbl">Interest Rate</span><span class="val">${intRate} % p.a.</span></div>
-                        <div class="item"><span class="lbl">Drawing Power</span><span class="val">0.00</span></div>
-                    </div>
-
-                    <!-- BALANCE ROW -->
-                    <div class="balance-row">
-                        <div class="item"><span class="lbl">CIF Number</span><span class="val">${cif}</span></div>
-                        <div class="item"><span class="lbl">Account Number</span><span class="val">${accNum}</span></div>
-                        <div class="item"><span class="lbl">Product</span><span class="val">-</span></div>
-                        <div class="item"><span class="lbl">IFSC Code</span><span class="val">${ifsc}</span></div>
-                        <div class="item"><span class="lbl">Currency</span><span class="val">INR</span></div>
-                        <div class="item"><span class="lbl">Account Status</span><span class="val">OPEN</span></div>
-                        <div class="item"><span class="lbl">MICR Code</span><span class="val">${micr}</span></div>
-                    </div>
-
-                    <!-- PERIOD -->
-                    <div class="period">
-                        Account open Date: ${openDateStr} &nbsp;|&nbsp; Statement From: ${periodStr}
-                    </div>
-
-                    <!-- TABLE -->
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Value Date</th>
-                                <th>Post Date</th>
-                                <th>Details</th>
-                                <th>Ref No/Cheque No</th>
-                                <th>Debit</th>
-                                <th>Credit</th>
-                                <th>Balance</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${rows}
-                            <tr style="font-weight:700;border-top:2px solid;background:#f8f9fa;">
-                                <td colspan="4" style="text-align:right;">TOTAL</td>
-                                <td class="debit">${Math.round(totalDebits).toLocaleString()}</td>
-                                <td class="credit">${Math.round(totalCredits).toLocaleString()}</td>
-                                <td class="${closingClass}">${closingDisplay}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <!-- FOOTER -->
-                    <div class="footer">
-                        <strong>${bankName}</strong> · ${branch} · ${ifsc}<br />
-                        Please do not share your ATM, Debit/Credit Card number, PIN (Personal Identification number),
-                        OTP (One-Time Password), Username or Password with anyone via email, SMS, phone call, or any other medium.
-                        Bank never asks for such information. If your account is operated by a Power of Attorney holder,
-                        please review the transactions with extra care. This is a computer generated statement and does not require a signature.
-                        ${pdfPassword ? '🔒 Password Protected' : ''}
-                    </div>
-                </div>
-            `;
-
-            document.getElementById('statementContent').innerHTML = html;
-            document.getElementById('output').classList.add('show');
-            document.getElementById('output').scrollIntoView({ behavior: 'smooth', block: 'start' });
-            showToast('✅ Statement generated successfully!');
-        }
-
-        // ─── DOWNLOAD PDF ───
-        function downloadPDF() {
-            const element = document.getElementById('statementPrint');
-            if (!element) { showToast('❌ Please generate a statement first'); return; }
-
-            const orientation = document.querySelector('#pdfOrientation .active')?.dataset.value || 'portrait';
-            const bankKey = document.querySelector('.bank-btn.active')?.dataset.bank || 'sbi';
-            const bank = banks[bankKey];
-            const fileName =
-                `${bank ? bank.short : 'Bank'}_Statement_${new Date().toISOString().slice(0,10)}.pdf`;
-
-            const opt = {
-                margin: [0.4, 0.4, 0.4, 0.4],
-                filename: fileName,
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true },
-                jsPDF: { unit: 'in', format: 'a4', orientation: orientation },
-                pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
-            };
-
-            const clone = element.cloneNode(true);
-            clone.style.width = '100%';
-            clone.style.maxWidth = '100%';
-            clone.style.margin = '0 auto';
-
-            const container = document.createElement('div');
-            container.style.cssText = 'background:#fff;padding:0;max-width:1000px;margin:0 auto;';
-            container.appendChild(clone);
-            document.body.appendChild(container);
-
-            html2pdf().set(opt).from(container).save().then(() => {
-                document.body.removeChild(container);
-                showToast('📥 PDF downloaded successfully!');
-            }).catch(() => {
-                document.body.removeChild(container);
-                showToast('❌ Error generating PDF');
-            });
-        }
-
-        // ─── COPY ───
-        function copyStatement() {
-            const element = document.getElementById('statementPrint');
-            if (!element) { showToast('❌ Please generate a statement first'); return; }
-            const text = element.textContent;
-            navigator.clipboard.writeText(text).then(() => {
-                showToast('📋 Statement copied!');
-            }).catch(() => {
-                const range = document.createRange();
-                range.selectNode(element);
-                window.getSelection().removeAllRanges();
-                window.getSelection().addRange(range);
-                document.execCommand('copy');
-                window.getSelection().removeAllRanges();
-                showToast('📋 Statement copied!');
-            });
-        }
-    </script>
-
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bank Statement Generator - All Banks Official</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js">
-    </script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: #eef1f5;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-        }
-        .app {
-            max-width: 1100px;
-            width: 100%;
-            background: #fff;
-            border-radius: 14px;
-            padding: 25px 30px 30px;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
-        }
-        .app-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid #eef2f7;
-            padding-bottom: 12px;
-            margin-bottom: 18px;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .app-header h1 {
-            font-size: 20px;
-            font-weight: 700;
-            color: #1a1a2e;
-        }
-        .app-header h1 span {
-            color: #1a5276;
-        }
-        .app-header .badge {
-            font-size: 11px;
-            background: #eaf2f8;
-            color: #1a5276;
-            padding: 4px 16px;
-            border-radius: 20px;
-            font-weight: 600;
-        }
-
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-        @media (max-width: 780px) {
-            .grid-2 {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .card {
-            background: #f8f9fc;
-            border: 1px solid #e8ecf1;
-            border-radius: 10px;
-            padding: 14px 16px 18px;
-        }
-        .card-title {
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: #5d6d7e;
-            letter-spacing: 0.5px;
-            margin-bottom: 10px;
-        }
-
-        .form-group {
-            margin-bottom: 8px;
-        }
-        .form-group label {
-            display: block;
-            font-size: 9px;
-            font-weight: 600;
-            text-transform: uppercase;
-            color: #7f8c8d;
-            letter-spacing: 0.3px;
-            margin-bottom: 1px;
-        }
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 5px 10px;
-            border: 1px solid #d5dbdb;
-            border-radius: 5px;
-            font-size: 13px;
-            font-family: 'Segoe UI', sans-serif;
-            background: #fff;
-        }
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: #1a5276;
-            box-shadow: 0 0 0 3px rgba(26, 82, 118, 0.08);
-        }
-        .inline {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 6px;
-        }
-        .inline-3 {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 6px;
-        }
-        @media (max-width: 500px) {
-            .inline,
-            .inline-3 {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .pill-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 3px;
-        }
-        .pill {
-            padding: 3px 12px;
-            border-radius: 20px;
-            font-size: 10px;
-            font-weight: 500;
-            background: #e8ecf1;
-            color: #2c3e50;
-            border: 1.5px solid transparent;
-            cursor: pointer;
-            transition: 0.15s;
-        }
-        .pill:hover {
-            background: #d5dbdb;
-        }
-        .pill.active {
-            background: #1a5276;
-            color: #fff;
-            border-color: #1a5276;
-        }
-
-        .bank-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 4px;
-            margin-bottom: 8px;
-        }
-        .bank-btn {
-            padding: 5px 2px;
-            border: 2px solid #d5dbdb;
-            border-radius: 5px;
-            background: #fff;
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 10px;
-            transition: 0.2s;
-            text-align: center;
-            font-family: 'Segoe UI', sans-serif;
-        }
-        .bank-btn:hover {
-            border-color: #aab7b8;
-        }
-        .bank-btn.active {
-            border-color: #1a5276;
-            background: #eaf2f8;
-            color: #1a5276;
-        }
-
-        .bank-preview {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 6px 12px;
-            background: #fff;
-            border-radius: 5px;
-            border: 1px solid #d5dbdb;
-        }
-        .bank-preview .logo-box {
-            width: 32px;
-            height: 32px;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 9px;
-            color: #fff;
-        }
-        .bank-preview .bname {
-            font-weight: 700;
-            font-size: 13px;
-        }
-        .bank-preview .bsub {
-            font-size: 9px;
-            color: #7f8c8d;
-        }
-
-        .expense-item {
-            display: grid;
-            grid-template-columns: 2fr 1fr 0.8fr 0.3fr;
-            gap: 4px;
-            align-items: center;
-            background: #fff;
-            padding: 4px 6px;
-            border-radius: 5px;
-            margin-bottom: 4px;
-            border: 1px solid #d5dbdb;
-        }
-        .expense-item input,
-        .expense-item select {
-            padding: 3px 5px;
-            border: 1px solid #d5dbdb;
-            border-radius: 4px;
-            font-size: 11px;
-        }
-        .expense-item .remove-btn {
-            background: none;
-            border: none;
-            color: #e74c3c;
-            font-size: 14px;
-            cursor: pointer;
-            font-weight: 700;
-        }
-        .add-btn {
-            background: #eaf2f8;
-            border: none;
-            padding: 3px 12px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 10px;
-            cursor: pointer;
-            color: #1a5276;
-            margin-top: 3px;
-        }
-
-        .gen-btn {
-            width: 100%;
-            padding: 12px;
-            background: #1a5276;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.3s;
-            margin-top: 16px;
-            font-family: 'Segoe UI', sans-serif;
-        }
-        .gen-btn:hover {
-            background: #154360;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 20px rgba(26, 82, 118, 0.2);
-        }
-
-        #output {
-            display: none;
-            margin-top: 22px;
-        }
-        #output.show {
-            display: block;
-        }
-
-        /* ═══════════════════════════════════════════ */
-        /* ─── BANK STATEMENT STYLES ─── */
-        /* ═══════════════════════════════════════════ */
-
-        .bank-statement {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: #ffffff;
-            padding: 0;
-            max-width: 1000px;
-            margin: 0 auto;
-            font-size: 10.5px;
-            line-height: 1.5;
-            color: #1c1c1c;
-            border: 1px solid #b0b0b0;
-            border-radius: 2px;
-            overflow: hidden;
-        }
-
-        /* ─── SBI STYLE ─── */
-        .bank-statement.sbi .header {
-            background: #1a5276;
-            color: #fff;
-            padding: 12px 22px 8px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            border-bottom: 3px solid #f39c12;
-        }
-        .bank-statement.sbi .header .logo-text {
-            font-size: 24px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-        .bank-statement.sbi .header .logo-text small {
-            font-size: 9px;
-            font-weight: 400;
-            opacity: 0.8;
-            display: block;
-        }
-        .bank-statement.sbi .header .branch-info {
-            margin-left: auto;
-            text-align: right;
-            font-size: 10px;
-            line-height: 1.3;
-        }
-        .bank-statement.sbi .header .branch-info .bname {
-            font-weight: 700;
-            font-size: 12px;
-        }
-        .bank-statement.sbi .header .branch-info .baddr {
-            font-size: 8.5px;
-            opacity: 0.85;
-        }
-        .bank-statement.sbi .title {
-            text-align: center;
-            font-size: 15px;
-            font-weight: 700;
-            color: #1a5276;
-            padding: 10px 0 5px;
-            border-bottom: 2px solid #1a5276;
-            margin: 0 20px 6px;
-            letter-spacing: 2px;
-        }
-        .bank-statement.sbi .acc-info {
-            padding: 6px 20px 8px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement.sbi .acc-info .name {
-            font-size: 14px;
-            font-weight: 700;
-            color: #1a5276;
-        }
-        .bank-statement.sbi .acc-info .email {
-            font-size: 9.5px;
-            color: #555;
-        }
-        .bank-statement.sbi .acc-info .address {
-            font-size: 9.5px;
-            color: #444;
-            margin-top: 1px;
-        }
-        .bank-statement.sbi .details-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 3px 25px;
-            padding: 8px 20px;
-            font-size: 9.5px;
-            border-bottom: 1px solid #e0e0e0;
-            background: #fafbfc;
-        }
-        .bank-statement.sbi .details-grid .item {
-            display: flex;
-            justify-content: space-between;
-            padding: 2px 0;
-            border-bottom: 1px dotted #eee;
-        }
-        .bank-statement.sbi .details-grid .item .lbl {
-            font-weight: 600;
-            color: #555;
-        }
-        .bank-statement.sbi .details-grid .item .val {
-            font-weight: 600;
-            color: #1a1a2e;
-        }
-        .bank-statement.sbi .balance-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-            gap: 3px;
-            padding: 5px 20px;
-            background: #f0f5fa;
-            font-size: 9px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement.sbi .balance-row .item .lbl {
-            font-weight: 600;
-            color: #555;
-            font-size: 8px;
-            display: block;
-        }
-        .bank-statement.sbi .balance-row .item .val {
-            font-weight: 700;
-            color: #1a5276;
-        }
-        .bank-statement.sbi .period {
-            padding: 5px 20px;
-            font-size: 9.5px;
-            font-weight: 600;
-            color: #1a5276;
-            border-bottom: 1px solid #e0e0e0;
-            background: #fafbfc;
-        }
-        .bank-statement.sbi table th {
-            background: #1a5276;
-            color: #fff;
-            padding: 4px 7px;
-            font-size: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .bank-statement.sbi .footer {
-            padding: 8px 20px 10px;
-            background: #f8f9fa;
-            border-top: 2px solid #1a5276;
-            font-size: 7.5px;
-            color: #555;
-            text-align: center;
-            line-height: 1.7;
-        }
-        .bank-statement.sbi .footer strong {
-            color: #1a5276;
-        }
-
-        /* ─── HDFC STYLE ─── */
-        .bank-statement.hdfc .header {
-            background: #004d8c;
-            color: #fff;
-            padding: 12px 22px 8px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            border-bottom: 3px solid #e6b800;
-        }
-        .bank-statement.hdfc .header .logo-text {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-        .bank-statement.hdfc .header .logo-text small {
-            font-size: 9px;
-            font-weight: 400;
-            opacity: 0.8;
-            display: block;
-        }
-        .bank-statement.hdfc .header .branch-info {
-            margin-left: auto;
-            text-align: right;
-            font-size: 10px;
-            line-height: 1.3;
-        }
-        .bank-statement.hdfc .header .branch-info .bname {
-            font-weight: 700;
-            font-size: 12px;
-        }
-        .bank-statement.hdfc .header .branch-info .baddr {
-            font-size: 8.5px;
-            opacity: 0.85;
-        }
-        .bank-statement.hdfc .title {
-            text-align: center;
-            font-size: 15px;
-            font-weight: 700;
-            color: #004d8c;
-            padding: 10px 0 5px;
-            border-bottom: 2px solid #004d8c;
-            margin: 0 20px 6px;
-            letter-spacing: 2px;
-        }
-        .bank-statement.hdfc .acc-info {
-            padding: 6px 20px 8px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement.hdfc .acc-info .name {
-            font-size: 14px;
-            font-weight: 700;
-            color: #004d8c;
-        }
-        .bank-statement.hdfc .acc-info .email {
-            font-size: 9.5px;
-            color: #555;
-        }
-        .bank-statement.hdfc .acc-info .address {
-            font-size: 9.5px;
-            color: #444;
-            margin-top: 1px;
-        }
-        .bank-statement.hdfc .details-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 3px 25px;
-            padding: 8px 20px;
-            font-size: 9.5px;
-            border-bottom: 1px solid #e0e0e0;
-            background: #fafbfc;
-        }
-        .bank-statement.hdfc .details-grid .item {
-            display: flex;
-            justify-content: space-between;
-            padding: 2px 0;
-            border-bottom: 1px dotted #eee;
-        }
-        .bank-statement.hdfc .details-grid .item .lbl {
-            font-weight: 600;
-            color: #555;
-        }
-        .bank-statement.hdfc .details-grid .item .val {
-            font-weight: 600;
-            color: #1a1a2e;
-        }
-        .bank-statement.hdfc .balance-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-            gap: 3px;
-            padding: 5px 20px;
-            background: #e8f0f8;
-            font-size: 9px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement.hdfc .balance-row .item .lbl {
-            font-weight: 600;
-            color: #555;
-            font-size: 8px;
-            display: block;
-        }
-        .bank-statement.hdfc .balance-row .item .val {
-            font-weight: 700;
-            color: #004d8c;
-        }
-        .bank-statement.hdfc .period {
-            padding: 5px 20px;
-            font-size: 9.5px;
-            font-weight: 600;
-            color: #004d8c;
-            border-bottom: 1px solid #e0e0e0;
-            background: #fafbfc;
-        }
-        .bank-statement.hdfc table th {
-            background: #004d8c;
-            color: #fff;
-            padding: 4px 7px;
-            font-size: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .bank-statement.hdfc .footer {
-            padding: 8px 20px 10px;
-            background: #f8f9fa;
-            border-top: 2px solid #004d8c;
-            font-size: 7.5px;
-            color: #555;
-            text-align: center;
-            line-height: 1.7;
-        }
-        .bank-statement.hdfc .footer strong {
-            color: #004d8c;
-        }
-
-        /* ─── ICICI STYLE ─── */
-        .bank-statement.icici .header {
-            background: #ed1c24;
-            color: #fff;
-            padding: 12px 22px 8px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            border-bottom: 3px solid #0033a0;
-        }
-        .bank-statement.icici .header .logo-text {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-        .bank-statement.icici .header .logo-text small {
-            font-size: 9px;
-            font-weight: 400;
-            opacity: 0.8;
-            display: block;
-        }
-        .bank-statement.icici .header .branch-info {
-            margin-left: auto;
-            text-align: right;
-            font-size: 10px;
-            line-height: 1.3;
-        }
-        .bank-statement.icici .header .branch-info .bname {
-            font-weight: 700;
-            font-size: 12px;
-        }
-        .bank-statement.icici .header .branch-info .baddr {
-            font-size: 8.5px;
-            opacity: 0.85;
-        }
-        .bank-statement.icici .title {
-            text-align: center;
-            font-size: 15px;
-            font-weight: 700;
-            color: #ed1c24;
-            padding: 10px 0 5px;
-            border-bottom: 2px solid #ed1c24;
-            margin: 0 20px 6px;
-            letter-spacing: 2px;
-        }
-        .bank-statement.icici .acc-info {
-            padding: 6px 20px 8px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement.icici .acc-info .name {
-            font-size: 14px;
-            font-weight: 700;
-            color: #ed1c24;
-        }
-        .bank-statement.icici .acc-info .email {
-            font-size: 9.5px;
-            color: #555;
-        }
-        .bank-statement.icici .acc-info .address {
-            font-size: 9.5px;
-            color: #444;
-            margin-top: 1px;
-        }
-        .bank-statement.icici .details-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 3px 25px;
-            padding: 8px 20px;
-            font-size: 9.5px;
-            border-bottom: 1px solid #e0e0e0;
-            background: #fafbfc;
-        }
-        .bank-statement.icici .details-grid .item {
-            display: flex;
-            justify-content: space-between;
-            padding: 2px 0;
-            border-bottom: 1px dotted #eee;
-        }
-        .bank-statement.icici .details-grid .item .lbl {
-            font-weight: 600;
-            color: #555;
-        }
-        .bank-statement.icici .details-grid .item .val {
-            font-weight: 600;
-            color: #1a1a2e;
-        }
-        .bank-statement.icici .balance-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-            gap: 3px;
-            padding: 5px 20px;
-            background: #fdf0f0;
-            font-size: 9px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement.icici .balance-row .item .lbl {
-            font-weight: 600;
-            color: #555;
-            font-size: 8px;
-            display: block;
-        }
-        .bank-statement.icici .balance-row .item .val {
-            font-weight: 700;
-            color: #ed1c24;
-        }
-        .bank-statement.icici .period {
-            padding: 5px 20px;
-            font-size: 9.5px;
-            font-weight: 600;
-            color: #ed1c24;
-            border-bottom: 1px solid #e0e0e0;
-            background: #fafbfc;
-        }
-        .bank-statement.icici table th {
-            background: #ed1c24;
-            color: #fff;
-            padding: 4px 7px;
-            font-size: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .bank-statement.icici .footer {
-            padding: 8px 20px 10px;
-            background: #f8f9fa;
-            border-top: 2px solid #ed1c24;
-            font-size: 7.5px;
-            color: #555;
-            text-align: center;
-            line-height: 1.7;
-        }
-        .bank-statement.icici .footer strong {
-            color: #ed1c24;
-        }
-
-        /* ─── AXIS STYLE ─── */
-        .bank-statement.axis .header {
-            background: #a2001a;
-            color: #fff;
-            padding: 12px 22px 8px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            border-bottom: 3px solid #fdb913;
-        }
-        .bank-statement.axis .header .logo-text {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-        .bank-statement.axis .header .logo-text small {
-            font-size: 9px;
-            font-weight: 400;
-            opacity: 0.8;
-            display: block;
-        }
-        .bank-statement.axis .header .branch-info {
-            margin-left: auto;
-            text-align: right;
-            font-size: 10px;
-            line-height: 1.3;
-        }
-        .bank-statement.axis .header .branch-info .bname {
-            font-weight: 700;
-            font-size: 12px;
-        }
-        .bank-statement.axis .header .branch-info .baddr {
-            font-size: 8.5px;
-            opacity: 0.85;
-        }
-        .bank-statement.axis .title {
-            text-align: center;
-            font-size: 15px;
-            font-weight: 700;
-            color: #a2001a;
-            padding: 10px 0 5px;
-            border-bottom: 2px solid #a2001a;
-            margin: 0 20px 6px;
-            letter-spacing: 2px;
-        }
-        .bank-statement.axis .acc-info {
-            padding: 6px 20px 8px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement.axis .acc-info .name {
-            font-size: 14px;
-            font-weight: 700;
-            color: #a2001a;
-        }
-        .bank-statement.axis .acc-info .email {
-            font-size: 9.5px;
-            color: #555;
-        }
-        .bank-statement.axis .acc-info .address {
-            font-size: 9.5px;
-            color: #444;
-            margin-top: 1px;
-        }
-        .bank-statement.axis .details-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 3px 25px;
-            padding: 8px 20px;
-            font-size: 9.5px;
-            border-bottom: 1px solid #e0e0e0;
-            background: #fafbfc;
-        }
-        .bank-statement.axis .details-grid .item {
-            display: flex;
-            justify-content: space-between;
-            padding: 2px 0;
-            border-bottom: 1px dotted #eee;
-        }
-        .bank-statement.axis .details-grid .item .lbl {
-            font-weight: 600;
-            color: #555;
-        }
-        .bank-statement.axis .details-grid .item .val {
-            font-weight: 600;
-            color: #1a1a2e;
-        }
-        .bank-statement.axis .balance-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-            gap: 3px;
-            padding: 5px 20px;
-            background: #fdf0f0;
-            font-size: 9px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement.axis .balance-row .item .lbl {
-            font-weight: 600;
-            color: #555;
-            font-size: 8px;
-            display: block;
-        }
-        .bank-statement.axis .balance-row .item .val {
-            font-weight: 700;
-            color: #a2001a;
-        }
-        .bank-statement.axis .period {
-            padding: 5px 20px;
-            font-size: 9.5px;
-            font-weight: 600;
-            color: #a2001a;
-            border-bottom: 1px solid #e0e0e0;
-            background: #fafbfc;
-        }
-        .bank-statement.axis table th {
-            background: #a2001a;
-            color: #fff;
-            padding: 4px 7px;
-            font-size: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .bank-statement.axis .footer {
-            padding: 8px 20px 10px;
-            background: #f8f9fa;
-            border-top: 2px solid #a2001a;
-            font-size: 7.5px;
-            color: #555;
-            text-align: center;
-            line-height: 1.7;
-        }
-        .bank-statement.axis .footer strong {
-            color: #a2001a;
-        }
-
-        /* ─── KOTAK STYLE ─── */
-        .bank-statement.kotak .header {
-            background: #1a2b5c;
-            color: #fff;
-            padding: 12px 22px 8px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            border-bottom: 3px solid #e6b800;
-        }
-        .bank-statement.kotak .header .logo-text {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-        .bank-statement.kotak .header .logo-text small {
-            font-size: 9px;
-            font-weight: 400;
-            opacity: 0.8;
-            display: block;
-        }
-        .bank-statement.kotak .header .branch-info {
-            margin-left: auto;
-            text-align: right;
-            font-size: 10px;
-            line-height: 1.3;
-        }
-        .bank-statement.kotak .header .branch-info .bname {
-            font-weight: 700;
-            font-size: 12px;
-        }
-        .bank-statement.kotak .header .branch-info .baddr {
-            font-size: 8.5px;
-            opacity: 0.85;
-        }
-        .bank-statement.kotak .title {
-            text-align: center;
-            font-size: 15px;
-            font-weight: 700;
-            color: #1a2b5c;
-            padding: 10px 0 5px;
-            border-bottom: 2px solid #1a2b5c;
-            margin: 0 20px 6px;
-            letter-spacing: 2px;
-        }
-        .bank-statement.kotak .acc-info {
-            padding: 6px 20px 8px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement.kotak .acc-info .name {
-            font-size: 14px;
-            font-weight: 700;
-            color: #1a2b5c;
-        }
-        .bank-statement.kotak .acc-info .email {
-            font-size: 9.5px;
-            color: #555;
-        }
-        .bank-statement.kotak .acc-info .address {
-            font-size: 9.5px;
-            color: #444;
-            margin-top: 1px;
-        }
-        .bank-statement.kotak .details-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 3px 25px;
-            padding: 8px 20px;
-            font-size: 9.5px;
-            border-bottom: 1px solid #e0e0e0;
-            background: #fafbfc;
-        }
-        .bank-statement.kotak .details-grid .item {
-            display: flex;
-            justify-content: space-between;
-            padding: 2px 0;
-            border-bottom: 1px dotted #eee;
-        }
-        .bank-statement.kotak .details-grid .item .lbl {
-            font-weight: 600;
-            color: #555;
-        }
-        .bank-statement.kotak .details-grid .item .val {
-            font-weight: 600;
-            color: #1a1a2e;
-        }
-        .bank-statement.kotak .balance-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-            gap: 3px;
-            padding: 5px 20px;
-            background: #e8ecf5;
-            font-size: 9px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement.kotak .balance-row .item .lbl {
-            font-weight: 600;
-            color: #555;
-            font-size: 8px;
-            display: block;
-        }
-        .bank-statement.kotak .balance-row .item .val {
-            font-weight: 700;
-            color: #1a2b5c;
-        }
-        .bank-statement.kotak .period {
-            padding: 5px 20px;
-            font-size: 9.5px;
-            font-weight: 600;
-            color: #1a2b5c;
-            border-bottom: 1px solid #e0e0e0;
-            background: #fafbfc;
-        }
-        .bank-statement.kotak table th {
-            background: #1a2b5c;
-            color: #fff;
-            padding: 4px 7px;
-            font-size: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .bank-statement.kotak .footer {
-            padding: 8px 20px 10px;
-            background: #f8f9fa;
-            border-top: 2px solid #1a2b5c;
-            font-size: 7.5px;
-            color: #555;
-            text-align: center;
-            line-height: 1.7;
-        }
-        .bank-statement.kotak .footer strong {
-            color: #1a2b5c;
-        }
-
-        /* ─── BOB STYLE ─── */
-        .bank-statement.bob .header {
-            background: #1f3a7a;
-            color: #fff;
-            padding: 12px 22px 8px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            border-bottom: 3px solid #fdb913;
-        }
-        .bank-statement.bob .header .logo-text {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-        .bank-statement.bob .header .logo-text small {
-            font-size: 9px;
-            font-weight: 400;
-            opacity: 0.8;
-            display: block;
-        }
-        .bank-statement.bob .header .branch-info {
-            margin-left: auto;
-            text-align: right;
-            font-size: 10px;
-            line-height: 1.3;
-        }
-        .bank-statement.bob .header .branch-info .bname {
-            font-weight: 700;
-            font-size: 12px;
-        }
-        .bank-statement.bob .header .branch-info .baddr {
-            font-size: 8.5px;
-            opacity: 0.85;
-        }
-        .bank-statement.bob .title {
-            text-align: center;
-            font-size: 15px;
-            font-weight: 700;
-            color: #1f3a7a;
-            padding: 10px 0 5px;
-            border-bottom: 2px solid #1f3a7a;
-            margin: 0 20px 6px;
-            letter-spacing: 2px;
-        }
-        .bank-statement.bob .acc-info {
-            padding: 6px 20px 8px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement.bob .acc-info .name {
-            font-size: 14px;
-            font-weight: 700;
-            color: #1f3a7a;
-        }
-        .bank-statement.bob .acc-info .email {
-            font-size: 9.5px;
-            color: #555;
-        }
-        .bank-statement.bob .acc-info .address {
-            font-size: 9.5px;
-            color: #444;
-            margin-top: 1px;
-        }
-        .bank-statement.bob .details-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 3px 25px;
-            padding: 8px 20px;
-            font-size: 9.5px;
-            border-bottom: 1px solid #e0e0e0;
-            background: #fafbfc;
-        }
-        .bank-statement.bob .details-grid .item {
-            display: flex;
-            justify-content: space-between;
-            padding: 2px 0;
-            border-bottom: 1px dotted #eee;
-        }
-        .bank-statement.bob .details-grid .item .lbl {
-            font-weight: 600;
-            color: #555;
-        }
-        .bank-statement.bob .details-grid .item .val {
-            font-weight: 600;
-            color: #1a1a2e;
-        }
-        .bank-statement.bob .balance-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-            gap: 3px;
-            padding: 5px 20px;
-            background: #e8ecf5;
-            font-size: 9px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement.bob .balance-row .item .lbl {
-            font-weight: 600;
-            color: #555;
-            font-size: 8px;
-            display: block;
-        }
-        .bank-statement.bob .balance-row .item .val {
-            font-weight: 700;
-            color: #1f3a7a;
-        }
-        .bank-statement.bob .period {
-            padding: 5px 20px;
-            font-size: 9.5px;
-            font-weight: 600;
-            color: #1f3a7a;
-            border-bottom: 1px solid #e0e0e0;
-            background: #fafbfc;
-        }
-        .bank-statement.bob table th {
-            background: #1f3a7a;
-            color: #fff;
-            padding: 4px 7px;
-            font-size: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .bank-statement.bob .footer {
-            padding: 8px 20px 10px;
-            background: #f8f9fa;
-            border-top: 2px solid #1f3a7a;
-            font-size: 7.5px;
-            color: #555;
-            text-align: center;
-            line-height: 1.7;
-        }
-        .bank-statement.bob .footer strong {
-            color: #1f3a7a;
-        }
-
-        /* ─── PNB STYLE ─── */
-        .bank-statement.pnb .header {
-            background: #b8860b;
-            color: #fff;
-            padding: 12px 22px 8px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            border-bottom: 3px solid #1a3c6e;
-        }
-        .bank-statement.pnb .header .logo-text {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-        .bank-statement.pnb .header .logo-text small {
-            font-size: 9px;
-            font-weight: 400;
-            opacity: 0.8;
-            display: block;
-        }
-        .bank-statement.pnb .header .branch-info {
-            margin-left: auto;
-            text-align: right;
-            font-size: 10px;
-            line-height: 1.3;
-        }
-        .bank-statement.pnb .header .branch-info .bname {
-            font-weight: 700;
-            font-size: 12px;
-        }
-        .bank-statement.pnb .header .branch-info .baddr {
-            font-size: 8.5px;
-            opacity: 0.85;
-        }
-        .bank-statement.pnb .title {
-            text-align: center;
-            font-size: 15px;
-            font-weight: 700;
-            color: #b8860b;
-            padding: 10px 0 5px;
-            border-bottom: 2px solid #b8860b;
-            margin: 0 20px 6px;
-            letter-spacing: 2px;
-        }
-        .bank-statement.pnb .acc-info {
-            padding: 6px 20px 8px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement.pnb .acc-info .name {
-            font-size: 14px;
-            font-weight: 700;
-            color: #b8860b;
-        }
-        .bank-statement.pnb .acc-info .email {
-            font-size: 9.5px;
-            color: #555;
-        }
-        .bank-statement.pnb .acc-info .address {
-            font-size: 9.5px;
-            color: #444;
-            margin-top: 1px;
-        }
-        .bank-statement.pnb .details-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 3px 25px;
-            padding: 8px 20px;
-            font-size: 9.5px;
-            border-bottom: 1px solid #e0e0e0;
-            background: #fafbfc;
-        }
-        .bank-statement.pnb .details-grid .item {
-            display: flex;
-            justify-content: space-between;
-            padding: 2px 0;
-            border-bottom: 1px dotted #eee;
-        }
-        .bank-statement.pnb .details-grid .item .lbl {
-            font-weight: 600;
-            color: #555;
-        }
-        .bank-statement.pnb .details-grid .item .val {
-            font-weight: 600;
-            color: #1a1a2e;
-        }
-        .bank-statement.pnb .balance-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-            gap: 3px;
-            padding: 5px 20px;
-            background: #fcf8e8;
-            font-size: 9px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement.pnb .balance-row .item .lbl {
-            font-weight: 600;
-            color: #555;
-            font-size: 8px;
-            display: block;
-        }
-        .bank-statement.pnb .balance-row .item .val {
-            font-weight: 700;
-            color: #b8860b;
-        }
-        .bank-statement.pnb .period {
-            padding: 5px 20px;
-            font-size: 9.5px;
-            font-weight: 600;
-            color: #b8860b;
-            border-bottom: 1px solid #e0e0e0;
-            background: #fafbfc;
-        }
-        .bank-statement.pnb table th {
-            background: #b8860b;
-            color: #fff;
-            padding: 4px 7px;
-            font-size: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .bank-statement.pnb .footer {
-            padding: 8px 20px 10px;
-            background: #f8f9fa;
-            border-top: 2px solid #b8860b;
-            font-size: 7.5px;
-            color: #555;
-            text-align: center;
-            line-height: 1.7;
-        }
-        .bank-statement.pnb .footer strong {
-            color: #b8860b;
-        }
-
-        /* ─── INDUSIND STYLE ─── */
-        .bank-statement.indusind .header {
-            background: #0066b3;
-            color: #fff;
-            padding: 12px 22px 8px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            border-bottom: 3px solid #e6b800;
-        }
-        .bank-statement.indusind .header .logo-text {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-        .bank-statement.indusind .header .logo-text small {
-            font-size: 9px;
-            font-weight: 400;
-            opacity: 0.8;
-            display: block;
-        }
-        .bank-statement.indusind .header .branch-info {
-            margin-left: auto;
-            text-align: right;
-            font-size: 10px;
-            line-height: 1.3;
-        }
-        .bank-statement.indusind .header .branch-info .bname {
-            font-weight: 700;
-            font-size: 12px;
-        }
-        .bank-statement.indusind .header .branch-info .baddr {
-            font-size: 8.5px;
-            opacity: 0.85;
-        }
-        .bank-statement.indusind .title {
-            text-align: center;
-            font-size: 15px;
-            font-weight: 700;
-            color: #0066b3;
-            padding: 10px 0 5px;
-            border-bottom: 2px solid #0066b3;
-            margin: 0 20px 6px;
-            letter-spacing: 2px;
-        }
-        .bank-statement.indusind .acc-info {
-            padding: 6px 20px 8px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement.indusind .acc-info .name {
-            font-size: 14px;
-            font-weight: 700;
-            color: #0066b3;
-        }
-        .bank-statement.indusind .acc-info .email {
-            font-size: 9.5px;
-            color: #555;
-        }
-        .bank-statement.indusind .acc-info .address {
-            font-size: 9.5px;
-            color: #444;
-            margin-top: 1px;
-        }
-        .bank-statement.indusind .details-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 3px 25px;
-            padding: 8px 20px;
-            font-size: 9.5px;
-            border-bottom: 1px solid #e0e0e0;
-            background: #fafbfc;
-        }
-        .bank-statement.indusind .details-grid .item {
-            display: flex;
-            justify-content: space-between;
-            padding: 2px 0;
-            border-bottom: 1px dotted #eee;
-        }
-        .bank-statement.indusind .details-grid .item .lbl {
-            font-weight: 600;
-            color: #555;
-        }
-        .bank-statement.indusind .details-grid .item .val {
-            font-weight: 600;
-            color: #1a1a2e;
-        }
-        .bank-statement.indusind .balance-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-            gap: 3px;
-            padding: 5px 20px;
-            background: #e8f0f8;
-            font-size: 9px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement.indusind .balance-row .item .lbl {
-            font-weight: 600;
-            color: #555;
-            font-size: 8px;
-            display: block;
-        }
-        .bank-statement.indusind .balance-row .item .val {
-            font-weight: 700;
-            color: #0066b3;
-        }
-        .bank-statement.indusind .period {
-            padding: 5px 20px;
-            font-size: 9.5px;
-            font-weight: 600;
-            color: #0066b3;
-            border-bottom: 1px solid #e0e0e0;
-            background: #fafbfc;
-        }
-        .bank-statement.indusind table th {
-            background: #0066b3;
-            color: #fff;
-            padding: 4px 7px;
-            font-size: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .bank-statement.indusind .footer {
-            padding: 8px 20px 10px;
-            background: #f8f9fa;
-            border-top: 2px solid #0066b3;
-            font-size: 7.5px;
-            color: #555;
-            text-align: center;
-            line-height: 1.7;
-        }
-        .bank-statement.indusind .footer strong {
-            color: #0066b3;
-        }
-
-        /* ─── CANARA STYLE ─── */
-        .bank-statement.canara .header {
-            background: #003366;
-            color: #fff;
-            padding: 12px 22px 8px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            border-bottom: 3px solid #fdb913;
-        }
-        .bank-statement.canara .header .logo-text {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-        .bank-statement.canara .header .logo-text small {
-            font-size: 9px;
-            font-weight: 400;
-            opacity: 0.8;
-            display: block;
-        }
-        .bank-statement.canara .header .branch-info {
-            margin-left: auto;
-            text-align: right;
-            font-size: 10px;
-            line-height: 1.3;
-        }
-        .bank-statement.canara .header .branch-info .bname {
-            font-weight: 700;
-            font-size: 12px;
-        }
-        .bank-statement.canara .header .branch-info .baddr {
-            font-size: 8.5px;
-            opacity: 0.85;
-        }
-        .bank-statement.canara .title {
-            text-align: center;
-            font-size: 15px;
-            font-weight: 700;
-            color: #003366;
-            padding: 10px 0 5px;
-            border-bottom: 2px solid #003366;
-            margin: 0 20px 6px;
-            letter-spacing: 2px;
-        }
-        .bank-statement.canara .acc-info {
-            padding: 6px 20px 8px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement.canara .acc-info .name {
-            font-size: 14px;
-            font-weight: 700;
-            color: #003366;
-        }
-        .bank-statement.canara .acc-info .email {
-            font-size: 9.5px;
-            color: #555;
-        }
-        .bank-statement.canara .acc-info .address {
-            font-size: 9.5px;
-            color: #444;
-            margin-top: 1px;
-        }
-        .bank-statement.canara .details-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 3px 25px;
-            padding: 8px 20px;
-            font-size: 9.5px;
-            border-bottom: 1px solid #e0e0e0;
-            background: #fafbfc;
-        }
-        .bank-statement.canara .details-grid .item {
-            display: flex;
-            justify-content: space-between;
-            padding: 2px 0;
-            border-bottom: 1px dotted #eee;
-        }
-        .bank-statement.canara .details-grid .item .lbl {
-            font-weight: 600;
-            color: #555;
-        }
-        .bank-statement.canara .details-grid .item .val {
-            font-weight: 600;
-            color: #1a1a2e;
-        }
-        .bank-statement.canara .balance-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-            gap: 3px;
-            padding: 5px 20px;
-            background: #e8ecf5;
-            font-size: 9px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement.canara .balance-row .item .lbl {
-            font-weight: 600;
-            color: #555;
-            font-size: 8px;
-            display: block;
-        }
-        .bank-statement.canara .balance-row .item .val {
-            font-weight: 700;
-            color: #003366;
-        }
-        .bank-statement.canara .period {
-            padding: 5px 20px;
-            font-size: 9.5px;
-            font-weight: 600;
-            color: #003366;
-            border-bottom: 1px solid #e0e0e0;
-            background: #fafbfc;
-        }
-        .bank-statement.canara table th {
-            background: #003366;
-            color: #fff;
-            padding: 4px 7px;
-            font-size: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .bank-statement.canara .footer {
-            padding: 8px 20px 10px;
-            background: #f8f9fa;
-            border-top: 2px solid #003366;
-            font-size: 7.5px;
-            color: #555;
-            text-align: center;
-            line-height: 1.7;
-        }
-        .bank-statement.canara .footer strong {
-            color: #003366;
-        }
-
-        /* ─── UNION STYLE ─── */
-        .bank-statement.union .header {
-            background: #1a3c6e;
-            color: #fff;
-            padding: 12px 22px 8px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            border-bottom: 3px solid #fdb913;
-        }
-        .bank-statement.union .header .logo-text {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-        .bank-statement.union .header .logo-text small {
-            font-size: 9px;
-            font-weight: 400;
-            opacity: 0.8;
-            display: block;
-        }
-        .bank-statement.union .header .branch-info {
-            margin-left: auto;
-            text-align: right;
-            font-size: 10px;
-            line-height: 1.3;
-        }
-        .bank-statement.union .header .branch-info .bname {
-            font-weight: 700;
-            font-size: 12px;
-        }
-        .bank-statement.union .header .branch-info .baddr {
-            font-size: 8.5px;
-            opacity: 0.85;
-        }
-        .bank-statement.union .title {
-            text-align: center;
-            font-size: 15px;
-            font-weight: 700;
-            color: #1a3c6e;
-            padding: 10px 0 5px;
-            border-bottom: 2px solid #1a3c6e;
-            margin: 0 20px 6px;
-            letter-spacing: 2px;
-        }
-        .bank-statement.union .acc-info {
-            padding: 6px 20px 8px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement.union .acc-info .name {
-            font-size: 14px;
-            font-weight: 700;
-            color: #1a3c6e;
-        }
-        .bank-statement.union .acc-info .email {
-            font-size: 9.5px;
-            color: #555;
-        }
-        .bank-statement.union .acc-info .address {
-            font-size: 9.5px;
-            color: #444;
-            margin-top: 1px;
-        }
-        .bank-statement.union .details-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 3px 25px;
-            padding: 8px 20px;
-            font-size: 9.5px;
-            border-bottom: 1px solid #e0e0e0;
-            background: #fafbfc;
-        }
-        .bank-statement.union .details-grid .item {
-            display: flex;
-            justify-content: space-between;
-            padding: 2px 0;
-            border-bottom: 1px dotted #eee;
-        }
-        .bank-statement.union .details-grid .item .lbl {
-            font-weight: 600;
-            color: #555;
-        }
-        .bank-statement.union .details-grid .item .val {
-            font-weight: 600;
-            color: #1a1a2e;
-        }
-        .bank-statement.union .balance-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-            gap: 3px;
-            padding: 5px 20px;
-            background: #e8ecf5;
-            font-size: 9px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .bank-statement.union .balance-row .item .lbl {
-            font-weight: 600;
-            color: #555;
-            font-size: 8px;
-            display: block;
-        }
-        .bank-statement.union .balance-row .item .val {
-            font-weight: 700;
-            color: #1a3c6e;
-        }
-        .bank-statement.union .period {
-            padding: 5px 20px;
-            font-size: 9.5px;
-            font-weight: 600;
-            color: #1a3c6e;
-            border-bottom: 1px solid #e0e0e0;
-            background: #fafbfc;
-        }
-        .bank-statement.union table th {
-            background: #1a3c6e;
-            color: #fff;
-            padding: 4px 7px;
-            font-size: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .bank-statement.union .footer {
-            padding: 8px 20px 10px;
-            background: #f8f9fa;
-            border-top: 2px solid #1a3c6e;
-            font-size: 7.5px;
-            color: #555;
-            text-align: center;
-            line-height: 1.7;
-        }
-        .bank-statement.union .footer strong {
-            color: #1a3c6e;
-        }
-
-        /* ─── COMMON TABLE STYLES ─── */
-        .bank-statement table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 9px;
-        }
-        .bank-statement table td {
-            padding: 3px 7px;
-            border-bottom: 1px solid #eee;
-            font-size: 8.5px;
-        }
-        .bank-statement table .debit {
-            color: #c0392b;
-            font-weight: 600;
-        }
-        .bank-statement table .credit {
-            color: #27ae60;
-            font-weight: 600;
-        }
-        .bank-statement table .balance-cr {
-            color: #27ae60;
-            font-weight: 600;
-        }
-        .bank-statement table .balance-dr {
-            color: #c0392b;
-            font-weight: 600;
-        }
-
-        /* ─── DARK VARIANT ─── */
-        .bank-statement.dark {
-            background: #1a1a2e;
-            color: #e8e8e8;
-            border-color: #444;
-        }
-        .bank-statement.dark .header {
-            background: #0d1a2e !important;
-        }
-        .bank-statement.dark .title {
-            color: #f39c12 !important;
-            border-bottom-color: #f39c12 !important;
-        }
-        .bank-statement.dark .acc-info .name {
-            color: #f39c12 !important;
-        }
-        .bank-statement.dark .details-grid {
-            background: #24243e !important;
-            border-bottom-color: #333 !important;
-        }
-        .bank-statement.dark .details-grid .item {
-            border-bottom-color: #333 !important;
-        }
-        .bank-statement.dark .details-grid .item .val {
-            color: #e8e8e8 !important;
-        }
-        .bank-statement.dark .balance-row {
-            background: #1a1a3e !important;
-            border-bottom-color: #333 !important;
-        }
-        .bank-statement.dark .balance-row .item .val {
-            color: #f39c12 !important;
-        }
-        .bank-statement.dark .period {
-            background: #24243e !important;
-            border-bottom-color: #333 !important;
-            color: #f39c12 !important;
-        }
-        .bank-statement.dark table th {
-            background: #0d1a2e !important;
-            color: #f39c12 !important;
-        }
-        .bank-statement.dark table td {
-            border-bottom-color: #333 !important;
-        }
-        .bank-statement.dark .footer {
-            background: #24243e !important;
-            border-top-color: #f39c12 !important;
-            color: #999 !important;
-        }
-        .bank-statement.dark .footer strong {
-            color: #f39c12 !important;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 10px;
-            margin-top: 12px;
-            flex-wrap: wrap;
-        }
-        .btn-group button {
-            flex: 1;
-            padding: 8px;
-            border: none;
-            border-radius: 6px;
-            font-weight: 700;
-            font-size: 12px;
-            cursor: pointer;
-            min-width: 80px;
-            font-family: 'Segoe UI', sans-serif;
-        }
-        .btn-primary {
-            background: #1a5276;
-            color: #fff;
-        }
-        .btn-primary:hover {
-            background: #154360;
-        }
-        .btn-secondary {
-            background: #e8ecf1;
-            color: #2c3e50;
-        }
-        .btn-secondary:hover {
-            background: #d5dbdb;
-        }
-
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: #1a1a2e;
-            color: #fff;
-            padding: 8px 18px;
-            border-radius: 6px;
-            font-family: 'Segoe UI', sans-serif;
-            font-size: 12px;
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
-            opacity: 0;
-            transform: translateY(20px);
-            transition: 0.3s;
-            z-index: 999;
-        }
-        .toast.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        @media (max-width: 600px) {
-            .app {
-                padding: 10px;
-            }
-            .bank-statement {
-                font-size: 8px;
-            }
-            .bank-statement .header {
-                flex-wrap: wrap;
-                padding: 8px 12px !important;
-            }
-            .bank-statement .header .branch-info {
-                text-align: left;
-                margin-left: 0;
-                width: 100%;
-            }
-            .bank-statement .details-grid {
-                grid-template-columns: 1fr 1fr !important;
-                padding: 5px 12px !important;
-            }
-            .bank-statement .balance-row {
-                grid-template-columns: 1fr 1fr 1fr !important;
-                padding: 4px 12px !important;
-            }
-            .bank-statement .acc-info {
-                padding: 4px 12px !important;
-            }
-            .bank-statement .title {
-                margin: 0 12px 4px !important;
-                font-size: 12px !important;
-            }
-            .bank-statement .period {
-                padding: 4px 12px !important;
-            }
-            .bank-statement table {
-                font-size: 7px;
-            }
-            .bank-statement table th,
-            .bank-statement table td {
-                padding: 2px 3px !important;
-            }
-            .bank-statement .footer {
-                padding: 5px 12px !important;
-                font-size: 6.5px !important;
-            }
-            .bank-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-    </style>
-</head>
-<body>
-
-    <div class="app">
-        <div class="app-header">
-            <h1>🏦 Bank <span>Statement</span> Generator</h1>
-            <span class="badge">📄 Official Bank Styles</span>
-        </div>
-
-        <!-- BANK SELECTION -->
-        <div class="card" style="margin-bottom:12px;">
-            <div class="card-title">🏛️ Select Bank</div>
-            <div class="bank-grid" id="bankGrid">
-                <button class="bank-btn active" data-bank="sbi">SBI</button>
-                <button class="bank-btn" data-bank="hdfc">HDFC</button>
-                <button class="bank-btn" data-bank="icici">ICICI</button>
-                <button class="bank-btn" data-bank="axis">Axis</button>
-                <button class="bank-btn" data-bank="kotak">Kotak</button>
-                <button class="bank-btn" data-bank="bob">BOB</button>
-                <button class="bank-btn" data-bank="pnb">PNB</button>
-                <button class="bank-btn" data-bank="indusind">IndusInd</button>
-                <button class="bank-btn" data-bank="canara">Canara</button>
-                <button class="bank-btn" data-bank="union">Union</button>
-            </div>
-            <div class="bank-preview">
-                <div class="logo-box" id="logoBox" style="background:#1a5276;">SBI</div>
-                <div>
-                    <div class="bname" id="bankNameDisplay">State Bank of India</div>
-                    <div class="bsub">Selected bank official format</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="grid-2">
-            <!-- LEFT -->
-            <div>
-                <div class="card">
-                    <div class="card-title">👤 Account Details</div>
-                    <div class="form-group">
-                        <label>Account Holder Name</label>
-                        <input type="text" id="accName" value="Mr. ABHISHEK REKVAR" />
-                    </div>
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input type="text" id="email" value="example@email.com" />
-                    </div>
-                    <div class="form-group">
-                        <label>Address</label>
-                        <input type="text" id="address" value="WARD NO 14 HINOTIYA VIDISHA MADHYA PRADESH" />
-                    </div>
-                    <div class="inline">
-                        <div class="form-group">
-                            <label>Account Number</label>
-                            <input type="text" id="accNum" value="45222567869" />
-                        </div>
-                        <div class="form-group">
-                            <label>IFSC Code</label>
-                            <input type="text" id="ifsc" value="SBIN0012193" />
-                        </div>
-                    </div>
-                    <div class="inline">
-                        <div class="form-group">
-                            <label>Branch Name</label>
-                            <input type="text" id="branch" value="SATI VIDISHA" />
-                        </div>
-                        <div class="form-group">
-                            <label>Branch Code</label>
-                            <input type="text" id="branchCode" value="12193" />
-                        </div>
-                    </div>
-                    <div class="inline-3">
-                        <div class="form-group">
-                            <label>CIF Number</label>
-                            <input type="text" id="cif" value="92445569679" />
-                        </div>
-                        <div class="form-group">
-                            <label>MICR Code</label>
-                            <input type="text" id="micr" value="464002202" />
-                        </div>
-                        <div class="form-group">
-                            <label>CKYCR</label>
-                            <input type="text" id="ckycr" value="50046100545797" />
-                        </div>
-                    </div>
-                    <div class="inline">
-                        <div class="form-group">
-                            <label>Branch Phone</label>
-                            <input type="text" id="branchPhone" value="123456789" />
-                        </div>
-                        <div class="form-group">
-                            <label>Interest Rate</label>
-                            <input type="text" id="intRate" value="2.50" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- RIGHT -->
-            <div>
-                <div class="card">
-                    <div class="card-title">💼 Income &amp; Period</div>
-                    <div class="form-group">
-                        <label>Monthly Income (INR)</label>
-                        <input type="number" id="monthlyIncome" value="195000" />
-                    </div>
-                    <div class="form-group">
-                        <label>Employer</label>
-                        <input type="text" id="employer" value="TATA STEEL LIMITED" />
-                    </div>
-                    <div class="inline">
-                        <div class="form-group">
-                            <label>Salary Day</label>
-                            <input type="number" id="salaryDay" value="1" min="1" max="28" />
-                        </div>
-                        <div class="form-group">
-                            <label>Opening Balance</label>
-                            <input type="number" id="openingBalance" value="45000" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Statement Period</label>
-                        <div class="pill-group" id="periodGroup">
-                            <span class="pill active" data-value="3">3 Months</span>
-                            <span class="pill" data-value="6">6 Months</span>
-                            <span class="pill" data-value="12">12 Months</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Spending Profile</label>
-                        <div class="pill-group" id="profileGroup">
-                            <span class="pill" data-value="conservative">Conservative</span>
-                            <span class="pill active" data-value="moderate">Moderate</span>
-                            <span class="pill" data-value="lavish">Lavish</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card" style="margin-top:10px;">
-                    <div class="card-title">🔄 Recurring Expenses</div>
-                    <div id="expenseList">
-                        <div class="expense-item">
-                            <input type="text" placeholder="Name" value="HOME LOAN EMI" />
-                            <input type="number" placeholder="Amount" value="15000" />
-                            <select>
-                                <option value="5" selected>Day 5</option>
-                                <option value="10">Day 10</option>
-                                <option value="15">Day 15</option>
-                                <option value="20">Day 20</option>
-                            </select>
-                            <button class="remove-btn" onclick="this.parentElement.remove()">✕</button>
-                        </div>
-                        <div class="expense-item">
-                            <input type="text" placeholder="Name" value="MUTUAL FUND SIP" />
-                            <input type="number" placeholder="Amount" value="8000" />
-                            <select>
-                                <option value="5">Day 5</option>
-                                <option value="10" selected>Day 10</option>
-                                <option value="15">Day 15</option>
-                                <option value="20">Day 20</option>
-                            </select>
-                            <button class="remove-btn" onclick="this.parentElement.remove()">✕</button>
-                        </div>
-                    </div>
-                    <button class="add-btn" onclick="addExpense()">+ Add Recurring Expense</button>
-                </div>
-
-                <div class="card" style="margin-top:10px;">
-                    <div class="card-title">⚙️ PDF Settings</div>
-                    <div class="inline">
-                        <div class="form-group">
-                            <label>Variant</label>
-                            <div class="pill-group" id="pdfVariant">
-                                <span class="pill active" data-value="light">Light</span>
-                                <span class="pill" data-value="dark">Dark</span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Orientation</label>
-                            <div class="pill-group" id="pdfOrientation">
-                                <span class="pill active" data-value="portrait">Portrait</span>
-                                <span class="pill" data-value="landscape">Landscape</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>PDF Password (optional)</label>
-                        <input type="text" id="pdfPassword" placeholder="Leave empty" />
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <button class="gen-btn" onclick="generateStatement()">⚡ Generate Statement</button>
-
-        <div id="output">
-            <div id="statementContent"></div>
-            <div class="btn-group">
-                <button class="btn-primary" onclick="downloadPDF()">📥 Download PDF</button>
-                <button class="btn-secondary" onclick="copyStatement()">📋 Copy</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="toast" id="toast"></div>
-
-    <script>
-        // ─── BANK DATA ───
-        const banks = {
-            sbi: { name: 'State Bank of India', short: 'SBI', color: '#1a5276', cls: 'sbi' },
-            hdfc: { name: 'HDFC Bank', short: 'HDFC', color: '#004d8c', cls: 'hdfc' },
-            icici: { name: 'ICICI Bank', short: 'ICICI', color: '#ed1c24', cls: 'icici' },
-            axis: { name: 'Axis Bank', short: 'Axis', color: '#a2001a', cls: 'axis' },
-            kotak: { name: 'Kotak Mahindra Bank', short: 'Kotak', color: '#1a2b5c', cls: 'kotak' },
-            bob: { name: 'Bank of Baroda', short: 'BOB', color: '#1f3a7a', cls: 'bob' },
-            pnb: { name: 'Punjab National Bank', short: 'PNB', color: '#b8860b', cls: 'pnb' },
-            indusind: { name: 'IndusInd Bank', short: 'IndusInd', color: '#0066b3', cls: 'indusind' },
-            canara: { name: 'Canara Bank', short: 'Canara', color: '#003366', cls: 'canara' },
-            union: { name: 'Union Bank of India', short: 'Union', color: '#1a3c6e', cls: 'union' }
-        };
-
-        // ─── BANK SELECTION ───
-        document.querySelectorAll('.bank-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.bank-btn').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                updateBankPreview();
-            });
-        });
-
-        function updateBankPreview() {
-            const key = document.querySelector('.bank-btn.active')?.dataset.bank || 'sbi';
-            const bank = banks[key];
-            if (bank) {
-                document.getElementById('logoBox').textContent = bank.short;
-                document.getElementById('logoBox').style.background = bank.color;
-                document.getElementById('bankNameDisplay').textContent = bank.name;
-            }
-        }
-        updateBankPreview();
-
-        // ─── PILLS ───
-        document.querySelectorAll('.pill-group').forEach(group => {
-            group.querySelectorAll('.pill').forEach(pill => {
-                pill.addEventListener('click', function() {
-                    group.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
-                    this.classList.add('active');
-                });
-            });
-        });
-
-        function addExpense() {
-            const list = document.getElementById('expenseList');
-            const div = document.createElement('div');
-            div.className = 'expense-item';
-            div.innerHTML = `
-                <input type="text" placeholder="Name" />
-                <input type="number" placeholder="Amount" />
-                <select>
-                    <option value="5">Day 5</option>
-                    <option value="10">Day 10</option>
-                    <option value="15">Day 15</option>
-                    <option value="20">Day 20</option>
-                </select>
-                <button class="remove-btn" onclick="this.parentElement.remove()">✕</button>
-            `;
-            list.appendChild(div);
-        }
-
-        function showToast(msg) {
-            const t = document.getElementById('toast');
-            t.textContent = msg;
-            t.classList.add('show');
-            clearTimeout(t._timeout);
-            t._timeout = setTimeout(() => t.classList.remove('show'), 3000);
-        }
-
-        // ─── GENERATE STATEMENT ───
-        function generateStatement() {
-            const bankKey = document.querySelector('.bank-btn.active')?.dataset.bank || 'sbi';
-            const bank = banks[bankKey];
-
-            const name = document.getElementById('accName').value || 'Customer';
-            const email = document.getElementById('email').value || '—';
-            const address = document.getElementById('address').value || '—';
-            const accNum = document.getElementById('accNum').value || '00000000000';
-            const ifsc = document.getElementById('ifsc').value || 'SBIN0000000';
-            const branch = document.getElementById('branch').value || 'MAIN BRANCH';
-            const branchCode = document.getElementById('branchCode').value || '00000';
-            const cif = document.getElementById('cif').value || '00000000000';
-            const micr = document.getElementById('micr').value || '000000000';
-            const ckycr = document.getElementById('ckycr').value || '00000000000000';
-            const branchPhone = document.getElementById('branchPhone').value || '—';
-            const intRate = document.getElementById('intRate').value || '2.50';
-
-            const monthlyIncome = Number(document.getElementById('monthlyIncome').value) || 0;
-            const employer = document.getElementById('employer').value || '—';
-            const salaryDay = Number(document.getElementById('salaryDay').value) || 1;
-            let openingBal = Number(document.getElementById('openingBalance').value);
-            if (!openingBal || openingBal < 0) openingBal = Math.floor(Math.random() * 50000) + 25000;
-
-            const period = Number(document.querySelector('#periodGroup .active')?.dataset.value) || 3;
-            const profile = document.querySelector('#profileGroup .active')?.dataset.value || 'moderate';
-            const pdfVariant = document.querySelector('#pdfVariant .active')?.dataset.value || 'light';
-            const pdfPassword = document.getElementById('pdfPassword').value || '';
-
-            // Recurring expenses
-            const expenseItems = document.querySelectorAll('#expenseList .expense-item');
-            const recurring = [];
-            expenseItems.forEach(item => {
-                const inputs = item.querySelectorAll('input');
-                const sel = item.querySelector('select');
-                if (inputs[0] && inputs[1] && sel) {
-                    const nameVal = inputs[0].value.trim() || 'Expense';
-                    const amt = Number(inputs[1].value) || 0;
-                    const day = Number(sel.value) || 5;
-                    if (amt > 0) recurring.push({ name: nameVal, amount: amt, day });
-                }
-            });
-
-            // ─── Build transactions ───
-            const startDate = new Date();
-            startDate.setMonth(startDate.getMonth() - period);
-            startDate.setDate(1);
-
-            let balance = openingBal;
-            const transactions = [];
-            const today = new Date();
-
-            const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
-            let spendMult = 1;
-            if (profile === 'conservative') spendMult = 0.55;
-            else if (profile === 'lavish') spendMult = 1.9;
-
-            const upiNames = ['HARISH', 'KIRANS', 'KOMALR', 'GAURAV', 'POOJAM', 'SUMITS', 'DIVYAR', 'ANILR', 'LATAC',
-                'SHAHID', 'SOHAIL', 'AJAYG', 'KIRANT', 'DEEPAK', 'DIVYAB', 'RAHULS', 'SHOEHA', 'FAHEEM', 'SWATIT',
-                'ROHITD', 'SANTOS', 'ASHISH', 'PRAVEE', 'AMITS', 'NITINP', 'ARIFM', 'KANCHA', 'GEETAS', 'SURESH',
-                'IRFANM', 'MADHUR', 'MAHESH', 'PRIYAS', 'PANKAJ', 'POONAM', 'SAVITA', 'VINODS', 'BHAVNA', 'USHAK'
-            ];
-            const bankCodes = ['UBIN', 'PUNB', 'UTIB', 'KKBK', 'INDB', 'CBIN', 'IDIB', 'HDFC', 'CNRB', 'BARB', 'SBIN',
-                'ICIC', 'YESB', 'IDFB', 'BKID', 'AIRP'
-            ];
-
-            // Opening balance
-            transactions.push({
-                date: new Date(startDate),
-                desc: 'Opening Balance',
-                credit: openingBal,
-                debit: 0,
-                balance: openingBal,
-                ref: '—',
-                isOpening: true
-            });
-
-            for (let m = 0; m < period; m++) {
-                const date = new Date(startDate);
-                date.setMonth(date.getMonth() + m);
-                const month = date.getMonth();
-                const year = date.getFullYear();
-
-                // Salary
-                if (monthlyIncome > 0) {
-                    const salDate = new Date(year, month, salaryDay);
-                    if (salDate <= today) {
-                        balance += monthlyIncome;
-                        transactions.push({
-                            date: salDate,
-                            desc: `BY TRANSFER-SALARY/${employer}`,
-                            credit: monthlyIncome,
-                            debit: 0,
-                            balance: balance,
-                            ref: `SAL/${String(rand(1000, 9999))}`,
-                            isOpening: false
-                        });
-                    }
-                }
-
-                // Recurring
-                recurring.forEach(exp => {
-                    const expDate = new Date(year, month, exp.day);
-                    if (expDate <= today) {
-                        balance -= exp.amount;
-                        transactions.push({
-                            date: expDate,
-                            desc: `TO TRANSFER-AUTO/${exp.name}`,
-                            credit: 0,
-                            debit: exp.amount,
-                            balance: balance,
-                            ref: `AUTO/${String(rand(1000, 9999))}`,
-                            isOpening: false
-                        });
-                    }
-                });
-
-                // Random daily transactions
-                const daysInMonth = new Date(year, month + 1, 0).getDate();
-                for (let d = 1; d <= daysInMonth; d++) {
-                    const curDate = new Date(year, month, d);
-                    if (curDate <= new Date(startDate)) continue;
-                    if (curDate > today) continue;
-
-                    const isWeekend = (curDate.getDay() === 0 || curDate.getDay() === 6);
-                    let prob = isWeekend ? 0.50 * spendMult : 0.28 * spendMult;
-                    const isFestival = (d >= 10 && d <= 15) || (d >= 22 && d <= 28);
-                    if (isFestival) prob *= 1.3;
-
-                    if (Math.random() < prob) {
-                        const amt = Math.round((rand(200, 5000) * spendMult) / 100) * 100;
-                        const name1 = upiNames[rand(0, upiNames.length - 1)];
-                        const bank1 = bankCodes[rand(0, bankCodes.length - 1)];
-                        const refNum = String(rand(100000000000, 999999999999));
-                        const isDebit = Math.random() < 0.6;
-
-                        if (isDebit) {
-                            balance -= amt;
-                            transactions.push({
-                                date: curDate,
-                                desc: `TO TRANSFER-UPI/DR/${refNum}/${name1}/${bank1}/${String(rand(1000000000, 9999999999))}/Payme`,
-                                credit: 0,
-                                debit: amt,
-                                balance: balance,
-                                ref: refNum,
-                                isOpening: false
-                            });
-                        } else {
-                            balance += amt;
-                            transactions.push({
-                                date: curDate,
-                                desc: `BY TRANSFER-UPI/CR/${refNum}/${name1}/${bank1}/${String(rand(1000000000, 9999999999))}/Payme`,
-                                credit: amt,
-                                debit: 0,
-                                balance: balance,
-                                ref: refNum,
-                                isOpening: false
-                            });
-                        }
-                    }
-                }
-            }
-
-            // Sort by date
-            transactions.sort((a, b) => a.date - b.date);
-
-            // ─── Build HTML ───
-            const variantClass = pdfVariant === 'dark' ? 'dark' : '';
-            const bankCls = bank ? bank.cls : 'sbi';
-            const bankName = bank ? bank.name : 'Bank';
-            const bankShort = bank ? bank.short : 'SBI';
-            const bankColor = bank ? bank.color : '#1a5276';
-
-            let rows = '';
-            let totalDebits = 0,
-                totalCredits = 0;
-
-            transactions.forEach((t, index) => {
-                const dateStr = t.date.toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit',
-                    year: 'numeric' });
-                const debitStr = t.debit > 0 ? t.debit.toLocaleString() : '—';
-                const creditStr = t.credit > 0 ? t.credit.toLocaleString() : '—';
-                const balStr = Math.round(t.balance).toLocaleString();
-
-                const isCredit = t.balance >= 0;
-                const balClass = isCredit ? 'balance-cr' : 'balance-dr';
-
-                if (t.debit > 0) totalDebits += t.debit;
-                if (t.credit > 0) totalCredits += t.credit;
-
-                const isOpening = t.isOpening || false;
-                const rowStyle = isOpening ? 'font-weight:700;background:#f8f9fa;' : '';
-
-                rows += `
-                    <tr style="${rowStyle}">
-                        <td>${dateStr}</td>
-                        <td>${dateStr}</td>
-                        <td style="font-size:7.5px;">${t.desc}</td>
-                        <td style="font-size:7.5px;">${t.ref || '—'}</td>
-                        <td class="${t.debit > 0 ? 'debit' : ''}">${debitStr}</td>
-                        <td class="${t.credit > 0 ? 'credit' : ''}">${creditStr}</td>
-                        <td class="${balClass}">${balStr}</td>
-                    </tr>
-                `;
-            });
-
-            const closingBal = transactions.length > 0 ? Math.round(transactions[transactions.length - 1].balance) :
-                openingBal;
-            const closingDisplay = closingBal.toLocaleString();
-            const closingClass = closingBal >= 0 ? 'balance-cr' : 'balance-dr';
-
-            const periodStart = new Date(startDate);
-            const periodEnd = new Date(today);
-            const periodStr =
-                `${periodStart.toLocaleDateString('en-IN', {day:'2-digit',month:'2-digit',year:'numeric'})} to ${periodEnd.toLocaleDateString('en-IN', {day:'2-digit',month:'2-digit',year:'numeric'})}`;
-            const genDate = today.toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric' });
-            const accountOpenDate = new Date(startDate);
-            accountOpenDate.setFullYear(accountOpenDate.getFullYear() - 3);
-            const openDateStr = accountOpenDate.toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit',
-                year: 'numeric' });
-
-            const html = `
-                <div class="bank-statement ${bankCls} ${variantClass}" id="statementPrint">
-                    <!-- HEADER -->
-                    <div class="header">
-                        <div class="logo-text">
-                            ${bankName}
-                            <small>${bankShort} Bank</small>
+                        <div class="logo">${bankShort}</div>
+                        <div class="bank-info">
+                            <div class="name">${bankName}</div>
+                            <div class="tagline">${bankShort} Bank · Since 1921</div>
                         </div>
                         <div class="branch-info">
                             <div class="bname">${branch}</div>

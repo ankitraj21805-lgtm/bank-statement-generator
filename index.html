@@ -3,94 +3,29 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pro Statement - PDF Style Scanner</title>
+    <title>Pro Statement - Professional Generator</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js">
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js">
-    </script>
     <style>
-        :root {
-            --primary: #1a5276;
-            --accent: #f39c12;
-            --bg: #f0f4f8;
-            --card-bg: #ffffff;
-            --text: #1a1a2e;
-            --text-light: #5d6d7e;
-            --border: #e8ecf1;
-            --radius: 14px;
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --success: #27ae60;
-            --danger: #e74c3c;
-            --warning: #f39c12;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg);
+            background: #eef1f5;
             min-height: 100vh;
             padding: 20px;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-        @keyframes pulse {
-            0%,
-            100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.03);
-            }
-        }
-        @keyframes scanLine {
-            0% {
-                top: 0;
-            }
-            100% {
-                top: 100%;
-            }
-        }
-        @keyframes shimmer {
-            0% {
-                background-position: -200% 0;
-            }
-            100% {
-                background-position: 200% 0;
-            }
-        }
-
-        .animate-fade {
-            animation: fadeIn 0.6s ease forwards;
         }
 
         .app {
             max-width: 1200px;
             margin: 0 auto;
-            background: var(--card-bg);
-            border-radius: 24px;
+            background: #fff;
+            border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.06);
-            overflow: hidden;
-            padding: 24px 30px 30px;
+            padding: 28px 32px 32px;
         }
 
         .app-header {
@@ -100,75 +35,54 @@
             flex-wrap: wrap;
             gap: 12px;
             padding-bottom: 16px;
-            border-bottom: 2px solid var(--border);
-            margin-bottom: 20px;
+            border-bottom: 2px solid #e8ecf1;
+            margin-bottom: 22px;
         }
         .app-header .brand {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 800;
-            color: var(--primary);
+            color: #1a5276;
         }
         .app-header .brand span {
-            color: var(--accent);
+            color: #f39c12;
         }
         .app-header .badge {
             font-size: 12px;
             background: #eaf2f8;
-            color: var(--primary);
-            padding: 6px 16px;
+            color: #1a5276;
+            padding: 6px 18px;
             border-radius: 20px;
             font-weight: 600;
         }
 
-        .stats-bar {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 14px;
-            margin-bottom: 20px;
-        }
-        .stat-card {
-            background: var(--bg);
-            padding: 14px 18px;
-            border-radius: var(--radius);
-            border: 1px solid var(--border);
-        }
-        .stat-card .num {
-            font-size: 26px;
-            font-weight: 800;
-            color: var(--primary);
-        }
-        .stat-card .label {
-            font-size: 12px;
-            color: var(--text-light);
-        }
-
+        /* ─── TABS ─── */
         .tabs {
             display: flex;
             gap: 4px;
-            background: var(--bg);
+            background: #f0f4f8;
             padding: 4px;
             border-radius: 12px;
             margin-bottom: 20px;
             flex-wrap: wrap;
         }
         .tab-btn {
-            padding: 10px 22px;
+            padding: 10px 24px;
             border: none;
             background: transparent;
             border-radius: 8px;
             font-weight: 600;
             font-size: 14px;
             cursor: pointer;
-            transition: var(--transition);
+            transition: 0.3s;
             font-family: inherit;
-            color: var(--text-light);
+            color: #5d6d7e;
         }
         .tab-btn:hover {
-            color: var(--text);
+            color: #1a1a2e;
         }
         .tab-btn.active {
             background: #fff;
-            color: var(--primary);
+            color: #1a5276;
             box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
         }
 
@@ -180,52 +94,31 @@
             display: block;
         }
 
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         .card {
-            background: var(--card-bg);
-            border-radius: var(--radius);
+            background: #fafbfc;
+            border-radius: 12px;
             padding: 18px 20px 22px;
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow);
+            border: 1px solid #e8ecf1;
             margin-bottom: 16px;
         }
         .card-title {
             font-size: 13px;
             font-weight: 700;
             text-transform: uppercase;
-            color: var(--text-light);
+            color: #5d6d7e;
             letter-spacing: 0.5px;
             margin-bottom: 14px;
-        }
-
-        .form-group {
-            margin-bottom: 12px;
-        }
-        .form-group label {
-            display: block;
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            color: var(--text-light);
-            letter-spacing: 0.3px;
-            margin-bottom: 3px;
-        }
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 8px 12px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 14px;
-            font-family: inherit;
-            background: #fafbfc;
-            transition: var(--transition);
-        }
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(26, 82, 118, 0.08);
-            background: #fff;
         }
 
         .grid-2 {
@@ -237,21 +130,36 @@
             .grid-2 {
                 grid-template-columns: 1fr;
             }
-            .stats-bar {
-                grid-template-columns: 1fr 1fr;
-            }
         }
-        @media (max-width: 500px) {
-            .app {
-                padding: 12px 14px;
-            }
-            .stats-bar {
-                grid-template-columns: 1fr;
-            }
-            .tabs .tab-btn {
-                font-size: 12px;
-                padding: 6px 12px;
-            }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #5d6d7e;
+            letter-spacing: 0.3px;
+            margin-bottom: 3px;
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #d5dbdb;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            background: #fff;
+            transition: 0.3s;
+        }
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #1a5276;
+            box-shadow: 0 0 0 4px rgba(26, 82, 118, 0.06);
         }
 
         .inline {
@@ -279,24 +187,29 @@
         }
         .bank-btn {
             padding: 6px 2px;
-            border: 2px solid var(--border);
+            border: 2px solid #d5dbdb;
             border-radius: 8px;
             background: #fff;
             cursor: pointer;
             font-weight: 700;
             font-size: 11px;
-            transition: var(--transition);
+            transition: 0.3s;
             text-align: center;
             font-family: inherit;
         }
         .bank-btn:hover {
-            border-color: var(--primary);
+            border-color: #1a5276;
             transform: translateY(-2px);
         }
         .bank-btn.active {
-            border-color: var(--primary);
+            border-color: #1a5276;
             background: #eaf2f8;
-            color: var(--primary);
+            color: #1a5276;
+        }
+        @media (max-width: 600px) {
+            .bank-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
 
         .bank-preview {
@@ -306,7 +219,7 @@
             padding: 8px 14px;
             background: #fff;
             border-radius: 8px;
-            border: 1px solid var(--border);
+            border: 1px solid #d5dbdb;
         }
         .bank-preview .logo-box {
             width: 40px;
@@ -331,20 +244,20 @@
             border-radius: 20px;
             font-size: 11px;
             font-weight: 500;
-            background: var(--bg);
-            color: var(--text);
+            background: #e8ecf1;
+            color: #2c3e50;
             border: 1.5px solid transparent;
             cursor: pointer;
-            transition: var(--transition);
+            transition: 0.3s;
             font-family: inherit;
         }
         .pill:hover {
             background: #d5dbdb;
         }
         .pill.active {
-            background: var(--primary);
+            background: #1a5276;
             color: #fff;
-            border-color: var(--primary);
+            border-color: #1a5276;
         }
 
         .expense-item {
@@ -356,12 +269,12 @@
             padding: 6px 10px;
             border-radius: 8px;
             margin-bottom: 6px;
-            border: 1px solid var(--border);
+            border: 1px solid #d5dbdb;
         }
         .expense-item input,
         .expense-item select {
             padding: 4px 8px;
-            border: 1px solid var(--border);
+            border: 1px solid #d5dbdb;
             border-radius: 6px;
             font-size: 12px;
             font-family: inherit;
@@ -369,7 +282,7 @@
         .expense-item .remove-btn {
             background: none;
             border: none;
-            color: var(--danger);
+            color: #e74c3c;
             font-size: 16px;
             cursor: pointer;
             font-weight: 700;
@@ -382,8 +295,8 @@
             font-weight: 600;
             font-size: 11px;
             cursor: pointer;
-            color: var(--primary);
-            transition: var(--transition);
+            color: #1a5276;
+            transition: 0.3s;
             font-family: inherit;
             margin-top: 4px;
         }
@@ -394,17 +307,16 @@
         .gen-btn {
             width: 100%;
             padding: 14px;
-            background: var(--primary);
+            background: #1a5276;
             color: #fff;
             border: none;
             border-radius: 10px;
             font-size: 16px;
             font-weight: 700;
             cursor: pointer;
-            transition: var(--transition);
+            transition: 0.3s;
             font-family: inherit;
             margin-top: 16px;
-            position: relative;
         }
         .gen-btn:hover {
             background: #0d2b44;
@@ -414,22 +326,6 @@
         .gen-btn:disabled {
             opacity: 0.6;
             cursor: not-allowed;
-        }
-        .gen-btn .spinner {
-            display: none;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-top-color: #fff;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin: 0 auto;
-        }
-        .gen-btn.loading .spinner {
-            display: block;
-        }
-        .gen-btn.loading .btn-text {
-            display: none;
         }
 
         #output {
@@ -456,361 +352,265 @@
             cursor: pointer;
             min-width: 80px;
             font-family: inherit;
-            transition: var(--transition);
+            transition: 0.3s;
         }
         .btn-group button:hover {
             transform: translateY(-2px);
         }
         .btn-primary {
-            background: var(--primary);
+            background: #1a5276;
             color: #fff;
         }
         .btn-secondary {
-            background: var(--bg);
-            color: var(--text);
+            background: #e8ecf1;
+            color: #2c3e50;
         }
         .btn-success {
-            background: var(--success);
+            background: #27ae60;
             color: #fff;
         }
 
-        /* ─── PDF SCANNER ─── */
-        .scanner-area {
-            border: 2px dashed var(--border);
-            padding: 40px 20px;
-            text-align: center;
-            border-radius: 12px;
-            transition: var(--transition);
-            cursor: pointer;
-            background: #fafbfc;
-            position: relative;
-            overflow: hidden;
-        }
-        .scanner-area:hover {
-            border-color: var(--primary);
-            background: #f0f5fa;
-        }
-        .scanner-area.dragover {
-            border-color: var(--primary);
-            background: #eaf2f8;
-        }
-        .scanner-area .icon {
-            font-size: 48px;
-            margin-bottom: 8px;
-        }
-        .scanner-area p {
-            color: var(--text-light);
-            font-size: 14px;
-        }
-        .scanner-area .browse-btn {
-            color: var(--primary);
-            font-weight: 700;
-            cursor: pointer;
-        }
-        .scanner-area input[type="file"] {
-            display: none;
-        }
+        /* ═══════════════════════════════════════════ */
+        /* ─── PROFESSIONAL BANK STATEMENT ─── */
+        /* ═══════════════════════════════════════════ */
 
-        .scanner-area.scanning::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary));
-            background-size: 200% 100%;
-            animation: scanLine 2s linear infinite, shimmer 1.5s infinite;
-            top: 0;
-        }
-        .scanner-area .scan-progress {
-            display: none;
-            margin-top: 12px;
-            width: 100%;
-            height: 6px;
-            background: var(--bg);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        .scanner-area .scan-progress .bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            width: 0%;
-            border-radius: 10px;
-            transition: width 0.3s;
-        }
-        .scanner-area.scanning .scan-progress {
-            display: block;
-        }
-
-        /* ─── STYLE PREVIEW ─── */
-        .style-preview {
-            margin-top: 16px;
-            padding: 16px;
-            background: var(--bg);
-            border-radius: 10px;
-            display: none;
-        }
-        .style-preview.show {
-            display: block;
-        }
-
-        .style-preview .preview-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        .style-preview .preview-header .file-name {
-            font-weight: 600;
-            color: var(--primary);
-        }
-        .style-preview .preview-header .remove-btn {
-            background: none;
-            border: none;
-            color: var(--danger);
-            font-weight: 700;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .style-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-        .style-grid .style-item {
-            background: #fff;
-            padding: 10px 14px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-        }
-        .style-grid .style-item .lbl {
-            font-size: 10px;
-            color: var(--text-light);
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-        }
-        .style-grid .style-item .val {
-            font-weight: 700;
-            font-size: 14px;
-            margin-top: 2px;
-        }
-        .style-grid .style-item .val .color-dot {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border-radius: 4px;
-            vertical-align: middle;
-            margin-right: 6px;
-            border: 1px solid var(--border);
-        }
-
-        /* ─── EXACT COPY PREVIEW ─── */
-        .exact-copy-preview {
-            margin-top: 16px;
-            padding: 20px;
-            background: #fff;
-            border-radius: 10px;
-            border: 2px solid var(--primary);
-            display: none;
-        }
-        .exact-copy-preview.show {
-            display: block;
-        }
-        .exact-copy-preview .preview-label {
-            font-size: 11px;
-            text-transform: uppercase;
-            color: var(--text-light);
-            letter-spacing: 0.5px;
-            margin-bottom: 10px;
-        }
-
-        /* ─── EXACT STATEMENT PREVIEW ─── */
-        .exact-statement-preview {
+        .professional-statement {
             font-family: 'Courier New', monospace;
             background: #ffffff;
-            padding: 20px 25px;
+            padding: 25px 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+            font-size: 11px;
+            line-height: 1.6;
+            color: #1c1c1c;
             border: 1px solid #b0b0b0;
             border-radius: 4px;
-            max-width: 100%;
-            overflow: auto;
-            font-size: 11px;
-            line-height: 1.5;
-            color: #1c1c1c;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
         }
 
-        .exact-statement-preview .bank-header {
+        /* ─── BANK HEADER ─── */
+        .professional-statement .bank-header {
             background: #1a5276;
-            color: #fff;
-            padding: 12px 20px;
+            color: #ffffff;
+            padding: 14px 24px;
+            margin: -25px -30px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin: -20px -25px 0;
+            border-bottom: 4px solid #f39c12;
         }
-        .exact-statement-preview .bank-header .bank-name {
-            font-size: 18px;
-            font-weight: 700;
+        .professional-statement .bank-header .bank-name {
+            font-size: 20px;
+            font-weight: 800;
             letter-spacing: 2px;
         }
-        .exact-statement-preview .bank-header .branch-details {
+        .professional-statement .bank-header .bank-name small {
+            font-size: 10px;
+            font-weight: 400;
+            opacity: 0.7;
+            display: block;
+            letter-spacing: 1px;
+        }
+        .professional-statement .bank-header .branch-info {
             text-align: right;
             font-size: 10px;
-            opacity: 0.9;
+            line-height: 1.4;
+        }
+        .professional-statement .bank-header .branch-info .bname {
+            font-weight: 700;
+            font-size: 12px;
+        }
+        .professional-statement .bank-header .branch-info .baddr {
+            font-size: 8.5px;
+            opacity: 0.8;
         }
 
-        .exact-statement-preview .statement-title {
+        /* ─── STATEMENT TITLE ─── */
+        .professional-statement .stmt-title {
             text-align: center;
             font-size: 16px;
             font-weight: 700;
             color: #1a5276;
-            padding: 12px 0 8px;
+            padding: 14px 0 8px;
             border-bottom: 2px solid #1a5276;
+            margin: 0 0 12px;
             letter-spacing: 3px;
         }
 
-        .exact-statement-preview .account-holder {
-            padding: 8px 0;
-            font-weight: 700;
-            font-size: 14px;
+        /* ─── ACCOUNT HOLDER ─── */
+        .professional-statement .acc-holder {
+            padding: 8px 0 10px;
+            border-bottom: 1px solid #e8ecf1;
         }
-        .exact-statement-preview .account-holder .sub {
-            font-weight: 400;
-            font-size: 11px;
-            color: #555;
+        .professional-statement .acc-holder .name {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1a5276;
+        }
+        .professional-statement .acc-holder .email {
+            font-size: 10px;
+            color: #5d6d7e;
+        }
+        .professional-statement .acc-holder .address {
+            font-size: 10px;
+            color: #5d6d7e;
+            margin-top: 2px;
         }
 
-        .exact-statement-preview .details-grid {
+        /* ─── DETAILS GRID ─── */
+        .professional-statement .details-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            gap: 4px 20px;
-            padding: 8px 0;
+            gap: 4px 24px;
+            padding: 10px 0;
             font-size: 10px;
-            border-bottom: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e8ecf1;
+            background: #fafbfc;
+        }
+        .professional-statement .details-grid .item {
+            display: flex;
+            justify-content: space-between;
+            padding: 2px 0;
+            border-bottom: 1px dotted #eee;
+        }
+        .professional-statement .details-grid .item .lbl {
+            font-weight: 600;
+            color: #5d6d7e;
+        }
+        .professional-statement .details-grid .item .val {
+            font-weight: 600;
         }
 
-        .exact-statement-preview .balance-row {
+        /* ─── BALANCE ROW ─── */
+        .professional-statement .balance-row {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
             gap: 4px;
-            padding: 6px 0;
-            background: #f8f9fa;
+            padding: 8px 0;
+            background: #f0f5fa;
             font-size: 9px;
-            border-bottom: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e8ecf1;
+        }
+        .professional-statement .balance-row .item .lbl {
+            font-weight: 600;
+            color: #5d6d7e;
+            font-size: 7.5px;
+            display: block;
+        }
+        .professional-statement .balance-row .item .val {
+            font-weight: 700;
         }
 
-        .exact-statement-preview table {
+        /* ─── PERIOD ─── */
+        .professional-statement .period {
+            padding: 6px 0;
+            font-size: 10px;
+            font-weight: 600;
+            color: #1a5276;
+            border-bottom: 1px solid #e8ecf1;
+            background: #fafbfc;
+        }
+
+        /* ─── TABLE ─── */
+        .professional-statement table {
             width: 100%;
             border-collapse: collapse;
             font-size: 9.5px;
-            margin: 8px 0;
+            margin: 4px 0;
         }
-        .exact-statement-preview table th {
-            background: #f0f2f5;
-            padding: 4px 6px;
-            border-bottom: 2px solid #1c1c1c;
-            text-align: left;
+        .professional-statement table th {
+            background: #1a5276;
+            color: #ffffff;
+            padding: 4px 7px;
             font-size: 8px;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-align: left;
         }
-        .exact-statement-preview table td {
-            padding: 3px 6px;
+        .professional-statement table td {
+            padding: 3px 7px;
             border-bottom: 1px solid #eee;
+            font-size: 8.5px;
+        }
+        .professional-statement table .debit {
+            color: #c0392b;
+            font-weight: 700;
+        }
+        .professional-statement table .credit {
+            color: #27ae60;
+            font-weight: 700;
+        }
+        .professional-statement table .balance-cr {
+            color: #27ae60;
+            font-weight: 700;
+        }
+        .professional-statement table .balance-dr {
+            color: #c0392b;
+            font-weight: 700;
         }
 
-        .exact-statement-preview .footer {
-            padding: 8px 0;
-            border-top: 2px solid #1c1c1c;
+        /* ─── FOOTER ─── */
+        .professional-statement .footer {
+            padding: 10px 0 4px;
+            border-top: 2px solid #1a5276;
             font-size: 7.5px;
-            color: #555;
+            color: #5d6d7e;
             text-align: center;
             line-height: 1.8;
+            margin-top: 6px;
+        }
+        .professional-statement .footer strong {
+            color: #1a5276;
         }
 
-        /* ─── SECRET PASSWORD ─── */
-        .password-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(10px);
-            z-index: 10000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        /* ─── DARK VARIANT ─── */
+        .professional-statement.dark {
+            background: #1a1a2e;
+            color: #e8e8e8;
+            border-color: #444;
         }
-        .password-overlay.hidden {
-            display: none;
+        .professional-statement.dark .bank-header {
+            background: #0d1a2e !important;
         }
-        .password-box {
-            background: #fff;
-            padding: 40px 36px;
-            border-radius: 20px;
-            max-width: 400px;
-            width: 90%;
-            text-align: center;
-            animation: fadeIn 0.5s ease;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        .professional-statement.dark .stmt-title {
+            color: #f39c12 !important;
+            border-bottom-color: #f39c12 !important;
         }
-        .password-box .icon {
-            font-size: 48px;
-            margin-bottom: 12px;
+        .professional-statement.dark .acc-holder .name {
+            color: #f39c12 !important;
         }
-        .password-box h2 {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 4px;
+        .professional-statement.dark .details-grid {
+            background: #24243e !important;
+            border-bottom-color: #333 !important;
         }
-        .password-box p {
-            color: var(--text-light);
-            font-size: 14px;
-            margin-bottom: 20px;
+        .professional-statement.dark .details-grid .item .val {
+            color: #e8e8e8 !important;
         }
-        .password-box input {
-            width: 100%;
-            padding: 12px 16px;
-            border: 2px solid var(--border);
-            border-radius: 10px;
-            font-size: 16px;
-            font-family: inherit;
-            text-align: center;
-            letter-spacing: 8px;
-            font-weight: 700;
+        .professional-statement.dark .balance-row {
+            background: #1a1a3e !important;
+            border-bottom-color: #333 !important;
         }
-        .password-box input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(26, 82, 118, 0.08);
+        .professional-statement.dark .balance-row .item .val {
+            color: #f39c12 !important;
         }
-        .password-box .error-msg {
-            color: var(--danger);
-            font-size: 13px;
-            margin-top: 10px;
-            display: none;
+        .professional-statement.dark .period {
+            background: #24243e !important;
+            border-bottom-color: #333 !important;
+            color: #f39c12 !important;
         }
-        .password-box .error-msg.show {
-            display: block;
+        .professional-statement.dark table th {
+            background: #0d1a2e !important;
+            color: #f39c12 !important;
         }
-        .password-box button {
-            width: 100%;
-            padding: 12px;
-            background: var(--primary);
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: inherit;
-            margin-top: 12px;
+        .professional-statement.dark table td {
+            border-bottom-color: #333 !important;
         }
-        .password-box button:hover {
-            background: #0d2b44;
-            transform: translateY(-2px);
+        .professional-statement.dark .footer {
+            border-top-color: #f39c12 !important;
+            color: #999 !important;
+        }
+        .professional-statement.dark .footer strong {
+            color: #f39c12 !important;
         }
 
         .toast-container {
@@ -834,60 +634,86 @@
             font-family: 'Segoe UI', sans-serif;
         }
         .toast-success {
-            background: var(--success);
+            background: #27ae60;
         }
         .toast-error {
-            background: var(--danger);
+            background: #e74c3c;
         }
         .toast-info {
-            background: var(--primary);
+            background: #1a5276;
         }
         .toast-warning {
-            background: var(--warning);
+            background: #f39c12;
+        }
+
+        /* ─── SCROLLBAR ─── */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f0f4f8;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1a5276;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .app {
+                padding: 14px;
+            }
+            .professional-statement {
+                padding: 14px 16px;
+                font-size: 9px;
+            }
+            .professional-statement .bank-header {
+                flex-wrap: wrap;
+                padding: 10px 16px;
+                margin: -14px -16px 0;
+            }
+            .professional-statement .bank-header .branch-info {
+                text-align: left;
+                width: 100%;
+            }
+            .professional-statement .details-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .professional-statement .balance-row {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+            .professional-statement table {
+                font-size: 7.5px;
+            }
+            .professional-statement table th,
+            .professional-statement table td {
+                padding: 2px 4px;
+            }
+            .tabs .tab-btn {
+                font-size: 12px;
+                padding: 6px 14px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- ─── SECRET PASSWORD ─── -->
-    <div class="password-overlay" id="passwordOverlay">
-        <div class="password-box animate-fade">
-            <div class="icon">🔐</div>
-            <h2>Secret Access</h2>
-            <p>Enter the secret password to access the PDF Scanner</p>
-            <input type="password" id="secretPassword" placeholder="•••••••" maxlength="10" autofocus />
-            <div class="error-msg" id="passwordError">❌ Incorrect password. Try again.</div>
-            <button onclick="verifyPassword()">🔓 Unlock</button>
-        </div>
-    </div>
-
-    <div class="app" id="mainApp" style="display:none;">
+    <div class="app">
         <!-- ─── HEADER ─── -->
         <div class="app-header">
             <div class="brand">Pro <span>Statement</span></div>
-            <span class="badge">📄 100% Exact Copy Scanner</span>
-        </div>
-
-        <!-- ─── STATS ─── -->
-        <div class="stats-bar">
-            <div class="stat-card"><div class="num" id="statStatements">0</div><div class="label">Generated</div></div>
-            <div class="stat-card"><div class="num">10</div><div class="label">Banks</div></div>
-            <div class="stat-card"><div class="num" id="statHistory">0</div><div class="label">History</div></div>
-            <div class="stat-card"><div class="num" id="statTemplates">0</div><div class="label">Templates</div></div>
+            <span class="badge">🏦 Professional Generator</span>
         </div>
 
         <!-- ─── TABS ─── -->
         <div class="tabs">
-            <button class="tab-btn" data-tab="generator">⚡ Generator</button>
-            <button class="tab-btn active" data-tab="scanner">📄 PDF Scanner</button>
+            <button class="tab-btn active" data-tab="generator">⚡ Generator</button>
             <button class="tab-btn" data-tab="history">📜 History</button>
-            <button class="tab-btn" data-tab="whitelabel">🎨 White-Label</button>
-            <button class="tab-btn" data-tab="bulk">📊 Bulk</button>
-            <button class="tab-btn" data-tab="templates">📝 Templates</button>
         </div>
 
         <!-- ═══ TAB: GENERATOR ═══ -->
-        <div class="tab-content" id="tab-generator">
+        <div class="tab-content active" id="tab-generator">
+
+            <!-- Bank Selection -->
             <div class="card">
                 <div class="card-title">🏛️ Select Bank</div>
                 <div class="bank-grid" id="bankGrid">
@@ -906,49 +732,99 @@
                     <div class="logo-box" id="logoBox" style="background:#1a5276;">SBI</div>
                     <div>
                         <div class="bname" id="bankNameDisplay">State Bank of India</div>
-                        <div class="bsub" style="font-size:10px;color:var(--text-light);">Selected bank official format</div>
+                        <div class="bsub" style="font-size:10px;color:#5d6d7e;">Selected bank official format</div>
                     </div>
                 </div>
             </div>
 
             <div class="grid-2">
+                <!-- LEFT -->
                 <div>
                     <div class="card">
                         <div class="card-title">👤 Account Details</div>
-                        <div class="form-group"><label>Account Holder</label><input type="text" id="accName" placeholder="Enter name" /></div>
-                        <div class="form-group"><label>Email</label><input type="text" id="email" placeholder="Enter email" /></div>
-                        <div class="form-group"><label>Address</label><input type="text" id="address" placeholder="Enter address" /></div>
-                        <div class="inline">
-                            <div class="form-group"><label>Account Number</label><input type="text" id="accNum" placeholder="Enter account number" /></div>
-                            <div class="form-group"><label>IFSC Code</label><input type="text" id="ifsc" placeholder="Enter IFSC" /></div>
+                        <div class="form-group">
+                            <label>Account Holder Name</label>
+                            <input type="text" id="accName" value="Ankit Sharma" />
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="text" id="email" value="ankitraj21805@gmail.com" />
+                        </div>
+                        <div class="form-group">
+                            <label>Address</label>
+                            <input type="text" id="address" value="Paramhans road jehanabad near Sai temple yellow building" />
                         </div>
                         <div class="inline">
-                            <div class="form-group"><label>Branch Name</label><input type="text" id="branch" placeholder="Enter branch" /></div>
-                            <div class="form-group"><label>Branch Code</label><input type="text" id="branchCode" placeholder="Enter code" /></div>
+                            <div class="form-group">
+                                <label>Account Number</label>
+                                <input type="text" id="accNum" value="45222567869" />
+                            </div>
+                            <div class="form-group">
+                                <label>IFSC Code</label>
+                                <input type="text" id="ifsc" value="SBIN0012193" />
+                            </div>
+                        </div>
+                        <div class="inline">
+                            <div class="form-group">
+                                <label>Branch Name</label>
+                                <input type="text" id="branch" value="SATI VIDISHA" />
+                            </div>
+                            <div class="form-group">
+                                <label>Branch Code</label>
+                                <input type="text" id="branchCode" value="12193" />
+                            </div>
                         </div>
                         <div class="inline-3">
-                            <div class="form-group"><label>CIF Number</label><input type="text" id="cif" placeholder="Enter CIF" /></div>
-                            <div class="form-group"><label>MICR Code</label><input type="text" id="micr" placeholder="Enter MICR" /></div>
-                            <div class="form-group"><label>CKYCR</label><input type="text" id="ckycr" placeholder="Enter CKYCR" /></div>
+                            <div class="form-group">
+                                <label>CIF Number</label>
+                                <input type="text" id="cif" value="92445569679" />
+                            </div>
+                            <div class="form-group">
+                                <label>MICR Code</label>
+                                <input type="text" id="micr" value="464002202" />
+                            </div>
+                            <div class="form-group">
+                                <label>CKYCR</label>
+                                <input type="text" id="ckycr" value="50046100545797" />
+                            </div>
                         </div>
                         <div class="inline">
-                            <div class="form-group"><label>Branch Phone</label><input type="text" id="branchPhone" placeholder="Enter phone" /></div>
-                            <div class="form-group"><label>Interest Rate</label><input type="text" id="intRate" value="2.50" /></div>
+                            <div class="form-group">
+                                <label>Branch Phone</label>
+                                <input type="text" id="branchPhone" value="09244076460" />
+                            </div>
+                            <div class="form-group">
+                                <label>Interest Rate</label>
+                                <input type="text" id="intRate" value="2.50" />
+                            </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- RIGHT -->
                 <div>
                     <div class="card">
                         <div class="card-title">💼 Income &amp; Period</div>
-                        <div class="form-group"><label>Monthly Income</label><input type="number" id="monthlyIncome" value="195000" /></div>
-                        <div class="form-group"><label>Employer</label><input type="text" id="employer" value="TATA STEEL LIMITED" /></div>
-                        <div class="inline">
-                            <div class="form-group"><label>Salary Day</label><input type="number" id="salaryDay" value="1" /></div>
-                            <div class="form-group"><label>Opening Balance</label><input type="number" id="openingBalance" value="45000" /></div>
+                        <div class="form-group">
+                            <label>Monthly Income (INR)</label>
+                            <input type="number" id="monthlyIncome" value="195000" />
                         </div>
                         <div class="form-group">
-                            <label>Period</label>
+                            <label>Employer</label>
+                            <input type="text" id="employer" value="TATA STEEL LIMITED" />
+                        </div>
+                        <div class="inline">
+                            <div class="form-group">
+                                <label>Salary Day</label>
+                                <input type="number" id="salaryDay" value="1" />
+                            </div>
+                            <div class="form-group">
+                                <label>Opening Balance</label>
+                                <input type="number" id="openingBalance" value="75000" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Statement Period</label>
                             <div class="pill-group" id="periodGroup">
                                 <span class="pill active" data-value="3">3 Months</span>
                                 <span class="pill" data-value="6">6 Months</span>
@@ -971,13 +847,23 @@
                             <div class="expense-item">
                                 <input type="text" placeholder="Name" value="HOME LOAN EMI" />
                                 <input type="number" placeholder="Amount" value="15000" />
-                                <select><option value="5" selected>Day 5</option><option value="10">Day 10</option><option value="15">Day 15</option><option value="20">Day 20</option></select>
+                                <select>
+                                    <option value="5" selected>Day 5</option>
+                                    <option value="10">Day 10</option>
+                                    <option value="15">Day 15</option>
+                                    <option value="20">Day 20</option>
+                                </select>
                                 <button class="remove-btn" onclick="this.parentElement.remove()">✕</button>
                             </div>
                             <div class="expense-item">
                                 <input type="text" placeholder="Name" value="MUTUAL FUND SIP" />
                                 <input type="number" placeholder="Amount" value="8000" />
-                                <select><option value="5">Day 5</option><option value="10" selected>Day 10</option><option value="15">Day 15</option><option value="20">Day 20</option></select>
+                                <select>
+                                    <option value="5">Day 5</option>
+                                    <option value="10" selected>Day 10</option>
+                                    <option value="15">Day 15</option>
+                                    <option value="20">Day 20</option>
+                                </select>
                                 <button class="remove-btn" onclick="this.parentElement.remove()">✕</button>
                             </div>
                         </div>
@@ -1002,14 +888,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group"><label>PDF Password</label><input type="text" id="pdfPassword" placeholder="Leave empty" /></div>
+                        <div class="form-group">
+                            <label>PDF Password (optional)</label>
+                            <input type="text" id="pdfPassword" placeholder="Leave empty" />
+                        </div>
                     </div>
                 </div>
             </div>
 
             <button class="gen-btn" id="generateBtn" onclick="generateStatement()">
-                <span class="btn-text">⚡ Generate Statement</span>
-                <span class="spinner"></span>
+                ⚡ Generate Professional Statement
             </button>
 
             <div id="output">
@@ -1017,71 +905,7 @@
                 <div class="btn-group">
                     <button class="btn-primary" onclick="downloadPDF()">📥 Download PDF</button>
                     <button class="btn-secondary" onclick="copyStatement()">📋 Copy</button>
-                    <button class="btn-success" onclick="saveToHistory()">💾 Save</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- ═══ TAB: PDF SCANNER ═══ -->
-        <div class="tab-content active" id="tab-scanner">
-            <div class="card">
-                <div class="card-title">📄 PDF Style Scanner - 100% Exact Copy</div>
-                <p style="color:var(--text-light);font-size:13px;margin-bottom:14px;">
-                    Upload any bank statement PDF. The scanner will <strong>extract the exact style</strong> (colors, fonts, layout, spacing, header, footer) and generate a <strong>100% identical</strong> copy with your account details.
-                    <span style="display:block;margin-top:4px;font-size:12px;color:var(--accent);">🔒 Works with: SBI, HDFC, ICICI, Axis, Kotak, PNB, BOB, IndusInd, Canara, Union &amp; more</span>
-                </p>
-
-                <!-- Scanner Area -->
-                <div class="scanner-area" id="scannerArea" onclick="document.getElementById('pdfScannerInput').click()">
-                    <div class="icon">📄</div>
-                    <p>Click to upload or drag &amp; drop a bank statement PDF</p>
-                    <p style="font-size:12px;color:var(--text-light);">The system will copy the style 100% exactly as in the PDF</p>
-                    <span class="browse-btn">Browse Files</span>
-                    <input type="file" id="pdfScannerInput" accept=".pdf" onchange="handleScannerUpload(event)" />
-                    <div class="scan-progress">
-                        <div class="bar" id="scanProgressBar"></div>
-                    </div>
-                </div>
-
-                <!-- Style Preview -->
-                <div class="style-preview" id="stylePreview">
-                    <div class="preview-header">
-                        <span class="file-name" id="scannerFileName">sample.pdf</span>
-                        <button class="remove-btn" onclick="removeScannedStyle()">✕ Remove</button>
-                    </div>
-
-                    <div class="style-grid">
-                        <div class="style-item">
-                            <div class="lbl">🏦 Bank Name</div>
-                            <div class="val" id="scannedBank">—</div>
-                        </div>
-                        <div class="style-item">
-                            <div class="lbl">🎨 Colors</div>
-                            <div class="val" id="scannedColors">
-                                <span class="color-dot" id="colorDot1" style="background:#1a5276;"></span>
-                                <span class="color-dot" id="colorDot2" style="background:#f39c12;"></span>
-                                <span id="scannedColorText">#1a5276 / #f39c12</span>
-                            </div>
-                        </div>
-                        <div class="style-item">
-                            <div class="lbl">📐 Layout Type</div>
-                            <div class="val" id="scannedLayout">Standard Bank Statement</div>
-                        </div>
-                        <div class="style-item">
-                            <div class="lbl">🔤 Font Family</div>
-                            <div class="val" id="scannedFont">Courier New</div>
-                        </div>
-                    </div>
-
-                    <!-- 100% Exact Copy Preview -->
-                    <div class="exact-copy-preview" id="exactCopyPreview">
-                        <div class="preview-label">📋 100% Exact Copy Preview</div>
-                        <div class="exact-statement-preview" id="exactPreviewContent">
-                            <!-- This will be filled with exact copy preview -->
-                        </div>
-                    </div>
-
-                    <button class="add-btn" onclick="applyScannedStyle()" style="margin-top:12px;background:var(--success);color:#fff;font-weight:700;">✅ Apply Exact Style &amp; Generate</button>
+                    <button class="btn-success" onclick="saveToHistory()">💾 Save to History</button>
                 </div>
             </div>
         </div>
@@ -1090,62 +914,10 @@
         <div class="tab-content" id="tab-history">
             <div class="card">
                 <div class="card-title">📜 Statement History</div>
-                <div id="historyList"><p style="color:var(--text-light);text-align:center;padding:20px;">No history.</p></div>
-                <button class="add-btn" onclick="clearHistory()" style="color:var(--danger);">🗑️ Clear All</button>
-            </div>
-        </div>
-
-        <!-- ═══ TAB: WHITE-LABEL ═══ -->
-        <div class="tab-content" id="tab-whitelabel">
-            <div class="card">
-                <div class="card-title">🎨 White-Label Settings</div>
-                <div class="form-group"><label>Company Name</label><input type="text" id="wlCompany" /></div>
-                <div class="form-group"><label>Logo Text</label><input type="text" id="wlLogo" /></div>
-                <div class="form-group"><label>Primary Color</label><input type="color" id="wlColor" value="#1a5276" /></div>
-                <div class="form-group"><label>Accent Color</label><input type="color" id="wlAccent" value="#f39c12" /></div>
-                <button class="add-btn" onclick="applyWhiteLabel()">✅ Apply</button>
-                <div id="wlPreview" style="margin-top:12px;padding:16px;background:var(--bg);border-radius:10px;border:2px dashed var(--border);text-align:center;">
-                    <div style="font-size:20px;font-weight:800;color:var(--primary);">Your Brand</div>
+                <div id="historyList">
+                    <p style="color:#5d6d7e;text-align:center;padding:20px;">No statements saved yet.</p>
                 </div>
-            </div>
-        </div>
-
-        <!-- ═══ TAB: BULK ═══ -->
-        <div class="tab-content" id="tab-bulk">
-            <div class="card">
-                <div class="card-title">📊 Bulk Generation</div>
-                <div class="csv-upload" onclick="document.getElementById('csvFile').click()" style="border:2px dashed var(--border);padding:30px;text-align:center;border-radius:12px;cursor:pointer;">
-                    <div style="font-size:48px;">📤</div>
-                    <p>Upload CSV file</p>
-                    <span style="color:var(--primary);font-weight:700;">Browse</span>
-                    <input type="file" id="csvFile" accept=".csv" style="display:none;" onchange="handleCSVUpload(event)" />
-                </div>
-                <div id="bulkPreview" style="display:none;margin-top:12px;">
-                    <p><strong>Rows:</strong> <span id="bulkCount">0</span></p>
-                    <button class="add-btn" onclick="processBulk()" style="background:var(--primary);color:#fff;">⚡ Generate All</button>
-                    <div id="bulkResults"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ═══ TAB: TEMPLATES ═══ -->
-        <div class="tab-content" id="tab-templates">
-            <div class="card">
-                <div class="card-title">📝 Custom Templates</div>
-                <div id="templateBuilder">
-                    <div class="template-field" style="display:flex;gap:10px;margin-bottom:8px;">
-                        <input type="text" placeholder="Field Name" value="Account Holder" style="flex:1;padding:6px 10px;border:1px solid var(--border);border-radius:6px;" />
-                        <select style="padding:6px 10px;border:1px solid var(--border);border-radius:6px;">
-                            <option value="text">Text</option>
-                            <option value="date">Date</option>
-                            <option value="number">Number</option>
-                        </select>
-                        <button class="remove-btn" onclick="this.parentElement.remove()" style="background:none;border:none;color:var(--danger);font-size:18px;cursor:pointer;">✕</button>
-                    </div>
-                </div>
-                <button class="add-btn" onclick="addTemplateField()">+ Add Field</button>
-                <button class="add-btn" onclick="saveTemplate()" style="background:var(--primary);color:#fff;">💾 Save</button>
-                <div id="savedTemplates" style="margin-top:12px;"></div>
+                <button class="add-btn" onclick="clearHistory()" style="color:#e74c3c;">🗑️ Clear All</button>
             </div>
         </div>
     </div>
@@ -1153,31 +925,6 @@
     <div class="toast-container" id="toastContainer"></div>
 
     <script>
-        // ─── SECRET PASSWORD ───
-        const SECRET_PASSWORD = '85807';
-
-        function verifyPassword() {
-            const input = document.getElementById('secretPassword');
-            const error = document.getElementById('passwordError');
-            if (input.value === SECRET_PASSWORD) {
-                document.getElementById('passwordOverlay').classList.add('hidden');
-                document.getElementById('mainApp').style.display = 'block';
-                showToast('🔓 Access granted! PDF Scanner unlocked.', 'success');
-                loadHistory();
-                renderTemplates();
-                updateStats();
-            } else {
-                error.classList.add('show');
-                input.value = '';
-                input.focus();
-                showToast('❌ Incorrect password', 'error');
-            }
-        }
-
-        document.getElementById('secretPassword').addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') verifyPassword();
-        });
-
         // ─── TOAST ───
         function showToast(msg, type = 'info') {
             const c = document.getElementById('toastContainer');
@@ -1206,7 +953,6 @@
         let history = [];
         let statementCount = 0;
         let currentStatementHTML = '';
-        let scannedStyle = {};
 
         // ─── BANK SELECTION ───
         document.querySelectorAll('.bank-btn').forEach(btn => {
@@ -1262,93 +1008,6 @@
             list.appendChild(div);
         }
 
-        // ─── TEMPLATES ───
-        function addTemplateField() {
-            const builder = document.getElementById('templateBuilder');
-            const div = document.createElement('div');
-            div.className = 'template-field';
-            div.style.cssText = 'display:flex;gap:10px;margin-bottom:8px;';
-            div.innerHTML = `
-                <input type="text" placeholder="Field Name" style="flex:1;padding:6px 10px;border:1px solid var(--border);border-radius:6px;" />
-                <select style="padding:6px 10px;border:1px solid var(--border);border-radius:6px;">
-                    <option value="text">Text</option>
-                    <option value="date">Date</option>
-                    <option value="number">Number</option>
-                </select>
-                <button class="remove-btn" onclick="this.parentElement.remove()" style="background:none;border:none;color:var(--danger);font-size:18px;cursor:pointer;">✕</button>
-            `;
-            builder.appendChild(div);
-        }
-
-        function saveTemplate() {
-            const fields = document.querySelectorAll('#templateBuilder .template-field');
-            const template = [];
-            fields.forEach(f => {
-                const input = f.querySelector('input');
-                const select = f.querySelector('select');
-                if (input) template.push({ name: input.value || 'Field', type: select ? select.value : 'text' });
-            });
-            if (template.length === 0) { showToast('⚠️ Add at least one field', 'warning'); return; }
-            let saved = JSON.parse(localStorage.getItem('customTemplates') || '[]');
-            saved.push({ name: `Template ${saved.length + 1}`, fields: template, date: new Date().toISOString() });
-            localStorage.setItem('customTemplates', JSON.stringify(saved));
-            renderTemplates();
-            updateStats();
-            showToast('✅ Template saved!', 'success');
-        }
-
-        function renderTemplates() {
-            const container = document.getElementById('savedTemplates');
-            const templates = JSON.parse(localStorage.getItem('customTemplates') || '[]');
-            if (templates.length === 0) { container.innerHTML = '<p style="color:var(--text-light);">No templates saved.</p>'; return; }
-            let html = '';
-            templates.forEach((t, idx) => {
-                html += `
-                    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:var(--bg);border-radius:6px;margin-bottom:4px;border-left:4px solid var(--accent);">
-                        <div><strong>${t.name}</strong> <span style="font-size:11px;color:var(--text-light);">(${t.fields.length} fields)</span></div>
-                        <div style="display:flex;gap:4px;">
-                            <button class="add-btn" onclick="loadTemplate(${idx})" style="background:var(--primary);color:#fff;">📂</button>
-                            <button class="add-btn" onclick="deleteTemplate(${idx})" style="background:var(--danger);color:#fff;">🗑️</button>
-                        </div>
-                    </div>
-                `;
-            });
-            container.innerHTML = html;
-        }
-
-        function loadTemplate(idx) {
-            const templates = JSON.parse(localStorage.getItem('customTemplates') || '[]');
-            const template = templates[idx];
-            if (!template) return;
-            const builder = document.getElementById('templateBuilder');
-            builder.innerHTML = '';
-            template.fields.forEach(f => {
-                const div = document.createElement('div');
-                div.className = 'template-field';
-                div.style.cssText = 'display:flex;gap:10px;margin-bottom:8px;';
-                div.innerHTML = `
-                    <input type="text" placeholder="Field Name" value="${f.name}" style="flex:1;padding:6px 10px;border:1px solid var(--border);border-radius:6px;" />
-                    <select style="padding:6px 10px;border:1px solid var(--border);border-radius:6px;">
-                        <option value="text" ${f.type === 'text' ? 'selected' : ''}>Text</option>
-                        <option value="date" ${f.type === 'date' ? 'selected' : ''}>Date</option>
-                        <option value="number" ${f.type === 'number' ? 'selected' : ''}>Number</option>
-                    </select>
-                    <button class="remove-btn" onclick="this.parentElement.remove()" style="background:none;border:none;color:var(--danger);font-size:18px;cursor:pointer;">✕</button>
-                `;
-                builder.appendChild(div);
-            });
-            showToast('📂 Template loaded!', 'success');
-        }
-
-        function deleteTemplate(idx) {
-            let templates = JSON.parse(localStorage.getItem('customTemplates') || '[]');
-            templates.splice(idx, 1);
-            localStorage.setItem('customTemplates', JSON.stringify(templates));
-            renderTemplates();
-            updateStats();
-            showToast('🗑️ Deleted', 'info');
-        }
-
         // ─── HISTORY ───
         function loadHistory() {
             history = JSON.parse(localStorage.getItem('statementHistory') || '[]');
@@ -1357,16 +1016,18 @@
 
         function renderHistory() {
             const container = document.getElementById('historyList');
-            if (history.length === 0) { container.innerHTML =
-                '<p style="color:var(--text-light);text-align:center;padding:20px;">No history.</p>'; return; }
+            if (history.length === 0) {
+                container.innerHTML = '<p style="color:#5d6d7e;text-align:center;padding:20px;">No statements saved yet.</p>';
+                return;
+            }
             let html = '';
             history.forEach((item, idx) => {
                 html += `
-                    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:var(--bg);border-radius:6px;margin-bottom:4px;border-left:4px solid var(--primary);">
-                        <div><strong>${item.name || 'Unnamed'}</strong> <span style="font-size:11px;color:var(--text-light);">${item.date || ''}</span></div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:#f8f9fa;border-radius:6px;margin-bottom:4px;border-left:4px solid #1a5276;">
+                        <div><strong>${item.name || 'Unnamed'}</strong> <span style="font-size:11px;color:#5d6d7e;">${item.date || ''}</span></div>
                         <div style="display:flex;gap:4px;">
-                            <button class="add-btn" onclick="viewHistory(${idx})" style="background:var(--primary);color:#fff;">👁️</button>
-                            <button class="add-btn" onclick="deleteHistory(${idx})" style="background:var(--danger);color:#fff;">🗑️</button>
+                            <button class="add-btn" onclick="viewHistory(${idx})" style="background:#1a5276;color:#fff;">👁️</button>
+                            <button class="add-btn" onclick="deleteHistory(${idx})" style="background:#e74c3c;color:#fff;">🗑️</button>
                         </div>
                     </div>
                 `;
@@ -1382,7 +1043,7 @@
                 currentStatementHTML = item.html;
                 document.getElementById('output').classList.add('show');
                 document.getElementById('output').scrollIntoView({ behavior: 'smooth' });
-                showToast('👁️ Viewing', 'info');
+                showToast('👁️ Viewing saved statement', 'info');
             }
         }
 
@@ -1400,390 +1061,62 @@
                 localStorage.setItem('statementHistory', JSON.stringify(history));
                 renderHistory();
                 updateStats();
-                showToast('🗑️ All cleared', 'info');
+                showToast('🗑️ All history cleared', 'info');
             }
         }
 
         function saveToHistory() {
-            if (!currentStatementHTML) { showToast('⚠️ Generate first', 'warning'); return; }
+            if (!currentStatementHTML) { showToast('⚠️ Generate a statement first.', 'warning'); return; }
             const name = document.getElementById('accName').value || 'Unnamed';
             history.push({ name, date: new Date().toLocaleDateString('en-IN'), html: currentStatementHTML });
             localStorage.setItem('statementHistory', JSON.stringify(history));
             renderHistory();
             updateStats();
-            showToast('💾 Saved!', 'success');
+            showToast('💾 Saved to history!', 'success');
         }
 
         function updateStats() {
             document.getElementById('statStatements').textContent = statementCount;
             document.getElementById('statHistory').textContent = history.length;
-            const t = JSON.parse(localStorage.getItem('customTemplates') || '[]');
-            document.getElementById('statTemplates').textContent = t.length;
-        }
-
-        // ─── WHITE-LABEL ───
-        function applyWhiteLabel() {
-            const company = document.getElementById('wlCompany').value || 'Your Brand';
-            const logo = document.getElementById('wlLogo').value || 'BRAND';
-            const color = document.getElementById('wlColor').value;
-            const accent = document.getElementById('wlAccent').value;
-            document.getElementById('wlPreview').innerHTML = `
-                <div style="font-size:20px;font-weight:800;color:${color};">${logo}</div>
-                <p style="color:${color};font-weight:700;">${company}</p>
-                <div style="display:flex;gap:8px;justify-content:center;margin-top:8px;">
-                    <span style="display:inline-block;width:30px;height:30px;border-radius:6px;background:${color};"></span>
-                    <span style="display:inline-block;width:30px;height:30px;border-radius:6px;background:${accent};"></span>
-                </div>
-            `;
-            localStorage.setItem('wlSettings', JSON.stringify({ company, logo, color, accent }));
-            showToast('🎨 White-label applied!', 'success');
-        }
-
-        // ─── BULK CSV ───
-        let bulkData = [];
-
-        function handleCSVUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const lines = e.target.result.split('\n').filter(l => l.trim());
-                bulkData = [];
-                for (let i = 1; i < lines.length; i++) {
-                    const cols = lines[i].split(',').map(c => c.trim());
-                    if (cols.length >= 4) bulkData.push({ name: cols[0], account: cols[1], ifsc: cols[2], branch: cols[3],
-                        amount: parseFloat(cols[4]) || 0 });
-                }
-                document.getElementById('bulkCount').textContent = bulkData.length;
-                document.getElementById('bulkPreview').style.display = 'block';
-                showToast(`📊 ${bulkData.length} rows uploaded`, 'success');
-            };
-            reader.readAsText(file);
-        }
-
-        function processBulk() {
-            if (bulkData.length === 0) { showToast('⚠️ Upload CSV first', 'warning'); return; }
-            const results = document.getElementById('bulkResults');
-            let html = '';
-            bulkData.forEach((row, idx) => {
-                html += `
-                    <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 10px;background:var(--bg);border-radius:4px;margin-bottom:4px;border-left:4px solid ${idx % 2 === 0 ? '#1a5276' : '#f39c12'};">
-                        <span>${row.name}</span>
-                        <button class="add-btn" onclick="generateBulkItem(${idx})" style="background:var(--primary);color:#fff;">⚡ Generate</button>
-                    </div>
-                `;
-            });
-            results.innerHTML = html;
-        }
-
-        function generateBulkItem(idx) {
-            const row = bulkData[idx];
-            document.getElementById('accName').value = row.name;
-            document.getElementById('accNum').value = row.account;
-            document.getElementById('ifsc').value = row.ifsc;
-            document.getElementById('branch').value = row.branch;
-            document.getElementById('openingBalance').value = row.amount || 45000;
-            generateStatement();
-            showToast(`⚡ Generated for ${row.name}`, 'success');
         }
 
         // ═══════════════════════════════════════════════
-        // ─── PDF STYLE SCANNER - 100% EXACT COPY ───
-        // ═══════════════════════════════════════════════
-
-        function handleScannerUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            if (file.type !== 'application/pdf') { showToast('⚠️ Please upload a PDF file.', 'error'); return; }
-
-            const area = document.getElementById('scannerArea');
-            area.classList.add('scanning');
-            document.getElementById('scanProgressBar').style.width = '0%';
-
-            let progress = 0;
-            const interval = setInterval(() => {
-                progress += Math.random() * 12 + 3;
-                if (progress > 100) progress = 100;
-                document.getElementById('scanProgressBar').style.width = progress + '%';
-
-                if (progress >= 100) {
-                    clearInterval(interval);
-                    area.classList.remove('scanning');
-
-                    // Detect style from filename
-                    const fileName = file.name.toLowerCase();
-                    let detectedBank = 'Universal Bank Style';
-                    let primaryColor = '#1a5276';
-                    let accentColor = '#f39c12';
-                    let fontStyle = 'Courier New';
-                    let layoutType = 'Standard Bank Statement';
-
-                    // Auto-detect from filename - support all banks
-                    if (fileName.includes('sbi') || fileName.includes('state bank') || fileName.includes('statebank')) {
-                        detectedBank = 'State Bank of India';
-                        primaryColor = '#1a5276';
-                        accentColor = '#f39c12';
-                    } else if (fileName.includes('hdfc')) {
-                        detectedBank = 'HDFC Bank';
-                        primaryColor = '#004d8c';
-                        accentColor = '#e6b800';
-                    } else if (fileName.includes('icici')) {
-                        detectedBank = 'ICICI Bank';
-                        primaryColor = '#ed1c24';
-                        accentColor = '#0033a0';
-                    } else if (fileName.includes('axis')) {
-                        detectedBank = 'Axis Bank';
-                        primaryColor = '#a2001a';
-                        accentColor = '#fdb913';
-                    } else if (fileName.includes('kotak')) {
-                        detectedBank = 'Kotak Mahindra Bank';
-                        primaryColor = '#1a2b5c';
-                        accentColor = '#e6b800';
-                    } else if (fileName.includes('bob') || fileName.includes('baroda')) {
-                        detectedBank = 'Bank of Baroda';
-                        primaryColor = '#1f3a7a';
-                        accentColor = '#fdb913';
-                    } else if (fileName.includes('pnb') || fileName.includes('punjab')) {
-                        detectedBank = 'Punjab National Bank';
-                        primaryColor = '#b8860b';
-                        accentColor = '#1a3c6e';
-                    } else if (fileName.includes('indusind')) {
-                        detectedBank = 'IndusInd Bank';
-                        primaryColor = '#0066b3';
-                        accentColor = '#e6b800';
-                    } else if (fileName.includes('canara')) {
-                        detectedBank = 'Canara Bank';
-                        primaryColor = '#003366';
-                        accentColor = '#fdb913';
-                    } else if (fileName.includes('union')) {
-                        detectedBank = 'Union Bank of India';
-                        primaryColor = '#1a3c6e';
-                        accentColor = '#fdb913';
-                    } else {
-                        // Universal detection - try to detect any bank
-                        detectedBank = 'Universal Bank Style';
-                        primaryColor = '#1a5276';
-                        accentColor = '#f39c12';
-                    }
-
-                    scannedStyle = {
-                        bankName: detectedBank,
-                        primaryColor: primaryColor,
-                        accentColor: accentColor,
-                        fontStyle: fontStyle,
-                        layoutType: layoutType,
-                        fileName: file.name
-                    };
-
-                    // Update preview
-                    document.getElementById('scannerFileName').textContent = file.name;
-                    document.getElementById('scannedBank').textContent = detectedBank;
-                    document.getElementById('scannedColorText').textContent = `${primaryColor} / ${accentColor}`;
-                    document.getElementById('colorDot1').style.background = primaryColor;
-                    document.getElementById('colorDot2').style.background = accentColor;
-                    document.getElementById('scannedLayout').textContent = layoutType;
-                    document.getElementById('scannedFont').textContent = fontStyle;
-
-                    // Build exact copy preview
-                    buildExactPreview(detectedBank, primaryColor, accentColor);
-
-                    document.getElementById('stylePreview').classList.add('show');
-                    document.getElementById('exactCopyPreview').classList.add('show');
-
-                    showToast(`✅ 100% exact style detected: ${detectedBank}`, 'success');
-                }
-            }, 300);
-        }
-
-        function buildExactPreview(bankName, primaryColor, accentColor) {
-            const container = document.getElementById('exactPreviewContent');
-            const short = bankName.substring(0, 4).toUpperCase();
-
-            container.innerHTML = `
-                <div class="bank-header" style="background:${primaryColor};border-bottom-color:${accentColor};">
-                    <div class="bank-name">${bankName}</div>
-                    <div class="branch-details">
-                        Branch: Main Branch<br />
-                        Phone: 09244076460
-                    </div>
-                </div>
-
-                <div class="statement-title" style="color:${primaryColor};border-bottom-color:${primaryColor};">
-                    STATEMENT OF ACCOUNT
-                </div>
-
-                <div class="account-holder">
-                    Ankit Sharma
-                    <span class="sub">Sector B, Address Line</span>
-                </div>
-
-                <div class="details-grid">
-                    <span><strong>Date of Statement:</strong> 20/06/2026</span>
-                    <span><strong>MOD Bal:</strong> 0.00</span>
-                    <span><strong>Monthly Avg Balance:</strong> 0.00</span>
-                    <span><strong>Clear Balance:</strong> 45,000 CR</span>
-                    <span><strong>Lien:</strong> 0.0</span>
-                    <span><strong>Interest Rate:</strong> 2.50 % p.a.</span>
-                    <span><strong>Uncleared Amount:</strong> 0.00</span>
-                    <span><strong>Limit:</strong> 0.00</span>
-                    <span><strong>Drawing Power:</strong> 0.00</span>
-                </div>
-
-                <div class="balance-row">
-                    <span><strong>CIF Number:</strong> 92076074822</span>
-                    <span><strong>Account Number:</strong> 45222567869</span>
-                    <span><strong>Product:</strong> -</span>
-                    <span><strong>IFSC Code:</strong> SBIN0012193</span>
-                    <span><strong>Currency:</strong> INR</span>
-                    <span><strong>Account Status:</strong> OPEN</span>
-                    <span><strong>MICR Code:</strong> 464002202</span>
-                </div>
-
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Value Date</th>
-                            <th>Post Date</th>
-                            <th>Details</th>
-                            <th>Ref No</th>
-                            <th>Debit</th>
-                            <th>Credit</th>
-                            <th>Balance</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr style="font-weight:700;background:#f8f9fa;">
-                            <td colspan="4">Opening Balance</td>
-                            <td>—</td>
-                            <td>—</td>
-                            <td>45,000.00</td>
-                        </tr>
-                        <tr>
-                            <td>09/01/2026</td>
-                            <td>09/01/2026</td>
-                            <td style="font-size:8px;">TO TRANSFER-UPI/DR/933977850418/HARISH/UBIN/9598576245/Payme</td>
-                            <td style="font-size:8px;">933977850418</td>
-                            <td class="debit">26,700.00</td>
-                            <td>—</td>
-                            <td>49,907.00</td>
-                        </tr>
-                        <tr>
-                            <td>09/01/2026</td>
-                            <td>09/01/2026</td>
-                            <td style="font-size:8px;">BY TRANSFER-UPI/CR/203632323726/KOMALR/UTIB/9780683164/Payme</td>
-                            <td style="font-size:8px;">203632323726</td>
-                            <td>—</td>
-                            <td class="credit">25,100.00</td>
-                            <td>48,807.00</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <div class="footer">
-                    <strong>${bankName}</strong> · Main Branch · SBIN0012193<br />
-                    Please do not share your ATM, Debit/Credit Card number, PIN, OTP, Username or Password with anyone.
-                    This is a computer generated statement.
-                </div>
-            `;
-
-            // Style the container
-            container.style.borderColor = primaryColor;
-        }
-
-        function removeScannedStyle() {
-            scannedStyle = {};
-            document.getElementById('stylePreview').classList.remove('show');
-            document.getElementById('exactCopyPreview').classList.remove('show');
-            document.getElementById('pdfScannerInput').value = '';
-            document.getElementById('scannerArea').classList.remove('scanning');
-            document.getElementById('scanProgressBar').style.width = '0%';
-            showToast('🗑️ Style removed', 'info');
-        }
-
-        function applyScannedStyle() {
-            if (!scannedStyle.bankName) {
-                showToast('⚠️ Please scan a PDF first.', 'warning');
-                return;
-            }
-
-            // Apply detected colors
-            document.getElementById('wlColor').value = scannedStyle.primaryColor || '#1a5276';
-            document.getElementById('wlAccent').value = scannedStyle.accentColor || '#f39c12';
-            document.getElementById('wlCompany').value = scannedStyle.bankName || '';
-            document.getElementById('wlLogo').value = scannedStyle.bankName?.substring(0, 4) || 'BANK';
-            applyWhiteLabel();
-
-            // Auto-select bank if matches
-            const bankKey = Object.keys(banks).find(k => banks[k].name === scannedStyle.bankName);
-            if (bankKey) {
-                document.querySelectorAll('.bank-btn').forEach(b => b.classList.remove('active'));
-                document.querySelector(`.bank-btn[data-bank="${bankKey}"]`)?.classList.add('active');
-                updateBankPreview();
-            }
-
-            // Switch to generator
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.querySelector('[data-tab="generator"]').classList.add('active');
-            document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
-            document.getElementById('tab-generator').classList.add('active');
-
-            showToast(`✅ Applied 100% exact style from ${scannedStyle.bankName}!`, 'success');
-            setTimeout(() => generateStatement(), 500);
-        }
-
-        // ─── DRAG & DROP ───
-        const scannerArea = document.getElementById('scannerArea');
-        if (scannerArea) {
-            scannerArea.addEventListener('dragover', (e) => { e.preventDefault();
-                scannerArea.classList.add('dragover'); });
-            scannerArea.addEventListener('dragleave', () => { scannerArea.classList.remove('dragover'); });
-            scannerArea.addEventListener('drop', (e) => {
-                e.preventDefault();
-                scannerArea.classList.remove('dragover');
-                const files = e.dataTransfer.files;
-                if (files.length > 0) {
-                    document.getElementById('pdfScannerInput').files = files;
-                    handleScannerUpload({ target: { files: files } });
-                }
-            });
-        }
-
-        // ═══════════════════════════════════════════════
-        // ─── GENERATE STATEMENT ───
+        // ─── GENERATE PROFESSIONAL STATEMENT ───
         // ═══════════════════════════════════════════════
         function generateStatement() {
             const btn = document.getElementById('generateBtn');
-            btn.classList.add('loading');
             btn.disabled = true;
+            btn.textContent = '⏳ Generating...';
 
             setTimeout(() => {
                 try {
                     const bankKey = document.querySelector('.bank-btn.active')?.dataset.bank || 'sbi';
                     const bank = banks[bankKey];
 
-                    const name = document.getElementById('accName').value || '_____________';
-                    const email = document.getElementById('email').value || '_____________';
-                    const address = document.getElementById('address').value || '_____________';
-                    const accNum = document.getElementById('accNum').value || '_____________';
-                    const ifsc = document.getElementById('ifsc').value || '_____________';
-                    const branch = document.getElementById('branch').value || '_____________';
-                    const branchCode = document.getElementById('branchCode').value || '_____________';
-                    const cif = document.getElementById('cif').value || '_____________';
-                    const micr = document.getElementById('micr').value || '_____________';
-                    const ckycr = document.getElementById('ckycr').value || '_____________';
-                    const branchPhone = document.getElementById('branchPhone').value || '_____________';
+                    const name = document.getElementById('accName').value || 'Customer Name';
+                    const email = document.getElementById('email').value || 'customer@email.com';
+                    const address = document.getElementById('address').value || 'Address';
+                    const accNum = document.getElementById('accNum').value || '00000000000000';
+                    const ifsc = document.getElementById('ifsc').value || 'SBIN0000000';
+                    const branch = document.getElementById('branch').value || 'MAIN BRANCH';
+                    const branchCode = document.getElementById('branchCode').value || '00000';
+                    const cif = document.getElementById('cif').value || '00000000000';
+                    const micr = document.getElementById('micr').value || '000000000';
+                    const ckycr = document.getElementById('ckycr').value || '00000000000000';
+                    const branchPhone = document.getElementById('branchPhone').value || '0000000000';
                     const intRate = document.getElementById('intRate').value || '2.50';
 
                     const monthlyIncome = Number(document.getElementById('monthlyIncome').value) || 0;
                     const employer = document.getElementById('employer').value || '—';
                     const salaryDay = Number(document.getElementById('salaryDay').value) || 1;
                     let openingBal = Number(document.getElementById('openingBalance').value);
-                    if (!openingBal || openingBal < 0) openingBal = Math.floor(Math.random() * 50000) + 25000;
+                    if (!openingBal || openingBal < 0) openingBal = 45000;
 
                     const period = Number(document.querySelector('#periodGroup .active')?.dataset.value) || 3;
                     const profile = document.querySelector('#profileGroup .active')?.dataset.value || 'moderate';
                     const pdfVariant = document.querySelector('#pdfVariant .active')?.dataset.value || 'light';
 
+                    // Recurring expenses
                     const expenseItems = document.querySelectorAll('#expenseList .expense-item');
                     const recurring = [];
                     expenseItems.forEach(item => {
@@ -1797,6 +1130,7 @@
                         }
                     });
 
+                    // ─── Build Transactions ───
                     const startDate = new Date();
                     startDate.setMonth(startDate.getMonth() - period);
                     startDate.setDate(1);
@@ -1915,10 +1249,21 @@
 
                     transactions.sort((a, b) => a.date - b.date);
 
+                    // ─── Build HTML ───
                     const variantClass = pdfVariant === 'dark' ? 'dark' : '';
                     const bankCls = bank ? bank.cls : 'sbi';
                     const bankName = bank ? bank.name : 'Bank';
                     const bankShort = bank ? bank.short : 'SBI';
+                    const bankColor = bank ? bank.color : '#1a5276';
+                    const bankAccent = bank ? (bank.cls === 'sbi' ? '#f39c12' :
+                        bank.cls === 'hdfc' ? '#e6b800' :
+                        bank.cls === 'icici' ? '#0033a0' :
+                        bank.cls === 'axis' ? '#fdb913' :
+                        bank.cls === 'kotak' ? '#e6b800' :
+                        bank.cls === 'bob' ? '#fdb913' :
+                        bank.cls === 'pnb' ? '#1a3c6e' :
+                        bank.cls === 'indusind' ? '#e6b800' :
+                        bank.cls === 'canara' ? '#fdb913' : '#f39c12') : '#f39c12';
 
                     let rows = '';
                     let totalDebits = 0,
@@ -1966,36 +1311,34 @@
                     const openDateStr = accountOpenDate.toLocaleDateString('en-IN', { day: '2-digit',
                         month: '2-digit', year: 'numeric' });
 
-                    // Use scanned style
-                    const wlColor = scannedStyle.primaryColor || document.getElementById('wlColor')?.value || bank?.color ||
-                        '#1a5276';
-                    const wlAccent = scannedStyle.accentColor || document.getElementById('wlAccent')?.value || '#f39c12';
-                    const wlCompany = scannedStyle.bankName || document.getElementById('wlCompany')?.value || bankName;
-                    const wlLogo = scannedStyle.bankName?.substring(0, 4) || document.getElementById('wlLogo')?.value ||
-                        bankShort;
-
                     const html = `
-                        <div class="bank-statement ${bankCls} ${variantClass}" id="statementPrint" style="border-color:${wlColor};">
-                            <div class="header" style="background:${wlColor};border-bottom-color:${wlAccent};">
-                                <div class="logo" style="background:${wlAccent};color:${wlColor};">${wlLogo}</div>
-                                <div class="bank-info">
-                                    <div class="name" style="color:#fff;">${wlCompany}</div>
-                                    <div class="tagline" style="color:rgba(255,255,255,0.7);">${bankName} · ${bankShort}</div>
+                        <div class="professional-statement ${variantClass}" id="statementPrint">
+                            <!-- BANK HEADER -->
+                            <div class="bank-header" style="background:${bankColor};border-bottom-color:${bankAccent};">
+                                <div class="bank-name">
+                                    ${bankName}
+                                    <small>${bankShort} Bank · ${branch}</small>
                                 </div>
-                                <div class="branch-info" style="color:rgba(255,255,255,0.9);">
+                                <div class="branch-info">
                                     <div class="bname">${branch}</div>
                                     <div class="baddr">Branch Code: ${branchCode} | Phone: ${branchPhone}</div>
                                 </div>
                             </div>
-                            <div class="title" style="color:${wlColor};border-bottom-color:${wlColor};">STATEMENT OF ACCOUNT</div>
-                            <div class="acc-info">
+
+                            <!-- TITLE -->
+                            <div class="stmt-title" style="color:${bankColor};border-bottom-color:${bankColor};">STATEMENT OF ACCOUNT</div>
+
+                            <!-- ACCOUNT HOLDER -->
+                            <div class="acc-holder">
                                 <div class="name">${name}</div>
                                 <div class="email">${email}</div>
                                 <div class="address">${address}</div>
                             </div>
+
+                            <!-- DETAILS GRID -->
                             <div class="details-grid">
                                 <div class="item"><span class="lbl">Date of Statement</span><span class="val">${genDate}</span></div>
-                                <div class="item"><span class="lbl">Clear Balance</span><span class="val">${openingBal.toLocaleString()}CR</span></div>
+                                <div class="item"><span class="lbl">Clear Balance</span><span class="val">${openingBal.toLocaleString()} CR</span></div>
                                 <div class="item"><span class="lbl">Uncleared Amount</span><span class="val">0.00</span></div>
                                 <div class="item"><span class="lbl">MOD Bal</span><span class="val">0.00</span></div>
                                 <div class="item"><span class="lbl">Lien</span><span class="val">0.0</span></div>
@@ -2004,6 +1347,8 @@
                                 <div class="item"><span class="lbl">Interest Rate</span><span class="val">${intRate} % p.a.</span></div>
                                 <div class="item"><span class="lbl">Drawing Power</span><span class="val">0.00</span></div>
                             </div>
+
+                            <!-- BALANCE ROW -->
                             <div class="balance-row">
                                 <div class="item"><span class="lbl">CIF Number</span><span class="val">${cif}</span></div>
                                 <div class="item"><span class="lbl">Account Number</span><span class="val">${accNum}</span></div>
@@ -2013,24 +1358,28 @@
                                 <div class="item"><span class="lbl">Account Status</span><span class="val">OPEN</span></div>
                                 <div class="item"><span class="lbl">MICR Code</span><span class="val">${micr}</span></div>
                             </div>
+
+                            <!-- PERIOD -->
                             <div class="period">
                                 Account open Date: ${openDateStr} &nbsp;|&nbsp; Statement From: ${periodStr}
                             </div>
+
+                            <!-- TABLE -->
                             <table>
                                 <thead>
-                                    <tr>
-                                        <th>Value Date</th>
-                                        <th>Post Date</th>
-                                        <th>Details</th>
-                                        <th>Ref No/Cheque No</th>
-                                        <th>Debit</th>
-                                        <th>Credit</th>
-                                        <th>Balance</th>
+                                    <tr style="background:${bankColor};">
+                                        <th style="color:#fff;">Value Date</th>
+                                        <th style="color:#fff;">Post Date</th>
+                                        <th style="color:#fff;">Details</th>
+                                        <th style="color:#fff;">Ref No/Cheque No</th>
+                                        <th style="color:#fff;">Debit</th>
+                                        <th style="color:#fff;">Credit</th>
+                                        <th style="color:#fff;">Balance</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     ${rows}
-                                    <tr style="font-weight:700;border-top:2px solid ${wlColor};background:#f8f9fa;">
+                                    <tr style="font-weight:700;border-top:2px solid ${bankColor};background:#f8f9fa;">
                                         <td colspan="4" style="text-align:right;">TOTAL</td>
                                         <td class="debit">${Math.round(totalDebits).toLocaleString()}</td>
                                         <td class="credit">${Math.round(totalCredits).toLocaleString()}</td>
@@ -2038,12 +1387,13 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <div class="footer" style="border-top-color:${wlColor};">
-                                <strong style="color:${wlColor};">${wlCompany}</strong> · ${branch} · ${ifsc}<br />
-                                Please do not share your ATM, Debit/Credit Card number, PIN (Personal Identification number),
-                                OTP (One-Time Password), Username or Password with anyone via email, SMS, phone call, or any other medium.
-                                Bank never asks for such information. If your account is operated by a Power of Attorney holder,
-                                please review the transactions with extra care. This is a computer generated statement and does not require a signature.
+
+                            <!-- FOOTER -->
+                            <div class="footer">
+                                <strong style="color:${bankColor};">${bankName}</strong> · ${branch} · ${ifsc}<br />
+                                Please do not share your ATM, Debit/Credit Card number, PIN, OTP, Username or Password with anyone via email, SMS, phone call, or any other medium.
+                                Bank never asks for such information. If your account is operated by a Power of Attorney holder, please review the transactions with extra care.
+                                This is a computer generated statement and does not require a signature.
                             </div>
                         </div>
                     `;
@@ -2054,23 +1404,24 @@
                     statementCount++;
                     updateStats();
 
-                    btn.classList.remove('loading');
                     btn.disabled = false;
-                    showToast('✅ 100% exact style statement generated!', 'success');
+                    btn.textContent = '⚡ Generate Professional Statement';
+                    showToast('✅ Professional statement generated successfully!', 'success');
 
                 } catch (err) {
-                    btn.classList.remove('loading');
                     btn.disabled = false;
+                    btn.textContent = '⚡ Generate Professional Statement';
                     showToast('❌ Error: ' + err.message, 'error');
                     console.error(err);
                 }
-            }, 800);
+            }, 600);
         }
 
         // ─── PDF DOWNLOAD ───
         function downloadPDF() {
             const element = document.getElementById('statementPrint');
-            if (!element) { showToast('❌ Generate first', 'error'); return; }
+            if (!element) { showToast('❌ Generate a statement first.', 'error'); return; }
+
             const orientation = document.querySelector('#pdfOrientation .active')?.dataset.value || 'portrait';
             const bankKey = document.querySelector('.bank-btn.active')?.dataset.bank || 'sbi';
             const bank = banks[bankKey];
@@ -2098,19 +1449,21 @@
 
             html2pdf().set(opt).from(container).save().then(() => {
                 document.body.removeChild(container);
-                showToast('📥 Downloaded!', 'success');
+                showToast('📥 PDF downloaded!', 'success');
             }).catch(() => {
                 document.body.removeChild(container);
-                showToast('❌ Error', 'error');
+                showToast('❌ Error downloading PDF', 'error');
             });
         }
 
         // ─── COPY ───
         function copyStatement() {
             const element = document.getElementById('statementPrint');
-            if (!element) { showToast('❌ Generate first', 'error'); return; }
+            if (!element) { showToast('❌ Generate a statement first.', 'error'); return; }
             const text = element.textContent;
-            navigator.clipboard.writeText(text).then(() => { showToast('📋 Copied!', 'success'); }).catch(() => {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('📋 Copied to clipboard!', 'success');
+            }).catch(() => {
                 const range = document.createRange();
                 range.selectNode(element);
                 window.getSelection().removeAllRanges();
@@ -2123,11 +1476,8 @@
 
         // ─── INIT ───
         loadHistory();
-        renderTemplates();
         updateStats();
-        console.log('🚀 Pro Statement loaded with 100% Exact Copy Scanner!');
-        console.log('🔐 Secret Password: 85807');
-        console.log('📄 Upload any bank PDF - it will copy the style 100% exactly!');
+        console.log('🚀 Pro Statement - Professional Generator Loaded!');
     </script>
 
 </body>

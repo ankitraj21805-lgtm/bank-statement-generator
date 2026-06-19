@@ -3,228 +3,207 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Professional Bank Statement Generator - All Banks</title>
+    <title>Bank Statement Generator - Realistic</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js">
     </script>
     <style>
-        /* ─────────── RESET & BASE ─────────── */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #eef1f5;
-            color: #1a1a2e;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #e8ecf1;
             padding: 20px;
+            display: flex;
+            justify-content: center;
         }
         .app {
-            max-width: 1280px;
-            margin: 0 auto;
+            max-width: 1100px;
+            width: 100%;
             background: #fff;
-            border-radius: 28px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.06);
-            overflow: hidden;
-            padding: 35px 40px 45px;
+            border-radius: 16px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
+            padding: 30px;
         }
 
-        /* ─────────── HEADER ─────────── */
-        .app-header {
+        /* ─── HEADER ─── */
+        .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            gap: 16px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f2f5;
         }
-        .app-header h1 {
-            font-size: 26px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -0.5px;
-        }
-        .app-header .badge {
-            background: #e8eaf6;
-            color: #3949ab;
-            padding: 8px 22px;
-            border-radius: 40px;
-            font-size: 13px;
-            font-weight: 600;
-        }
-        .app-header .badge span {
-            background: #3949ab;
-            color: #fff;
-            padding: 1px 10px;
-            border-radius: 30px;
-            margin-left: 6px;
-            font-size: 11px;
-        }
-
-        /* ─────────── GRID ─────────── */
-        .two-col {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 28px;
-        }
-        @media (max-width: 920px) {
-            .two-col {
-                grid-template-columns: 1fr;
-            }
-            .app {
-                padding: 18px 16px;
-            }
-        }
-
-        /* ─────────── CARDS ─────────── */
-        .card {
-            background: #ffffff;
-            border-radius: 18px;
-            padding: 20px 22px 26px;
-            border: 1px solid #ecedf2;
-            transition: 0.2s;
-        }
-        .card:hover {
-            border-color: #c5c9d6;
-        }
-        .card-title {
-            font-size: 14px;
+        .header h1 {
+            font-size: 22px;
             font-weight: 700;
             color: #1a1a2e;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            letter-spacing: 0.3px;
         }
-        .card-title .icon {
-            font-size: 18px;
+        .header h1 span {
+            color: #6c63ff;
+        }
+        .header .badge {
+            background: #e8f0fe;
+            color: #1967d2;
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
         }
 
-        /* ─────────── FORM ─────────── */
-        .form-group {
+        /* ─── GRID ─── */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        @media (max-width: 800px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ─── CARDS ─── */
+        .card {
+            background: #fafbfc;
+            border-radius: 12px;
+            padding: 18px 20px 22px;
+            border: 1px solid #e4e7ec;
+        }
+        .card-title {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #5f6b7a;
             margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
         }
         .form-group label {
             display: block;
             font-size: 11px;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.4px;
-            color: #5a5a7a;
-            margin-bottom: 4px;
+            color: #6b7a8a;
+            margin-bottom: 3px;
+            letter-spacing: 0.3px;
         }
         .form-group input,
         .form-group select {
             width: 100%;
-            padding: 9px 14px;
-            border: 1px solid #dce0e8;
-            border-radius: 10px;
+            padding: 8px 12px;
+            border: 1px solid #d4d9e0;
+            border-radius: 8px;
             font-size: 14px;
-            background: #fafbfc;
+            background: #fff;
             transition: 0.2s;
             font-family: inherit;
-            color: #1a1a2e;
         }
         .form-group input:focus,
         .form-group select:focus {
             outline: none;
-            border-color: #4f46e5;
-            background: #fff;
-            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.06);
+            border-color: #6c63ff;
+            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1);
         }
-        .inline-group {
+        .inline {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: 10px;
         }
-        .inline-group-3 {
+        .inline-3 {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            gap: 12px;
-        }
-        @media (max-width: 500px) {
-            .inline-group,
-            .inline-group-3 {
-                grid-template-columns: 1fr;
-            }
+            gap: 10px;
         }
 
-        /* ─────────── PILLS ─────────── */
+        /* ─── PILLS ─── */
         .pill-group {
             display: flex;
             flex-wrap: wrap;
-            gap: 6px;
+            gap: 5px;
         }
         .pill {
-            padding: 6px 16px;
-            border-radius: 40px;
+            padding: 5px 14px;
+            border-radius: 30px;
             font-size: 12px;
             font-weight: 500;
-            background: #f0f2f5;
-            color: #333;
+            background: #eef0f3;
+            color: #3d4a5a;
             border: 1.5px solid transparent;
             cursor: pointer;
-            transition: 0.2s;
+            transition: 0.15s;
             user-select: none;
         }
         .pill:hover {
-            background: #e5e7eb;
+            background: #e2e6ec;
         }
         .pill.active {
-            background: #4f46e5;
+            background: #6c63ff;
             color: #fff;
-            border-color: #4f46e5;
-        }
-        .pill.bank-pill.active {
-            box-shadow: 0 2px 12px rgba(79, 70, 229, 0.25);
+            border-color: #6c63ff;
+            box-shadow: 0 2px 8px rgba(108, 99, 255, 0.25);
         }
 
-        /* ─────────── BANK LOGO PREVIEW ─────────── */
-        .bank-logo-preview {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 8px 14px;
-            background: #f8f9fc;
-            border-radius: 12px;
-            margin-top: 8px;
-            border: 1px solid #ecedf2;
+        /* ─── BANK SELECTION ─── */
+        .bank-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 6px;
+            margin-bottom: 10px;
         }
-        .bank-logo-preview .logo-placeholder {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 12px;
-            color: #fff;
-        }
-        .bank-logo-preview .bank-name-preview {
+        .bank-btn {
+            padding: 8px 4px;
+            border: 2px solid #e4e7ec;
+            border-radius: 8px;
+            background: #fff;
+            cursor: pointer;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 12px;
+            transition: 0.2s;
+            text-align: center;
+            font-family: inherit;
+        }
+        .bank-btn:hover {
+            border-color: #b0b8c4;
+        }
+        .bank-btn.active {
+            border-color: #6c63ff;
+            background: #f0eeff;
+            color: #6c63ff;
+        }
+        .bank-btn .sub {
+            font-weight: 400;
+            font-size: 9px;
+            color: #8a9aa8;
+            display: block;
         }
 
-        /* ─────────── EXPENSE ITEMS ─────────── */
+        /* ─── EXPENSE ITEMS ─── */
         .expense-item {
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr 0.4fr;
-            gap: 8px;
+            grid-template-columns: 2fr 1fr 0.8fr 0.3fr;
+            gap: 6px;
+            background: #fff;
+            padding: 6px 10px;
+            border-radius: 8px;
+            margin-bottom: 5px;
+            border: 1px solid #e4e7ec;
             align-items: center;
-            background: #f8f9fc;
-            padding: 8px 12px;
-            border-radius: 10px;
-            margin-bottom: 6px;
         }
         .expense-item input,
         .expense-item select {
-            padding: 5px 10px;
-            border: 1px solid #dce0e8;
-            border-radius: 8px;
+            padding: 5px 8px;
+            border: 1px solid #d4d9e0;
+            border-radius: 6px;
             font-size: 13px;
             background: #fff;
             font-family: inherit;
@@ -232,331 +211,304 @@
         .expense-item .remove-btn {
             background: none;
             border: none;
-            color: #e53e3e;
+            color: #dc3545;
             font-size: 18px;
             cursor: pointer;
             font-weight: 700;
-            line-height: 1;
         }
         .add-btn {
-            background: #eef2ff;
-            color: #4f46e5;
+            background: #eef0f3;
             border: none;
-            padding: 7px 18px;
+            padding: 5px 16px;
             border-radius: 30px;
             font-weight: 600;
             font-size: 12px;
             cursor: pointer;
             transition: 0.2s;
             margin-top: 4px;
+            color: #3d4a5a;
         }
         .add-btn:hover {
-            background: #dde3ff;
+            background: #e2e6ec;
         }
 
-        /* ─────────── GENERATE BUTTON ─────────── */
-        .generate-btn {
+        /* ─── GENERATE BTN ─── */
+        .gen-btn {
             width: 100%;
-            padding: 16px;
+            padding: 14px;
             background: linear-gradient(135deg, #1a1a2e, #2d2d5e);
             color: #fff;
             border: none;
-            border-radius: 16px;
-            font-size: 18px;
+            border-radius: 12px;
+            font-size: 17px;
             font-weight: 700;
             cursor: pointer;
             transition: 0.3s;
+            margin-top: 20px;
             letter-spacing: 0.5px;
-            margin-top: 24px;
+        }
+        .gen-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(26, 26, 46, 0.2);
+        }
+
+        /* ─── BANK PREVIEW ─── */
+        .bank-preview {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            background: #fff;
+            border-radius: 10px;
+            border: 1px solid #e4e7ec;
+            margin-top: 6px;
+        }
+        .bank-preview .logo {
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-        }
-        .generate-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 30px rgba(26, 26, 46, 0.2);
-        }
-
-        /* ─────────── PREVIEW ─────────── */
-        .preview-box {
-            background: #f8f9fc;
-            border-radius: 16px;
-            padding: 18px 22px;
-            margin-top: 18px;
-            border: 1px solid #ecedf2;
-        }
-        .preview-grid {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 4px 20px;
-        }
-        .preview-grid .label {
+            font-weight: 800;
             font-size: 11px;
-            color: #7a7a9a;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-            font-weight: 600;
+            color: #fff;
+            flex-shrink: 0;
         }
-        .preview-grid .value {
-            font-size: 14px;
+        .bank-preview .name {
             font-weight: 600;
-            color: #1a1a2e;
+            font-size: 14px;
+        }
+        .bank-preview .sub {
+            font-size: 11px;
+            color: #8a9aa8;
         }
 
-        /* ─────────── OUTPUT ─────────── */
-        #statement-output {
+        /* ─── OUTPUT ─── */
+        #output {
             display: none;
-            margin-top: 30px;
-            padding: 25px 20px;
+            margin-top: 25px;
+            padding: 20px;
             background: #fff;
-            border-radius: 18px;
-            border: 2px solid #ecedf2;
+            border-radius: 12px;
+            border: 2px solid #e4e7ec;
         }
-        #statement-output.show {
+        #output.show {
             display: block;
         }
 
-        /* ─────────── BANK STATEMENT STYLES ─────────── */
-        .bank-statement {
-            font-family: 'Courier New', monospace;
+        /* ─── REAL BANK STATEMENT ─── */
+        .real-statement {
+            font-family: 'Courier New', Courier, monospace;
             background: #fff;
-            padding: 28px 32px;
-            border-radius: 8px;
+            padding: 25px 30px;
             max-width: 1000px;
             margin: 0 auto;
-            font-size: 12px;
-            line-height: 1.7;
+            font-size: 11.5px;
+            line-height: 1.6;
             color: #111;
-            border: 1px solid #ccc;
+            border: 1px solid #bbb;
+            border-radius: 4px;
         }
-        .bank-statement .header {
+        .real-statement .top-bar {
             text-align: center;
-            border-bottom: 2px solid #111;
-            padding-bottom: 10px;
-            margin-bottom: 14px;
-        }
-        .bank-statement .header h2 {
-            font-size: 22px;
-            letter-spacing: 2px;
-            font-weight: 700;
-            margin-bottom: 2px;
-        }
-        .bank-statement .header .sub {
-            font-size: 11px;
-            color: #444;
-            letter-spacing: 1px;
-        }
-        .bank-statement .bank-details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2px 30px;
-            font-size: 11px;
-            border-bottom: 1px dashed #aaa;
-            padding-bottom: 10px;
+            border-bottom: 3px double #222;
+            padding-bottom: 8px;
             margin-bottom: 12px;
         }
-        .bank-statement .bank-details .label {
-            font-weight: 600;
-            color: #333;
-        }
-        .bank-statement table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 11px;
-        }
-        .bank-statement table th {
-            background: #f2f2f2;
-            text-align: left;
-            padding: 5px 8px;
-            border-bottom: 2px solid #111;
+        .real-statement .top-bar h2 {
+            font-size: 20px;
+            letter-spacing: 3px;
             font-weight: 700;
-            text-transform: uppercase;
-            font-size: 10px;
-            letter-spacing: 0.5px;
+            margin-bottom: 1px;
         }
-        .bank-statement table td {
-            padding: 4px 8px;
-            border-bottom: 1px solid #eee;
-        }
-        .bank-statement table .debit {
-            color: #c0392b;
-            font-weight: 600;
-        }
-        .bank-statement table .credit {
-            color: #27ae60;
-            font-weight: 600;
-        }
-        .bank-statement .footer {
-            margin-top: 16px;
-            border-top: 2px solid #111;
-            padding-top: 10px;
+        .real-statement .top-bar .sub {
             font-size: 10px;
             color: #555;
-            text-align: center;
-            letter-spacing: 0.3px;
+            letter-spacing: 2px;
         }
-        .bank-statement .summary {
+        .real-statement .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px 25px;
+            font-size: 10.5px;
+            border-bottom: 1px dashed #aaa;
+            padding-bottom: 8px;
+            margin-bottom: 10px;
+        }
+        .real-statement .details-grid .lbl {
+            font-weight: 700;
+            color: #222;
+        }
+        .real-statement table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 10.5px;
+        }
+        .real-statement table th {
+            background: #f0f2f5;
+            text-align: left;
+            padding: 4px 6px;
+            border-bottom: 2px solid #222;
+            font-weight: 700;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .real-statement table td {
+            padding: 3px 6px;
+            border-bottom: 1px solid #eee;
+        }
+        .real-statement table .debit {
+            color: #c0392b;
+            font-weight: 700;
+        }
+        .real-statement table .credit {
+            color: #27ae60;
+            font-weight: 700;
+        }
+        .real-statement .summary-box {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr 1fr;
             gap: 8px;
-            background: #f8f9fc;
+            background: #f8f9fa;
             padding: 10px 14px;
-            border-radius: 8px;
-            margin-top: 12px;
-            font-size: 11px;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-size: 10.5px;
             border: 1px solid #e0e0e0;
         }
-        .bank-statement .summary strong {
+        .real-statement .summary-box strong {
             font-weight: 700;
         }
+        .real-statement .footer {
+            margin-top: 14px;
+            border-top: 2px solid #222;
+            padding-top: 10px;
+            font-size: 9px;
+            color: #666;
+            text-align: center;
+            letter-spacing: 0.3px;
+        }
+        .real-statement .watermark {
+            color: #ccc;
+            font-size: 8px;
+            text-align: center;
+            margin-top: 6px;
+            letter-spacing: 1px;
+        }
 
-        /* ─── BANK SPECIFIC HEADERS ─── */
-        .bank-statement.bank-sbi .header h2 {
+        /* Bank specific */
+        .real-statement.sbi .top-bar h2 {
             color: #2e6b3e;
         }
-        .bank-statement.bank-sbi .header {
-            border-bottom-color: #2e6b3e;
-        }
-
-        .bank-statement.bank-hdfc .header h2 {
+        .real-statement.hdfc .top-bar h2 {
             color: #004d8c;
         }
-        .bank-statement.bank-hdfc .header {
-            border-bottom-color: #004d8c;
-        }
-
-        .bank-statement.bank-icici .header h2 {
+        .real-statement.icici .top-bar h2 {
             color: #ed1c24;
         }
-        .bank-statement.bank-icici .header {
-            border-bottom-color: #ed1c24;
-        }
-
-        .bank-statement.bank-axis .header h2 {
+        .real-statement.axis .top-bar h2 {
             color: #a2001a;
         }
-        .bank-statement.bank-axis .header {
-            border-bottom-color: #a2001a;
-        }
-
-        .bank-statement.bank-kotak .header h2 {
+        .real-statement.kotak .top-bar h2 {
             color: #1a2b5c;
         }
-        .bank-statement.bank-kotak .header {
-            border-bottom-color: #1a2b5c;
-        }
-
-        .bank-statement.bank-bob .header h2 {
+        .real-statement.bob .top-bar h2 {
             color: #1f3a7a;
         }
-        .bank-statement.bank-bob .header {
-            border-bottom-color: #1f3a7a;
-        }
-
-        .bank-statement.bank-pnb .header h2 {
+        .real-statement.pnb .top-bar h2 {
             color: #b8860b;
         }
-        .bank-statement.bank-pnb .header {
-            border-bottom-color: #b8860b;
-        }
-
-        .bank-statement.bank-indusind .header h2 {
+        .real-statement.indusind .top-bar h2 {
             color: #0066b3;
         }
-        .bank-statement.bank-indusind .header {
-            border-bottom-color: #0066b3;
-        }
-
-        .bank-statement.bank-canara .header h2 {
+        .real-statement.canara .top-bar h2 {
             color: #003366;
         }
-        .bank-statement.bank-canara .header {
-            border-bottom-color: #003366;
-        }
-
-        .bank-statement.bank-union .header h2 {
+        .real-statement.union .top-bar h2 {
             color: #1a3c6e;
         }
-        .bank-statement.bank-union .header {
-            border-bottom-color: #1a3c6e;
-        }
 
-        /* ─── DARK VARIANT ─── */
-        .bank-statement.dark {
+        /* Dark variant */
+        .real-statement.dark {
             background: #1a1a2e;
             color: #e8e8e8;
-            border-color: #333;
+            border-color: #444;
         }
-        .bank-statement.dark .header {
+        .real-statement.dark .top-bar {
             border-bottom-color: #555;
         }
-        .bank-statement.dark table th {
+        .real-statement.dark .top-bar .sub {
+            color: #aaa;
+        }
+        .real-statement.dark table th {
             background: #2a2a4a;
             color: #e8e8e8;
             border-bottom-color: #555;
         }
-        .bank-statement.dark table td {
+        .real-statement.dark table td {
             border-bottom-color: #333;
         }
-        .bank-statement.dark .bank-details {
+        .real-statement.dark .details-grid {
             border-bottom-color: #444;
         }
-        .bank-statement.dark .summary {
+        .real-statement.dark .summary-box {
             background: #24243e;
             border-color: #444;
             color: #e8e8e8;
         }
-        .bank-statement.dark .footer {
+        .real-statement.dark .footer {
             border-top-color: #555;
             color: #999;
         }
-
-        /* ─── RESPONSIVE ─── */
-        @media (max-width: 600px) {
-            .bank-statement {
-                padding: 14px 12px;
-                font-size: 10px;
-            }
-            .bank-statement .bank-details {
-                grid-template-columns: 1fr;
-            }
-            .bank-statement table {
-                font-size: 9px;
-            }
-            .bank-statement table td,
-            .bank-statement table th {
-                padding: 3px 4px;
-            }
-            .bank-statement .summary {
-                grid-template-columns: 1fr 1fr;
-            }
+        .real-statement.dark .watermark {
+            color: #444;
         }
 
-        /* ─── SCROLLBAR ─── */
-        ::-webkit-scrollbar {
-            width: 6px;
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+            flex-wrap: wrap;
         }
-        ::-webkit-scrollbar-track {
-            background: #f0f2f5;
+        .btn-group .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+            min-width: 120px;
         }
-        ::-webkit-scrollbar-thumb {
-            background: #c4c8d4;
-            border-radius: 12px;
+        .btn-group .btn-primary {
+            background: #6c63ff;
+            color: #fff;
+        }
+        .btn-group .btn-primary:hover {
+            background: #5a52e0;
+        }
+        .btn-group .btn-secondary {
+            background: #eef0f3;
+            color: #3d4a5a;
+        }
+        .btn-group .btn-secondary:hover {
+            background: #e2e6ec;
         }
 
-        /* ─── TOAST ─── */
         .toast {
             position: fixed;
             bottom: 30px;
             right: 30px;
             background: #1a1a2e;
             color: #fff;
-            padding: 14px 28px;
-            border-radius: 14px;
+            padding: 12px 24px;
+            border-radius: 10px;
             font-weight: 500;
-            font-size: 14px;
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+            font-size: 13px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
             opacity: 0;
             transform: translateY(20px);
             transition: 0.3s;
@@ -566,123 +518,139 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        @media (max-width: 600px) {
+            .app {
+                padding: 14px;
+            }
+            .real-statement {
+                padding: 14px 12px;
+                font-size: 9px;
+            }
+            .real-statement .details-grid {
+                grid-template-columns: 1fr;
+            }
+            .real-statement .summary-box {
+                grid-template-columns: 1fr 1fr;
+            }
+            .bank-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .inline {
+                grid-template-columns: 1fr;
+            }
+            .inline-3 {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <div class="app" id="app">
+    <div class="app">
         <!-- HEADER -->
-        <div class="app-header">
-            <h1>🏦 Bank Statement Generator</h1>
-            <span class="badge">All Banks <span>10+</span></span>
+        <div class="header">
+            <h1>🏦 Bank <span>Statement</span> Generator</h1>
+            <span class="badge">🔒 Realistic · All Banks</span>
         </div>
 
-        <!-- MAIN 2-COLUMN -->
-        <div class="two-col">
-
-            <!-- ===== LEFT COLUMN ===== -->
-            <div>
-
-                <!-- ── Bank Selection ── -->
-                <div class="card">
-                    <div class="card-title"><span class="icon">🏛️</span> Select Bank</div>
-                    <div class="form-group">
-                        <label>Choose Bank</label>
-                        <div class="pill-group" id="bankSelect">
-                            <span class="pill bank-pill active" data-value="sbi">SBI</span>
-                            <span class="pill bank-pill" data-value="hdfc">HDFC</span>
-                            <span class="pill bank-pill" data-value="icici">ICICI</span>
-                            <span class="pill bank-pill" data-value="axis">Axis</span>
-                            <span class="pill bank-pill" data-value="kotak">Kotak</span>
-                            <span class="pill bank-pill" data-value="bob">BOB</span>
-                            <span class="pill bank-pill" data-value="pnb">PNB</span>
-                            <span class="pill bank-pill" data-value="indusind">IndusInd</span>
-                            <span class="pill bank-pill" data-value="canara">Canara</span>
-                            <span class="pill bank-pill" data-value="union">Union</span>
-                        </div>
-                    </div>
-                    <div class="bank-logo-preview" id="bankPreview">
-                        <div class="logo-placeholder" id="logoPreview" style="background:#2e6b3e;">SBI</div>
-                        <div>
-                            <div class="bank-name-preview" id="bankNamePreview">State Bank of India</div>
-                            <div style="font-size:11px;color:#888;">Selected bank format</div>
-                        </div>
-                    </div>
+        <!-- BANK SELECTION -->
+        <div class="card" style="margin-bottom:16px;">
+            <div class="card-title">🏛️ Select Bank</div>
+            <div class="bank-grid" id="bankGrid">
+                <button class="bank-btn active" data-bank="sbi">SBI <span class="sub">State Bank</span></button>
+                <button class="bank-btn" data-bank="hdfc">HDFC <span class="sub">HDFC Bank</span></button>
+                <button class="bank-btn" data-bank="icici">ICICI <span class="sub">ICICI Bank</span></button>
+                <button class="bank-btn" data-bank="axis">Axis <span class="sub">Axis Bank</span></button>
+                <button class="bank-btn" data-bank="kotak">Kotak <span class="sub">Kotak 811</span></button>
+                <button class="bank-btn" data-bank="bob">BOB <span class="sub">Bank of Baroda</span></button>
+                <button class="bank-btn" data-bank="pnb">PNB <span class="sub">Punjab National</span></button>
+                <button class="bank-btn" data-bank="indusind">IndusInd <span class="sub">IndusInd Bank</span></button>
+                <button class="bank-btn" data-bank="canara">Canara <span class="sub">Canara Bank</span></button>
+                <button class="bank-btn" data-bank="union">Union <span class="sub">Union Bank</span></button>
+            </div>
+            <div class="bank-preview" id="bankPreview">
+                <div class="logo" id="logoPreview" style="background:#2e6b3e;">SBI</div>
+                <div>
+                    <div class="name" id="bankNamePreview">State Bank of India</div>
+                    <div class="sub">Selected bank format · Realistic statement</div>
                 </div>
+            </div>
+        </div>
 
-                <!-- ── Account Details ── -->
-                <div class="card" style="margin-top:16px;">
-                    <div class="card-title"><span class="icon">👤</span> Account Details</div>
+        <!-- MAIN GRID -->
+        <div class="grid-2">
+
+            <!-- LEFT -->
+            <div>
+                <!-- Account Details -->
+                <div class="card">
+                    <div class="card-title">👤 Account Details</div>
                     <div class="form-group">
                         <label>Account Holder Name</label>
-                        <input type="text" id="accName" placeholder="Full Name" value="Mr. BADAL SINGH" />
+                        <input type="text" id="accName" value="Mr. BADAL SINGH" />
                     </div>
-                    <div class="inline-group">
+                    <div class="inline">
                         <div class="form-group">
                             <label>Account Number</label>
-                            <input type="text" id="accNum" placeholder="Account Number" value="00000040858739275" />
+                            <input type="text" id="accNum" value="00000040858739275" />
                         </div>
                         <div class="form-group">
                             <label>IFSC Code</label>
-                            <input type="text" id="ifsc" placeholder="IFSC" value="SBIN0061102" />
+                            <input type="text" id="ifsc" value="SBIN0061102" />
                         </div>
                     </div>
-                    <div class="inline-group">
+                    <div class="inline">
                         <div class="form-group">
                             <label>Branch Name</label>
-                            <input type="text" id="branch" placeholder="Branch" value="URALIKANCHSN" />
+                            <input type="text" id="branch" value="URALIKANCHSN" />
                         </div>
                         <div class="form-group">
                             <label>MICR Code</label>
-                            <input type="text" id="micr" placeholder="MICR" value="411002043" />
+                            <input type="text" id="micr" value="411002043" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Address</label>
-                        <input type="text" id="address" placeholder="Address" value="H no 2564, SHIV NAGAR" />
+                        <input type="text" id="address" value="H No 2564, SHIV NAGAR" />
                     </div>
-                    <div class="inline-group-3">
+                    <div class="inline-3">
                         <div class="form-group">
                             <label>CIF No.</label>
-                            <input type="text" id="cif" placeholder="CIF" value="92076074822" />
+                            <input type="text" id="cif" value="92076074822" />
                         </div>
                         <div class="form-group">
                             <label>CKYCR</label>
-                            <input type="text" id="ckycr" placeholder="CKYCR" value="XXXXXXXXXX1234" />
+                            <input type="text" id="ckycr" value="XXXXXXXXXX1234" />
                         </div>
                         <div class="form-group">
                             <label>Interest Rate</label>
-                            <input type="text" id="intRate" placeholder="%" value="2.5" />
+                            <input type="text" id="intRate" value="2.5" />
                         </div>
                     </div>
                 </div>
 
-            </div>
-
-            <!-- ===== RIGHT COLUMN ===== -->
-            <div>
-
-                <!-- ── Income & Period ── -->
-                <div class="card">
-                    <div class="card-title"><span class="icon">💼</span> Income &amp; Period</div>
-                    <div class="inline-group">
+                <!-- Income & Period -->
+                <div class="card" style="margin-top:14px;">
+                    <div class="card-title">💼 Income &amp; Period</div>
+                    <div class="inline">
                         <div class="form-group">
                             <label>Monthly Income (INR)</label>
-                            <input type="number" id="monthlyIncome" placeholder="195000" value="195000" />
+                            <input type="number" id="monthlyIncome" value="195000" />
                         </div>
                         <div class="form-group">
                             <label>Employer</label>
-                            <input type="text" id="employer" placeholder="Employer" value="TATA STEEL LIMITED" />
+                            <input type="text" id="employer" value="TATA STEEL LIMITED" />
                         </div>
                     </div>
-                    <div class="inline-group">
+                    <div class="inline">
                         <div class="form-group">
                             <label>Salary Day</label>
-                            <input type="number" id="salaryDay" placeholder="1" value="1" min="1" max="28" />
+                            <input type="number" id="salaryDay" value="1" min="1" max="28" />
                         </div>
                         <div class="form-group">
                             <label>Opening Balance</label>
-                            <input type="number" id="openingBalance" placeholder="Random" value="45000" />
+                            <input type="number" id="openingBalance" value="45000" />
                         </div>
                     </div>
                     <div class="form-group">
@@ -702,10 +670,13 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- ── Recurring Expenses ── -->
-                <div class="card" style="margin-top:16px;">
-                    <div class="card-title"><span class="icon">🔄</span> Recurring Expenses</div>
+            <!-- RIGHT -->
+            <div>
+                <!-- Recurring Expenses -->
+                <div class="card">
+                    <div class="card-title">🔄 Recurring Expenses</div>
                     <div id="expenseList">
                         <div class="expense-item">
                             <input type="text" placeholder="Name" value="HOME LOAN EMI" />
@@ -729,14 +700,25 @@
                             </select>
                             <button class="remove-btn" onclick="this.parentElement.remove()">✕</button>
                         </div>
+                        <div class="expense-item">
+                            <input type="text" placeholder="Name" value="INSURANCE PREMIUM" />
+                            <input type="number" placeholder="Amount" value="5000" />
+                            <select>
+                                <option value="5">Day 5</option>
+                                <option value="10">Day 10</option>
+                                <option value="15" selected>Day 15</option>
+                                <option value="20">Day 20</option>
+                            </select>
+                            <button class="remove-btn" onclick="this.parentElement.remove()">✕</button>
+                        </div>
                     </div>
                     <button class="add-btn" onclick="addExpense()">+ Add Recurring Expense</button>
                 </div>
 
-                <!-- ── PDF Settings ── -->
-                <div class="card" style="margin-top:16px;">
-                    <div class="card-title"><span class="icon">⚙️</span> PDF Settings</div>
-                    <div class="inline-group">
+                <!-- PDF Settings -->
+                <div class="card" style="margin-top:14px;">
+                    <div class="card-title">⚙️ PDF Settings</div>
+                    <div class="inline">
                         <div class="form-group">
                             <label>Variant</label>
                             <div class="pill-group" id="pdfVariant">
@@ -758,59 +740,74 @@
                     </div>
                 </div>
 
+                <!-- Preview -->
+                <div style="background:#f8f9fa;border-radius:10px;padding:14px 18px;margin-top:14px;border:1px solid #e4e7ec;">
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px 20px;font-size:13px;">
+                        <span style="color:#6b7a8a;font-weight:600;">Bank</span>
+                        <span id="prevBank" style="font-weight:700;">SBI</span>
+                        <span style="color:#6b7a8a;font-weight:600;">Name</span>
+                        <span id="prevName" style="font-weight:700;">Mr. BADAL SINGH</span>
+                        <span style="color:#6b7a8a;font-weight:600;">Income</span>
+                        <span id="prevIncome" style="font-weight:700;">₹1,95,000</span>
+                        <span style="color:#6b7a8a;font-weight:600;">Period</span>
+                        <span id="prevPeriod" style="font-weight:700;">3 Months</span>
+                        <span style="color:#6b7a8a;font-weight:600;">Opening</span>
+                        <span id="prevOpening" style="font-weight:700;">₹45,000</span>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- ── PREVIEW ── -->
-        <div class="preview-box">
-            <div style="font-weight:600; font-size:14px; margin-bottom:8px;">📋 Preview</div>
-            <div class="preview-grid" id="previewGrid">
-                <span class="label">Bank</span><span class="value" id="prevBank">SBI</span>
-                <span class="label">Name</span><span class="value" id="prevName">Mr. BADAL SINGH</span>
-                <span class="label">Income</span><span class="value" id="prevIncome">₹1,95,000</span>
-                <span class="label">Period</span><span class="value" id="prevPeriod">3 Months</span>
-                <span class="label">Profile</span><span class="value" id="prevProfile">Moderate</span>
-                <span class="label">Opening</span><span class="value" id="prevOpening">₹45,000</span>
-            </div>
-        </div>
+        <!-- GENERATE -->
+        <button class="gen-btn" onclick="generateStatement()">⚡ Generate Realistic Statement</button>
 
-        <!-- ── GENERATE ── -->
-        <button class="generate-btn" onclick="generateStatement()">
-            ⚡ Generate Statement
-        </button>
-
-        <!-- ── OUTPUT ── -->
-        <div id="statement-output">
+        <!-- OUTPUT -->
+        <div id="output">
             <div id="statementContent"></div>
-            <div style="display:flex; gap:12px; margin-top:20px; flex-wrap:wrap;">
-                <button class="generate-btn" style="flex:1; padding:14px; font-size:15px;" onclick="downloadPDF()">
-                    📥 Download PDF
-                </button>
-                <button class="generate-btn" style="flex:0.4; padding:14px; font-size:15px; background:#4f46e5;" onclick="copyStatement()">
-                    📋 Copy
-                </button>
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="downloadPDF()">📥 Download PDF</button>
+                <button class="btn btn-secondary" onclick="copyStatement()">📋 Copy Statement</button>
             </div>
         </div>
-
     </div>
 
-    <!-- TOAST -->
     <div class="toast" id="toast"></div>
 
     <script>
         // ─── BANK DATA ───
-        const bankData = {
-            sbi: { name: 'State Bank of India', color: '#2e6b3e', short: 'SBI' },
-            hdfc: { name: 'HDFC Bank', color: '#004d8c', short: 'HDFC' },
-            icici: { name: 'ICICI Bank', color: '#ed1c24', short: 'ICICI' },
-            axis: { name: 'Axis Bank', color: '#a2001a', short: 'Axis' },
-            kotak: { name: 'Kotak Mahindra Bank', color: '#1a2b5c', short: 'Kotak' },
-            bob: { name: 'Bank of Baroda', color: '#1f3a7a', short: 'BOB' },
-            pnb: { name: 'Punjab National Bank', color: '#b8860b', short: 'PNB' },
-            indusind: { name: 'IndusInd Bank', color: '#0066b3', short: 'IndusInd' },
-            canara: { name: 'Canara Bank', color: '#003366', short: 'Canara' },
-            union: { name: 'Union Bank of India', color: '#1a3c6e', short: 'Union' }
+        const banks = {
+            sbi: { name: 'State Bank of India', short: 'SBI', color: '#2e6b3e' },
+            hdfc: { name: 'HDFC Bank', short: 'HDFC', color: '#004d8c' },
+            icici: { name: 'ICICI Bank', short: 'ICICI', color: '#ed1c24' },
+            axis: { name: 'Axis Bank', short: 'Axis', color: '#a2001a' },
+            kotak: { name: 'Kotak Mahindra Bank', short: 'Kotak', color: '#1a2b5c' },
+            bob: { name: 'Bank of Baroda', short: 'BOB', color: '#1f3a7a' },
+            pnb: { name: 'Punjab National Bank', short: 'PNB', color: '#b8860b' },
+            indusind: { name: 'IndusInd Bank', short: 'IndusInd', color: '#0066b3' },
+            canara: { name: 'Canara Bank', short: 'Canara', color: '#003366' },
+            union: { name: 'Union Bank of India', short: 'Union', color: '#1a3c6e' }
         };
+
+        // ─── BANK SELECTION ───
+        document.querySelectorAll('.bank-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.bank-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                updateBankPreview();
+                updatePreview();
+            });
+        });
+
+        function updateBankPreview() {
+            const key = document.querySelector('.bank-btn.active')?.dataset.bank || 'sbi';
+            const bank = banks[key];
+            if (bank) {
+                document.getElementById('logoPreview').textContent = bank.short;
+                document.getElementById('logoPreview').style.background = bank.color;
+                document.getElementById('bankNamePreview').textContent = bank.name;
+            }
+        }
+        updateBankPreview();
 
         // ─── PILL TOGGLE ───
         document.querySelectorAll('.pill-group').forEach(group => {
@@ -818,7 +815,6 @@
                 pill.addEventListener('click', function() {
                     group.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
                     this.classList.add('active');
-                    if (group.id === 'bankSelect') updateBankPreview();
                     updatePreview();
                 });
             });
@@ -830,34 +826,18 @@
             el.addEventListener('change', updatePreview);
         });
 
-        // ─── BANK PREVIEW ───
-        function updateBankPreview() {
-            const key = document.querySelector('#bankSelect .active')?.dataset.value || 'sbi';
-            const bank = bankData[key];
-            if (bank) {
-                document.getElementById('logoPreview').textContent = bank.short;
-                document.getElementById('logoPreview').style.background = bank.color;
-                document.getElementById('bankNamePreview').textContent = bank.name;
-            }
-            updatePreview();
-        }
-        updateBankPreview();
-
-        // ─── PREVIEW ───
         function updatePreview() {
-            const bankKey = document.querySelector('#bankSelect .active')?.dataset.value || 'sbi';
-            const bank = bankData[bankKey];
+            const key = document.querySelector('.bank-btn.active')?.dataset.bank || 'sbi';
+            const bank = banks[key];
             const name = document.getElementById('accName').value || '—';
             const income = document.getElementById('monthlyIncome').value || '0';
             const period = document.querySelector('#periodGroup .active')?.dataset.value || '3';
-            const profile = document.querySelector('#profileGroup .active')?.dataset.value || 'moderate';
             const opening = document.getElementById('openingBalance').value || 'Random';
 
             document.getElementById('prevBank').textContent = bank ? bank.short : 'SBI';
             document.getElementById('prevName').textContent = name;
             document.getElementById('prevIncome').textContent = '₹' + Number(income).toLocaleString();
             document.getElementById('prevPeriod').textContent = period + ' Months';
-            document.getElementById('prevProfile').textContent = profile.charAt(0).toUpperCase() + profile.slice(1);
             document.getElementById('prevOpening').textContent = opening === 'Random' ? 'Random' : '₹' + Number(opening)
                 .toLocaleString();
         }
@@ -893,9 +873,9 @@
 
         // ─── GENERATE STATEMENT ───
         function generateStatement() {
-            // Gather data
-            const bankKey = document.querySelector('#bankSelect .active')?.dataset.value || 'sbi';
-            const bank = bankData[bankKey];
+            const bankKey = document.querySelector('.bank-btn.active')?.dataset.bank || 'sbi';
+            const bank = banks[bankKey];
+
             const name = document.getElementById('accName').value || 'Customer';
             const accNum = document.getElementById('accNum').value || '00000000000000000';
             const ifsc = document.getElementById('ifsc').value || 'SBIN0000000';
@@ -916,7 +896,6 @@
             const profile = document.querySelector('#profileGroup .active')?.dataset.value || 'moderate';
             const pdfVariant = document.querySelector('#pdfVariant .active')?.dataset.value || 'light';
             const pdfPassword = document.getElementById('pdfPassword').value || '';
-            const orientation = document.querySelector('#pdfOrientation .active')?.dataset.value || 'portrait';
 
             // Recurring expenses
             const expenseItems = document.querySelectorAll('#expenseList .expense-item');
@@ -946,13 +925,15 @@
             if (profile === 'conservative') spendMult = 0.55;
             else if (profile === 'lavish') spendMult = 1.9;
 
-            // Generate random UPI descriptions
             const upiDescs = [
                 'UPI - GROCERY', 'UPI - DINING', 'UPI - SHOPPING', 'UPI - ENTERTAINMENT',
                 'UPI - BILL PAYMENT', 'UPI - RECHARGE', 'UPI - TRANSFER', 'UPI - UTILITY',
-                'UPI - PHARMACY', 'UPI - PETROL', 'UPI - ONLINE ORDER', 'UPI - RENT'
+                'UPI - PHARMACY', 'UPI - PETROL', 'UPI - ONLINE ORDER', 'UPI - RENT',
+                'UPI - MEDICAL', 'UPI - SCHOOL FEE', 'UPI - INSURANCE', 'UPI - SUBSCRIPTION'
             ];
-            const upiNames = ['SHARMA', 'VERMA', 'SINGH', 'PATEL', 'KUMAR', 'GUPTA', 'JOSHI', 'RAO', 'MEHTA', 'AGARWAL'];
+            const upiNames = ['SHARMA', 'VERMA', 'SINGH', 'PATEL', 'KUMAR', 'GUPTA', 'JOSHI', 'RAO', 'MEHTA', 'AGARWAL',
+                'MALHOTRA', 'REDDY', 'IYER', 'NAIR', 'SINHA'
+            ];
 
             for (let m = 0; m < period; m++) {
                 const date = new Date(startDate);
@@ -970,7 +951,8 @@
                             desc: `SALARY CREDIT - ${employer}`,
                             credit: monthlyIncome,
                             debit: 0,
-                            balance: balance
+                            balance: balance,
+                            ref: `SAL/${String(rand(1000, 9999))}`
                         });
                     }
                 }
@@ -985,7 +967,8 @@
                             desc: `${exp.name} - AUTO DEBIT`,
                             credit: 0,
                             debit: exp.amount,
-                            balance: balance
+                            balance: balance,
+                            ref: `AUTO/${String(rand(1000, 9999))}`
                         });
                     }
                 });
@@ -996,9 +979,13 @@
                     const curDate = new Date(year, month, d);
                     if (curDate > today) continue;
 
-                    // Weekend spending
                     const isWeekend = (curDate.getDay() === 0 || curDate.getDay() === 6);
                     let prob = isWeekend ? 0.65 * spendMult : 0.35 * spendMult;
+
+                    // Festival spikes around specific dates
+                    const isFestival = (d >= 10 && d <= 15) || (d >= 22 && d <= 28);
+                    if (isFestival) prob *= 1.4;
+
                     if (Math.random() < prob) {
                         const amt = rand(200, 6000) * spendMult;
                         const desc = `${upiDescs[rand(0, upiDescs.length - 1)]} - ${upiNames[rand(0, upiNames.length - 1)]}`;
@@ -1008,7 +995,8 @@
                             desc: desc,
                             credit: 0,
                             debit: Math.round(amt),
-                            balance: balance
+                            balance: balance,
+                            ref: `UPI/${String(rand(1000000000, 9999999999))}`
                         });
                     }
                 }
@@ -1019,56 +1007,71 @@
 
             // ─── Build HTML ───
             const variantClass = pdfVariant === 'dark' ? 'dark' : '';
-            const bankClass = `bank-${bankKey}`;
+            const bankClass = `sbi`; // Use bank specific class
             const bankName = bank ? bank.name : 'Bank';
 
             let rows = '';
             let totalDebits = 0,
                 totalCredits = 0;
 
+            // Opening row
+            rows += `
+            <tr style="font-weight:600;background:#f8f9fa;">
+              <td colspan="4">Opening Balance</td>
+              <td>—</td>
+              <td>—</td>
+              <td>₹${openingBal.toLocaleString()}</td>
+            </tr>
+          `;
+
             transactions.forEach(t => {
                 const dateStr = t.date.toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit',
                     year: 'numeric' });
-                const debitStr = t.debit > 0 ? `₹${t.debit.toLocaleString()}` : '';
-                const creditStr = t.credit > 0 ? `₹${t.credit.toLocaleString()}` : '';
+                const debitStr = t.debit > 0 ? `₹${t.debit.toLocaleString()}` : '—';
+                const creditStr = t.credit > 0 ? `₹${t.credit.toLocaleString()}` : '—';
                 const balStr = `₹${Math.round(t.balance).toLocaleString()}`;
                 if (t.debit > 0) totalDebits += t.debit;
                 if (t.credit > 0) totalCredits += t.credit;
+
+                const debitClass = t.debit > 0 ? 'debit' : '';
+                const creditClass = t.credit > 0 ? 'credit' : '';
 
                 rows += `
               <tr>
                 <td>${dateStr}</td>
                 <td>${dateStr}</td>
                 <td>${t.desc}</td>
-                <td>—</td>
-                <td class="${t.debit > 0 ? 'debit' : ''}">${debitStr}</td>
-                <td class="${t.credit > 0 ? 'credit' : ''}">${creditStr}</td>
+                <td>${t.ref || '—'}</td>
+                <td class="${debitClass}">${debitStr}</td>
+                <td class="${creditClass}">${creditStr}</td>
                 <td>${balStr}</td>
               </tr>
             `;
             });
 
-            const openingStr = `₹${openingBal.toLocaleString()}`;
             const closingBal = transactions.length > 0 ? Math.round(transactions[transactions.length - 1].balance) :
                 openingBal;
-            const closingStr = `₹${closingBal.toLocaleString()}`;
+
+            // Generate statement period
+            const periodStart = new Date(startDate);
+            const periodEnd = new Date(today);
+            const periodStr = `${periodStart.toLocaleDateString('en-IN', {day:'2-digit',month:'2-digit',year:'numeric'})} to ${periodEnd.toLocaleDateString('en-IN', {day:'2-digit',month:'2-digit',year:'numeric'})}`;
+            const genDate = today.toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric' });
 
             const html = `
-            <div class="bank-statement ${bankClass} ${variantClass}" id="statementPrint">
-              <div class="header">
+            <div class="real-statement ${bankClass} ${variantClass}" id="statementPrint">
+              <div class="top-bar">
                 <h2>${bankName}</h2>
-                <div class="sub">BANK STATEMENT</div>
+                <div class="sub">BANK STATEMENT · ${periodStr}</div>
               </div>
-              <div class="bank-details">
-                <span><span class="label">Account Holder:</span> ${name}</span>
-                <span><span class="label">Account No:</span> ${accNum}</span>
-                <span><span class="label">IFSC:</span> ${ifsc}</span>
-                <span><span class="label">Branch:</span> ${branch}</span>
-                <span><span class="label">MICR:</span> ${micr}</span>
-                <span><span class="label">CIF No:</span> ${cif}</span>
-                <span><span class="label">CKYCR:</span> ${ckycr}</span>
-                <span><span class="label">Interest Rate:</span> ${intRate}% p.a.</span>
-                <span style="grid-column:1/-1;"><span class="label">Address:</span> ${address}</span>
+              <div class="details-grid">
+                <span><span class="lbl">Account Holder:</span> ${name}</span>
+                <span><span class="lbl">Account No:</span> ${accNum}</span>
+                <span><span class="lbl">IFSC:</span> ${ifsc}</span>
+                <span><span class="lbl">Branch:</span> ${branch}</span>
+                <span><span class="lbl">MICR:</span> ${micr}</span>
+                <span><span class="lbl">CIF No:</span> ${cif}</span>
+                <span style="grid-column:1/-1;"><span class="lbl">Address:</span> ${address}</span>
               </div>
               <table>
                 <thead>
@@ -1076,49 +1079,44 @@
                     <th>Value Date</th>
                     <th>Post Date</th>
                     <th>Particulars</th>
-                    <th>Ref/Chq No</th>
+                    <th>Ref No</th>
                     <th>Debit (₹)</th>
                     <th>Credit (₹)</th>
                     <th>Balance (₹)</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td colspan="4" style="font-weight:600;">Opening Balance</td>
-                    <td></td>
-                    <td></td>
-                    <td>${openingStr}</td>
-                  </tr>
                   ${rows}
-                  <tr style="font-weight:700;border-top:2px solid #111;">
-                    <td colspan="4" style="text-align:right;">Total</td>
+                  <tr style="font-weight:700;border-top:2px solid #222;background:#f8f9fa;">
+                    <td colspan="4" style="text-align:right;font-size:11px;">TOTAL</td>
                     <td class="debit">₹${Math.round(totalDebits).toLocaleString()}</td>
                     <td class="credit">₹${Math.round(totalCredits).toLocaleString()}</td>
-                    <td>${closingStr}</td>
+                    <td>₹${closingBal.toLocaleString()}</td>
                   </tr>
                 </tbody>
               </table>
-              <div class="summary">
-                <span><strong>Opening Balance:</strong> ${openingStr}</span>
+              <div class="summary-box">
+                <span><strong>Opening Balance:</strong> ₹${openingBal.toLocaleString()}</span>
                 <span><strong>Total Debits:</strong> ₹${Math.round(totalDebits).toLocaleString()}</span>
                 <span><strong>Total Credits:</strong> ₹${Math.round(totalCredits).toLocaleString()}</span>
-                <span><strong>Closing Balance:</strong> ${closingStr}</span>
+                <span><strong>Closing Balance:</strong> ₹${closingBal.toLocaleString()}</span>
               </div>
               <div class="footer">
-                Statement Period: ${startDate.toLocaleDateString('en-IN', {day:'2-digit',month:'2-digit',year:'numeric'})} to ${today.toLocaleDateString('en-IN', {day:'2-digit',month:'2-digit',year:'numeric'})} &nbsp;|&nbsp; Generated on ${today.toLocaleDateString('en-IN', {day:'2-digit',month:'2-digit',year:'numeric'})}
+                <strong>Statement Period:</strong> ${periodStr} &nbsp;|&nbsp; <strong>Generated on:</strong> ${genDate}
                 <br />
-                This is a computer generated statement. Please verify all transactions.
+                This is a computer generated statement. Please verify all transactions with your passbook.
                 ${pdfPassword ? '🔒 Password Protected' : ''}
               </div>
+              <div class="watermark">★ This is an electronically generated document ★</div>
             </div>
           `;
 
             document.getElementById('statementContent').innerHTML = html;
-            const output = document.getElementById('statement-output');
+            const output = document.getElementById('output');
             output.classList.add('show');
             output.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-            showToast('✅ Statement generated successfully!');
+            showToast('✅ Realistic statement generated successfully!');
         }
 
         // ─── DOWNLOAD PDF ───
@@ -1131,8 +1129,8 @@
 
             const orientation = document.querySelector('#pdfOrientation .active')?.dataset.value || 'portrait';
             const pdfPassword = document.getElementById('pdfPassword').value || '';
-            const bankKey = document.querySelector('#bankSelect .active')?.dataset.value || 'sbi';
-            const bank = bankData[bankKey];
+            const bankKey = document.querySelector('.bank-btn.active')?.dataset.bank || 'sbi';
+            const bank = banks[bankKey];
             const fileName = `Bank_Statement_${bank ? bank.short : 'Bank'}_${new Date().toISOString().slice(0,10)}.pdf`;
 
             const opt = {
@@ -1140,11 +1138,10 @@
                 filename: fileName,
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: { scale: 2, useCORS: true, letterRendering: true },
-                jsPDF: { unit: 'in', format: orientation === 'landscape' ? 'a4' : 'a4', orientation: orientation },
+                jsPDF: { unit: 'in', format: 'a4', orientation: orientation },
                 pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
             };
 
-            // Clone and clean for PDF
             const clone = element.cloneNode(true);
             clone.style.width = '100%';
             clone.style.maxWidth = '100%';
@@ -1178,7 +1175,6 @@
             navigator.clipboard.writeText(text).then(() => {
                 showToast('📋 Statement copied to clipboard!');
             }).catch(() => {
-                // Fallback
                 const range = document.createRange();
                 range.selectNode(element);
                 window.getSelection().removeAllRanges();

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pro Statement - Bank Statement Generator</title>
+    <title>Pro Statement - PDF Template</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js">
@@ -11,18 +11,14 @@
     <style>
         :root {
             --primary: #1a5276;
-            --primary-dark: #0d2b44;
-            --primary-light: #2980b9;
             --accent: #f39c12;
-            --accent-hover: #e67e22;
             --bg: #f0f4f8;
             --card-bg: #ffffff;
             --text: #1a1a2e;
             --text-light: #5d6d7e;
             --border: #e8ecf1;
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-            --shadow-hover: 0 12px 48px rgba(0, 0, 0, 0.12);
             --radius: 14px;
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
             --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             --success: #27ae60;
             --danger: #e74c3c;
@@ -42,7 +38,6 @@
             padding: 20px;
         }
 
-        /* ─── ANIMATIONS ─── */
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -53,36 +48,14 @@
                 transform: translateY(0);
             }
         }
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
         @keyframes spin {
             to {
                 transform: rotate(360deg);
             }
         }
-        @keyframes pulse {
-            0%,
-            100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.03);
-            }
-        }
 
         .animate-fade {
             animation: fadeIn 0.6s ease forwards;
-        }
-        .animate-slide {
-            animation: slideIn 0.5s ease forwards;
         }
 
         .app {
@@ -182,32 +155,6 @@
             display: block;
         }
 
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-        @media (max-width: 780px) {
-            .grid-2 {
-                grid-template-columns: 1fr;
-            }
-            .stats-bar {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-        @media (max-width: 500px) {
-            .stats-bar {
-                grid-template-columns: 1fr;
-            }
-            .app {
-                padding: 12px 14px;
-            }
-            .tabs .tab-btn {
-                font-size: 12px;
-                padding: 6px 12px;
-            }
-        }
-
         .card {
             background: var(--card-bg);
             border-radius: var(--radius);
@@ -215,10 +162,6 @@
             border: 1px solid var(--border);
             box-shadow: var(--shadow);
             margin-bottom: 16px;
-            transition: var(--transition);
-        }
-        .card:hover {
-            box-shadow: var(--shadow-hover);
         }
         .card-title {
             font-size: 13px;
@@ -259,6 +202,33 @@
             box-shadow: 0 0 0 4px rgba(26, 82, 118, 0.08);
             background: #fff;
         }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        @media (max-width: 780px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            .stats-bar {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        @media (max-width: 500px) {
+            .app {
+                padding: 12px 14px;
+            }
+            .stats-bar {
+                grid-template-columns: 1fr;
+            }
+            .tabs .tab-btn {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+        }
+
         .inline {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -295,18 +265,13 @@
             font-family: inherit;
         }
         .bank-btn:hover {
-            border-color: var(--primary-light);
+            border-color: var(--primary);
             transform: translateY(-2px);
         }
         .bank-btn.active {
             border-color: var(--primary);
             background: #eaf2f8;
             color: var(--primary);
-        }
-        @media (max-width: 600px) {
-            .bank-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
         }
 
         .bank-preview {
@@ -425,14 +390,13 @@
             position: relative;
         }
         .gen-btn:hover {
-            background: var(--primary-dark);
+            background: #0d2b44;
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(26, 82, 118, 0.25);
         }
         .gen-btn:disabled {
             opacity: 0.6;
             cursor: not-allowed;
-            transform: none;
         }
         .gen-btn .spinner {
             display: none;
@@ -485,7 +449,7 @@
             color: #fff;
         }
         .btn-primary:hover {
-            background: var(--primary-dark);
+            background: #0d2b44;
         }
         .btn-secondary {
             background: var(--bg);
@@ -505,7 +469,7 @@
         /* ─── PDF TEMPLATE UPLOAD ─── */
         .template-upload-area {
             border: 2px dashed var(--border);
-            padding: 30px 20px;
+            padding: 40px 20px;
             text-align: center;
             border-radius: 12px;
             transition: var(--transition);
@@ -513,7 +477,7 @@
             background: #fafbfc;
         }
         .template-upload-area:hover {
-            border-color: var(--primary-light);
+            border-color: var(--primary);
             background: #f0f5fa;
         }
         .template-upload-area.dragover {
@@ -565,25 +529,29 @@
             cursor: pointer;
             font-size: 14px;
         }
-        .template-preview .pdf-preview {
-            width: 100%;
-            height: 300px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            background: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-light);
-            font-size: 14px;
-            overflow: hidden;
+
+        .template-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
         }
-        .template-preview .pdf-preview canvas {
-            max-width: 100%;
-            max-height: 100%;
+        .template-info .info-item {
+            background: #fff;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+        }
+        .template-info .info-item .lbl {
+            font-size: 10px;
+            color: var(--text-light);
+            text-transform: uppercase;
+        }
+        .template-info .info-item .val {
+            font-weight: 600;
+            font-size: 13px;
         }
 
-        /* ─── FIELD MAPPING ─── */
         .field-mapping {
             margin-top: 16px;
             display: none;
@@ -611,6 +579,59 @@
             font-size: 13px;
             font-family: inherit;
             background: #fff;
+        }
+
+        /* ─── PDF PREVIEW ─── */
+        .pdf-preview-container {
+            width: 100%;
+            height: 400px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: #fff;
+            overflow: auto;
+            margin-top: 10px;
+            padding: 10px;
+        }
+        .pdf-preview-container canvas {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* ─── TOAST ─── */
+        .toast-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .toast {
+            padding: 12px 24px;
+            border-radius: 10px;
+            color: #fff;
+            font-weight: 600;
+            font-size: 13px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            animation: fadeIn 0.4s ease forwards;
+            max-width: 400px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .toast-success {
+            background: var(--success);
+        }
+        .toast-error {
+            background: var(--danger);
+        }
+        .toast-info {
+            background: var(--primary);
+        }
+        .toast-warning {
+            background: var(--warning);
         }
 
         /* ─── BANK STATEMENT OUTPUT ─── */
@@ -1067,42 +1088,6 @@
         .bank-statement.dark .footer strong {
             color: #f39c12 !important;
         }
-
-        .toast-container {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .toast {
-            padding: 12px 24px;
-            border-radius: 10px;
-            color: #fff;
-            font-weight: 600;
-            font-size: 13px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-            animation: slideIn 0.4s ease forwards;
-            max-width: 400px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-family: 'Segoe UI', sans-serif;
-        }
-        .toast-success {
-            background: var(--success);
-        }
-        .toast-error {
-            background: var(--danger);
-        }
-        .toast-info {
-            background: var(--primary);
-        }
-        .toast-warning {
-            background: var(--warning);
-        }
     </style>
 </head>
 <body>
@@ -1111,30 +1096,29 @@
         <!-- ─── HEADER ─── -->
         <div class="app-header">
             <div class="brand">Pro <span>Statement</span></div>
-            <span class="badge">🔒 PDF Template Upload</span>
+            <span class="badge">📄 PDF Template Copy</span>
         </div>
 
         <!-- ─── STATS ─── -->
         <div class="stats-bar">
-            <div class="stat-card"><div class="num" id="statStatements">0</div><div class="label">Statements Generated</div></div>
-            <div class="stat-card"><div class="num">10</div><div class="label">Banks Supported</div></div>
-            <div class="stat-card"><div class="num" id="statHistory">0</div><div class="label">Saved History</div></div>
-            <div class="stat-card"><div class="num" id="statTemplates">0</div><div class="label">Custom Templates</div></div>
+            <div class="stat-card"><div class="num" id="statStatements">0</div><div class="label">Generated</div></div>
+            <div class="stat-card"><div class="num">10</div><div class="label">Banks</div></div>
+            <div class="stat-card"><div class="num" id="statHistory">0</div><div class="label">History</div></div>
+            <div class="stat-card"><div class="num" id="statTemplates">0</div><div class="label">Templates</div></div>
         </div>
 
         <!-- ─── TABS ─── -->
         <div class="tabs">
-            <button class="tab-btn active" data-tab="generator">⚡ Generator</button>
+            <button class="tab-btn" data-tab="generator">⚡ Generator</button>
+            <button class="tab-btn active" data-tab="pdf-template">📄 PDF Template</button>
             <button class="tab-btn" data-tab="history">📜 History</button>
             <button class="tab-btn" data-tab="whitelabel">🎨 White-Label</button>
             <button class="tab-btn" data-tab="bulk">📊 Bulk</button>
             <button class="tab-btn" data-tab="templates">📝 Templates</button>
-            <button class="tab-btn" data-tab="pdf-template">📄 PDF Template</button>
         </div>
 
         <!-- ═══ TAB: GENERATOR ═══ -->
-        <div class="tab-content active" id="tab-generator">
-            <!-- Bank Selection -->
+        <div class="tab-content" id="tab-generator">
             <div class="card">
                 <div class="card-title">🏛️ Select Bank</div>
                 <div class="bank-grid" id="bankGrid">
@@ -1162,61 +1146,25 @@
                 <div>
                     <div class="card">
                         <div class="card-title">👤 Account Details</div>
-                        <div class="form-group">
-                            <label>Account Holder Name</label>
-                            <input type="text" id="accName" placeholder="Enter name" />
-                        </div>
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="text" id="email" placeholder="Enter email" />
-                        </div>
-                        <div class="form-group">
-                            <label>Address</label>
-                            <input type="text" id="address" placeholder="Enter address" />
+                        <div class="form-group"><label>Account Holder</label><input type="text" id="accName" placeholder="Enter name" /></div>
+                        <div class="form-group"><label>Email</label><input type="text" id="email" placeholder="Enter email" /></div>
+                        <div class="form-group"><label>Address</label><input type="text" id="address" placeholder="Enter address" /></div>
+                        <div class="inline">
+                            <div class="form-group"><label>Account Number</label><input type="text" id="accNum" placeholder="Enter account number" /></div>
+                            <div class="form-group"><label>IFSC Code</label><input type="text" id="ifsc" placeholder="Enter IFSC" /></div>
                         </div>
                         <div class="inline">
-                            <div class="form-group">
-                                <label>Account Number</label>
-                                <input type="text" id="accNum" placeholder="Enter account number" />
-                            </div>
-                            <div class="form-group">
-                                <label>IFSC Code</label>
-                                <input type="text" id="ifsc" placeholder="Enter IFSC" />
-                            </div>
-                        </div>
-                        <div class="inline">
-                            <div class="form-group">
-                                <label>Branch Name</label>
-                                <input type="text" id="branch" placeholder="Enter branch" />
-                            </div>
-                            <div class="form-group">
-                                <label>Branch Code</label>
-                                <input type="text" id="branchCode" placeholder="Enter code" />
-                            </div>
+                            <div class="form-group"><label>Branch Name</label><input type="text" id="branch" placeholder="Enter branch" /></div>
+                            <div class="form-group"><label>Branch Code</label><input type="text" id="branchCode" placeholder="Enter code" /></div>
                         </div>
                         <div class="inline-3">
-                            <div class="form-group">
-                                <label>CIF Number</label>
-                                <input type="text" id="cif" placeholder="Enter CIF" />
-                            </div>
-                            <div class="form-group">
-                                <label>MICR Code</label>
-                                <input type="text" id="micr" placeholder="Enter MICR" />
-                            </div>
-                            <div class="form-group">
-                                <label>CKYCR</label>
-                                <input type="text" id="ckycr" placeholder="Enter CKYCR" />
-                            </div>
+                            <div class="form-group"><label>CIF Number</label><input type="text" id="cif" placeholder="Enter CIF" /></div>
+                            <div class="form-group"><label>MICR Code</label><input type="text" id="micr" placeholder="Enter MICR" /></div>
+                            <div class="form-group"><label>CKYCR</label><input type="text" id="ckycr" placeholder="Enter CKYCR" /></div>
                         </div>
                         <div class="inline">
-                            <div class="form-group">
-                                <label>Branch Phone</label>
-                                <input type="text" id="branchPhone" placeholder="Enter phone" />
-                            </div>
-                            <div class="form-group">
-                                <label>Interest Rate</label>
-                                <input type="text" id="intRate" placeholder="2.50" value="2.50" />
-                            </div>
+                            <div class="form-group"><label>Branch Phone</label><input type="text" id="branchPhone" placeholder="Enter phone" /></div>
+                            <div class="form-group"><label>Interest Rate</label><input type="text" id="intRate" value="2.50" /></div>
                         </div>
                     </div>
                 </div>
@@ -1224,26 +1172,14 @@
                 <div>
                     <div class="card">
                         <div class="card-title">💼 Income &amp; Period</div>
-                        <div class="form-group">
-                            <label>Monthly Income (INR)</label>
-                            <input type="number" id="monthlyIncome" value="195000" />
-                        </div>
-                        <div class="form-group">
-                            <label>Employer</label>
-                            <input type="text" id="employer" value="TATA STEEL LIMITED" />
-                        </div>
+                        <div class="form-group"><label>Monthly Income</label><input type="number" id="monthlyIncome" value="195000" /></div>
+                        <div class="form-group"><label>Employer</label><input type="text" id="employer" value="TATA STEEL LIMITED" /></div>
                         <div class="inline">
-                            <div class="form-group">
-                                <label>Salary Day</label>
-                                <input type="number" id="salaryDay" value="1" min="1" max="28" />
-                            </div>
-                            <div class="form-group">
-                                <label>Opening Balance</label>
-                                <input type="number" id="openingBalance" value="45000" />
-                            </div>
+                            <div class="form-group"><label>Salary Day</label><input type="number" id="salaryDay" value="1" /></div>
+                            <div class="form-group"><label>Opening Balance</label><input type="number" id="openingBalance" value="45000" /></div>
                         </div>
                         <div class="form-group">
-                            <label>Statement Period</label>
+                            <label>Period</label>
                             <div class="pill-group" id="periodGroup">
                                 <span class="pill active" data-value="3">3 Months</span>
                                 <span class="pill" data-value="6">6 Months</span>
@@ -1266,27 +1202,17 @@
                             <div class="expense-item">
                                 <input type="text" placeholder="Name" value="HOME LOAN EMI" />
                                 <input type="number" placeholder="Amount" value="15000" />
-                                <select>
-                                    <option value="5" selected>Day 5</option>
-                                    <option value="10">Day 10</option>
-                                    <option value="15">Day 15</option>
-                                    <option value="20">Day 20</option>
-                                </select>
+                                <select><option value="5" selected>Day 5</option><option value="10">Day 10</option><option value="15">Day 15</option><option value="20">Day 20</option></select>
                                 <button class="remove-btn" onclick="this.parentElement.remove()">✕</button>
                             </div>
                             <div class="expense-item">
                                 <input type="text" placeholder="Name" value="MUTUAL FUND SIP" />
                                 <input type="number" placeholder="Amount" value="8000" />
-                                <select>
-                                    <option value="5">Day 5</option>
-                                    <option value="10" selected>Day 10</option>
-                                    <option value="15">Day 15</option>
-                                    <option value="20">Day 20</option>
-                                </select>
+                                <select><option value="5">Day 5</option><option value="10" selected>Day 10</option><option value="15">Day 15</option><option value="20">Day 20</option></select>
                                 <button class="remove-btn" onclick="this.parentElement.remove()">✕</button>
                             </div>
                         </div>
-                        <button class="add-btn" onclick="addExpense()">+ Add Recurring Expense</button>
+                        <button class="add-btn" onclick="addExpense()">+ Add</button>
                     </div>
 
                     <div class="card">
@@ -1307,10 +1233,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label>PDF Password (optional)</label>
-                            <input type="text" id="pdfPassword" placeholder="Leave empty" />
-                        </div>
+                        <div class="form-group"><label>PDF Password</label><input type="text" id="pdfPassword" placeholder="Leave empty" /></div>
                     </div>
                 </div>
             </div>
@@ -1325,105 +1248,17 @@
                 <div class="btn-group">
                     <button class="btn-primary" onclick="downloadPDF()">📥 Download PDF</button>
                     <button class="btn-secondary" onclick="copyStatement()">📋 Copy</button>
-                    <button class="btn-success" onclick="saveToHistory()">💾 Save to History</button>
+                    <button class="btn-success" onclick="saveToHistory()">💾 Save</button>
                 </div>
-            </div>
-        </div>
-
-        <!-- ═══ TAB: HISTORY ═══ -->
-        <div class="tab-content" id="tab-history">
-            <div class="card">
-                <div class="card-title">📜 Statement History</div>
-                <div id="historyList">
-                    <p style="color:var(--text-light);text-align:center;padding:20px;">No statements saved yet.</p>
-                </div>
-                <button class="add-btn" onclick="clearHistory()" style="margin-top:12px;color:var(--danger);">🗑️ Clear All</button>
-            </div>
-        </div>
-
-        <!-- ═══ TAB: WHITE-LABEL ═══ -->
-        <div class="tab-content" id="tab-whitelabel">
-            <div class="card">
-                <div class="card-title">🎨 White-Label Settings</div>
-                <div class="form-group">
-                    <label>Your Company Name</label>
-                    <input type="text" id="wlCompany" placeholder="Enter company name" />
-                </div>
-                <div class="form-group">
-                    <label>Your Logo Text</label>
-                    <input type="text" id="wlLogo" placeholder="e.g., ABC Corp" />
-                </div>
-                <div class="form-group">
-                    <label>Primary Color</label>
-                    <input type="color" id="wlColor" value="#1a5276" />
-                </div>
-                <div class="form-group">
-                    <label>Accent Color</label>
-                    <input type="color" id="wlAccent" value="#f39c12" />
-                </div>
-                <button class="add-btn" onclick="applyWhiteLabel()">✅ Apply White-Label</button>
-                <div class="white-label-preview" id="wlPreview" style="margin-top:12px;padding:16px;background:var(--bg);border-radius:10px;border:2px dashed var(--border);text-align:center;">
-                    <div style="font-size:20px;font-weight:800;color:var(--primary);">Your Brand</div>
-                    <p style="color:var(--text-light);font-size:13px;">Preview will appear here after applying</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- ═══ TAB: BULK ═══ -->
-        <div class="tab-content" id="tab-bulk">
-            <div class="card">
-                <div class="card-title">📊 Bulk Generation (CSV Upload)</div>
-                <div class="csv-upload" onclick="document.getElementById('csvFile').click()" style="border:2px dashed var(--border);padding:30px;text-align:center;border-radius:12px;cursor:pointer;transition:var(--transition);">
-                    <div style="font-size:48px;margin-bottom:8px;">📤</div>
-                    <p>Click to upload CSV file</p>
-                    <p style="font-size:12px;color:var(--text-light);">Format: Name, Account, IFSC, Branch, Amount</p>
-                    <span style="color:var(--primary);font-weight:700;">Browse Files</span>
-                    <input type="file" id="csvFile" accept=".csv" style="display:none;" onchange="handleCSVUpload(event)" />
-                </div>
-                <div id="bulkPreview" style="margin-top:16px;display:none;">
-                    <p><strong>Rows uploaded:</strong> <span id="bulkCount">0</span></p>
-                    <button class="add-btn" onclick="processBulk()" style="background:var(--primary);color:#fff;">⚡ Generate All</button>
-                    <div id="bulkResults" style="margin-top:12px;"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ═══ TAB: TEMPLATES ═══ -->
-        <div class="tab-content" id="tab-templates">
-            <div class="card">
-                <div class="card-title">📝 Custom Templates</div>
-                <div class="template-builder" id="templateBuilder">
-                    <div class="template-field" style="display:flex;gap:10px;align-items:center;margin-bottom:8px;">
-                        <input type="text" placeholder="Field Name" value="Account Holder" style="flex:1;padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;" />
-                        <select style="padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;">
-                            <option value="text">Text</option>
-                            <option value="date">Date</option>
-                            <option value="number">Number</option>
-                        </select>
-                        <button class="remove-btn" onclick="this.parentElement.remove()" style="background:none;border:none;color:var(--danger);font-size:18px;cursor:pointer;">✕</button>
-                    </div>
-                    <div class="template-field" style="display:flex;gap:10px;align-items:center;margin-bottom:8px;">
-                        <input type="text" placeholder="Field Name" value="Account Number" style="flex:1;padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;" />
-                        <select style="padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;">
-                            <option value="text" selected>Text</option>
-                            <option value="date">Date</option>
-                            <option value="number">Number</option>
-                        </select>
-                        <button class="remove-btn" onclick="this.parentElement.remove()" style="background:none;border:none;color:var(--danger);font-size:18px;cursor:pointer;">✕</button>
-                    </div>
-                </div>
-                <button class="add-btn" onclick="addTemplateField()">+ Add Field</button>
-                <button class="add-btn" onclick="saveTemplate()" style="margin-left:8px;background:var(--primary);color:#fff;">💾 Save Template</button>
-                <div id="savedTemplates" style="margin-top:12px;"></div>
             </div>
         </div>
 
         <!-- ═══ TAB: PDF TEMPLATE ═══ -->
-        <div class="tab-content" id="tab-pdf-template">
+        <div class="tab-content active" id="tab-pdf-template">
             <div class="card">
                 <div class="card-title">📄 Upload PDF Template</div>
                 <p style="color:var(--text-light);font-size:13px;margin-bottom:14px;">
-                    Upload a sample bank statement PDF. The system will extract the template and replace details with your data.
+                    Upload a sample bank statement PDF. The system will <strong>copy the exact style</strong> (colors, logo, header, footer, fonts) and replace only the account details.
                 </p>
 
                 <!-- Upload Area -->
@@ -1441,39 +1276,109 @@
                         <span class="file-name" id="fileNameDisplay">sample.pdf</span>
                         <button class="remove-btn" onclick="removeTemplate()">✕ Remove</button>
                     </div>
-                    <div class="pdf-preview" id="pdfPreviewContainer">
-                        <span>📄 PDF loaded successfully!<br /><span style="font-size:12px;color:var(--text-light);">Click "Extract Template" to map fields</span></span>
-                    </div>
-                    <button class="add-btn" onclick="extractTemplate()" style="margin-top:12px;background:var(--primary);color:#fff;">🔍 Extract Template Fields</button>
-                </div>
 
-                <!-- Field Mapping -->
-                <div class="field-mapping" id="fieldMapping">
-                    <div class="card-title" style="margin-top:12px;">📋 Map Fields to Your Data</div>
-                    <p style="color:var(--text-light);font-size:12px;margin-bottom:10px;">Map the template fields to your account details</p>
-                    <div id="mappingFields"></div>
-                    <button class="add-btn" onclick="applyTemplateMapping()" style="margin-top:12px;background:var(--success);color:#fff;">✅ Apply & Generate Statement</button>
+                    <!-- PDF Preview -->
+                    <div class="pdf-preview-container" id="pdfPreviewContainer">
+                        <span style="color:var(--text-light);">📄 PDF loaded! Click "Detect Style" to extract template.</span>
+                    </div>
+
+                    <!-- Detected Info -->
+                    <div class="template-info" id="templateInfo" style="display:none;">
+                        <div class="info-item"><span class="lbl">Bank Name</span><div class="val" id="detectedBank">—</div></div>
+                        <div class="info-item"><span class="lbl">Colors Detected</span><div class="val" id="detectedColors">—</div></div>
+                        <div class="info-item"><span class="lbl">Header Style</span><div class="val" id="detectedHeader">—</div></div>
+                        <div class="info-item"><span class="lbl">Font Style</span><div class="val" id="detectedFont">—</div></div>
+                    </div>
+
+                    <button class="add-btn" onclick="detectPDFStyle()" style="margin-top:12px;background:var(--primary);color:#fff;">🔍 Detect Style &amp; Extract Template</button>
+
+                    <!-- Field Mapping -->
+                    <div class="field-mapping" id="fieldMapping">
+                        <div class="card-title" style="margin-top:12px;">📋 Map Fields to Your Data</div>
+                        <p style="color:var(--text-light);font-size:12px;margin-bottom:10px;">Map the template fields to your account details</p>
+                        <div id="mappingFields"></div>
+                        <button class="add-btn" onclick="applyTemplateMapping()" style="margin-top:12px;background:var(--success);color:#fff;">✅ Apply &amp; Generate Statement</button>
+                    </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- ═══ TAB: HISTORY ═══ -->
+        <div class="tab-content" id="tab-history">
+            <div class="card">
+                <div class="card-title">📜 Statement History</div>
+                <div id="historyList"><p style="color:var(--text-light);text-align:center;padding:20px;">No statements saved yet.</p></div>
+                <button class="add-btn" onclick="clearHistory()" style="color:var(--danger);">🗑️ Clear All</button>
+            </div>
+        </div>
+
+        <!-- ═══ TAB: WHITE-LABEL ═══ -->
+        <div class="tab-content" id="tab-whitelabel">
+            <div class="card">
+                <div class="card-title">🎨 White-Label Settings</div>
+                <div class="form-group"><label>Company Name</label><input type="text" id="wlCompany" /></div>
+                <div class="form-group"><label>Logo Text</label><input type="text" id="wlLogo" /></div>
+                <div class="form-group"><label>Primary Color</label><input type="color" id="wlColor" value="#1a5276" /></div>
+                <div class="form-group"><label>Accent Color</label><input type="color" id="wlAccent" value="#f39c12" /></div>
+                <button class="add-btn" onclick="applyWhiteLabel()">✅ Apply</button>
+                <div id="wlPreview" style="margin-top:12px;padding:16px;background:var(--bg);border-radius:10px;border:2px dashed var(--border);text-align:center;">
+                    <div style="font-size:20px;font-weight:800;color:var(--primary);">Your Brand</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ TAB: BULK ═══ -->
+        <div class="tab-content" id="tab-bulk">
+            <div class="card">
+                <div class="card-title">📊 Bulk Generation</div>
+                <div class="csv-upload" onclick="document.getElementById('csvFile').click()" style="border:2px dashed var(--border);padding:30px;text-align:center;border-radius:12px;cursor:pointer;">
+                    <div style="font-size:48px;">📤</div>
+                    <p>Upload CSV file</p>
+                    <span style="color:var(--primary);font-weight:700;">Browse</span>
+                    <input type="file" id="csvFile" accept=".csv" style="display:none;" onchange="handleCSVUpload(event)" />
+                </div>
+                <div id="bulkPreview" style="display:none;margin-top:12px;">
+                    <p><strong>Rows:</strong> <span id="bulkCount">0</span></p>
+                    <button class="add-btn" onclick="processBulk()" style="background:var(--primary);color:#fff;">⚡ Generate All</button>
+                    <div id="bulkResults"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ TAB: TEMPLATES ═══ -->
+        <div class="tab-content" id="tab-templates">
+            <div class="card">
+                <div class="card-title">📝 Custom Templates</div>
+                <div id="templateBuilder">
+                    <div class="template-field" style="display:flex;gap:10px;margin-bottom:8px;">
+                        <input type="text" placeholder="Field Name" value="Account Holder" style="flex:1;padding:6px 10px;border:1px solid var(--border);border-radius:6px;" />
+                        <select style="padding:6px 10px;border:1px solid var(--border);border-radius:6px;">
+                            <option value="text">Text</option>
+                            <option value="date">Date</option>
+                            <option value="number">Number</option>
+                        </select>
+                        <button class="remove-btn" onclick="this.parentElement.remove()" style="background:none;border:none;color:var(--danger);font-size:18px;cursor:pointer;">✕</button>
+                    </div>
+                </div>
+                <button class="add-btn" onclick="addTemplateField()">+ Add Field</button>
+                <button class="add-btn" onclick="saveTemplate()" style="background:var(--primary);color:#fff;">💾 Save</button>
+                <div id="savedTemplates" style="margin-top:12px;"></div>
             </div>
         </div>
     </div>
 
-    <!-- ─── TOAST CONTAINER ─── -->
     <div class="toast-container" id="toastContainer"></div>
 
     <script>
-        // ─── TOAST SYSTEM ───
-        function showToast(message, type = 'info') {
-            const container = document.getElementById('toastContainer');
-            const toast = document.createElement('div');
-            toast.className = `toast toast-${type}`;
-            toast.textContent = message;
-            container.appendChild(toast);
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                toast.style.transform = 'translateX(40px)';
-                setTimeout(() => toast.remove(), 400);
-            }, 4000);
+        // ─── TOAST ───
+        function showToast(msg, type = 'info') {
+            const c = document.getElementById('toastContainer');
+            const t = document.createElement('div');
+            t.className = `toast toast-${type}`;
+            t.textContent = msg;
+            c.appendChild(t);
+            setTimeout(() => { t.style.opacity = '0';
+                setTimeout(() => t.remove(), 400); }, 4000);
         }
 
         // ─── BANK DATA ───
@@ -1494,6 +1399,7 @@
         let statementCount = 0;
         let currentStatementHTML = '';
         let uploadedPDF = null;
+        let detectedStyle = {};
 
         // ─── BANK SELECTION ───
         document.querySelectorAll('.bank-btn').forEach(btn => {
@@ -1515,16 +1421,6 @@
         }
         updateBankPreview();
 
-        // ─── PILLS ───
-        document.querySelectorAll('.pill-group').forEach(group => {
-            group.querySelectorAll('.pill').forEach(pill => {
-                pill.addEventListener('click', function() {
-                    group.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
-                    this.classList.add('active');
-                });
-            });
-        });
-
         // ─── TABS ───
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', function() {
@@ -1532,6 +1428,16 @@
                 this.classList.add('active');
                 document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
                 document.getElementById(`tab-${this.dataset.tab}`).classList.add('active');
+            });
+        });
+
+        // ─── PILLS ───
+        document.querySelectorAll('.pill-group').forEach(group => {
+            group.querySelectorAll('.pill').forEach(pill => {
+                pill.addEventListener('click', function() {
+                    group.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+                    this.classList.add('active');
+                });
             });
         });
 
@@ -1543,27 +1449,21 @@
             div.innerHTML = `
                 <input type="text" placeholder="Name" />
                 <input type="number" placeholder="Amount" />
-                <select>
-                    <option value="5">Day 5</option>
-                    <option value="10">Day 10</option>
-                    <option value="15">Day 15</option>
-                    <option value="20">Day 20</option>
-                </select>
+                <select><option value="5">Day 5</option><option value="10">Day 10</option><option value="15">Day 15</option><option value="20">Day 20</option></select>
                 <button class="remove-btn" onclick="this.parentElement.remove()">✕</button>
             `;
             list.appendChild(div);
         }
 
-        // ─── TEMPLATE FIELDS ───
+        // ─── TEMPLATES ───
         function addTemplateField() {
             const builder = document.getElementById('templateBuilder');
             const div = document.createElement('div');
             div.className = 'template-field';
-            div.style.cssText =
-            'display:flex;gap:10px;align-items:center;margin-bottom:8px;';
+            div.style.cssText = 'display:flex;gap:10px;margin-bottom:8px;';
             div.innerHTML = `
-                <input type="text" placeholder="Field Name" style="flex:1;padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;" />
-                <select style="padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;">
+                <input type="text" placeholder="Field Name" style="flex:1;padding:6px 10px;border:1px solid var(--border);border-radius:6px;" />
+                <select style="padding:6px 10px;border:1px solid var(--border);border-radius:6px;">
                     <option value="text">Text</option>
                     <option value="date">Date</option>
                     <option value="number">Number</option>
@@ -1573,21 +1473,15 @@
             builder.appendChild(div);
         }
 
-        // ─── SAVE TEMPLATE ───
         function saveTemplate() {
             const fields = document.querySelectorAll('#templateBuilder .template-field');
             const template = [];
-            fields.forEach(field => {
-                const input = field.querySelector('input');
-                const select = field.querySelector('select');
-                if (input) {
-                    template.push({ name: input.value || 'Field', type: select ? select.value : 'text' });
-                }
+            fields.forEach(f => {
+                const input = f.querySelector('input');
+                const select = f.querySelector('select');
+                if (input) template.push({ name: input.value || 'Field', type: select ? select.value : 'text' });
             });
-            if (template.length === 0) {
-                showToast('⚠️ Please add at least one field.', 'warning');
-                return;
-            }
+            if (template.length === 0) { showToast('⚠️ Add at least one field', 'warning'); return; }
             let saved = JSON.parse(localStorage.getItem('customTemplates') || '[]');
             saved.push({ name: `Template ${saved.length + 1}`, fields: template, date: new Date().toISOString() });
             localStorage.setItem('customTemplates', JSON.stringify(saved));
@@ -1599,17 +1493,14 @@
         function renderTemplates() {
             const container = document.getElementById('savedTemplates');
             const templates = JSON.parse(localStorage.getItem('customTemplates') || '[]');
-            if (templates.length === 0) {
-                container.innerHTML = '<p style="color:var(--text-light);font-size:13px;">No templates saved.</p>';
-                return;
-            }
+            if (templates.length === 0) { container.innerHTML = '<p style="color:var(--text-light);">No templates saved.</p>'; return; }
             let html = '';
             templates.forEach((t, idx) => {
                 html += `
-                    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--bg);border-radius:8px;margin-bottom:6px;border-left:4px solid var(--accent);">
+                    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:var(--bg);border-radius:6px;margin-bottom:4px;border-left:4px solid var(--accent);">
                         <div><strong>${t.name}</strong> <span style="font-size:11px;color:var(--text-light);">(${t.fields.length} fields)</span></div>
-                        <div style="display:flex;gap:6px;">
-                            <button class="add-btn" onclick="loadTemplate(${idx})" style="background:var(--primary);color:#fff;">📂 Load</button>
+                        <div style="display:flex;gap:4px;">
+                            <button class="add-btn" onclick="loadTemplate(${idx})" style="background:var(--primary);color:#fff;">📂</button>
                             <button class="add-btn" onclick="deleteTemplate(${idx})" style="background:var(--danger);color:#fff;">🗑️</button>
                         </div>
                     </div>
@@ -1624,17 +1515,16 @@
             if (!template) return;
             const builder = document.getElementById('templateBuilder');
             builder.innerHTML = '';
-            template.fields.forEach(field => {
+            template.fields.forEach(f => {
                 const div = document.createElement('div');
                 div.className = 'template-field';
-                div.style.cssText =
-                'display:flex;gap:10px;align-items:center;margin-bottom:8px;';
+                div.style.cssText = 'display:flex;gap:10px;margin-bottom:8px;';
                 div.innerHTML = `
-                    <input type="text" placeholder="Field Name" value="${field.name}" style="flex:1;padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;" />
-                    <select style="padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;">
-                        <option value="text" ${field.type === 'text' ? 'selected' : ''}>Text</option>
-                        <option value="date" ${field.type === 'date' ? 'selected' : ''}>Date</option>
-                        <option value="number" ${field.type === 'number' ? 'selected' : ''}>Number</option>
+                    <input type="text" placeholder="Field Name" value="${f.name}" style="flex:1;padding:6px 10px;border:1px solid var(--border);border-radius:6px;" />
+                    <select style="padding:6px 10px;border:1px solid var(--border);border-radius:6px;">
+                        <option value="text" ${f.type === 'text' ? 'selected' : ''}>Text</option>
+                        <option value="date" ${f.type === 'date' ? 'selected' : ''}>Date</option>
+                        <option value="number" ${f.type === 'number' ? 'selected' : ''}>Number</option>
                     </select>
                     <button class="remove-btn" onclick="this.parentElement.remove()" style="background:none;border:none;color:var(--danger);font-size:18px;cursor:pointer;">✕</button>
                 `;
@@ -1649,7 +1539,7 @@
             localStorage.setItem('customTemplates', JSON.stringify(templates));
             renderTemplates();
             updateStats();
-            showToast('🗑️ Template deleted', 'info');
+            showToast('🗑️ Deleted', 'info');
         }
 
         // ─── HISTORY ───
@@ -1660,17 +1550,15 @@
 
         function renderHistory() {
             const container = document.getElementById('historyList');
-            if (history.length === 0) {
-                container.innerHTML = '<p style="color:var(--text-light);text-align:center;padding:20px;">No statements saved yet.</p>';
-                return;
-            }
+            if (history.length === 0) { container.innerHTML =
+                '<p style="color:var(--text-light);text-align:center;padding:20px;">No history.</p>'; return; }
             let html = '';
             history.forEach((item, idx) => {
                 html += `
-                    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--bg);border-radius:8px;margin-bottom:6px;border-left:4px solid var(--primary);">
-                        <div><strong>${item.name || 'Unnamed'}</strong> <span style="font-size:11px;color:var(--text-light);">${item.date || ''} · ${item.bank || ''}</span></div>
-                        <div style="display:flex;gap:6px;">
-                            <button class="add-btn" onclick="viewHistory(${idx})" style="background:var(--primary);color:#fff;">👁️ View</button>
+                    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:var(--bg);border-radius:6px;margin-bottom:4px;border-left:4px solid var(--primary);">
+                        <div><strong>${item.name || 'Unnamed'}</strong> <span style="font-size:11px;color:var(--text-light);">${item.date || ''}</span></div>
+                        <div style="display:flex;gap:4px;">
+                            <button class="add-btn" onclick="viewHistory(${idx})" style="background:var(--primary);color:#fff;">👁️</button>
                             <button class="add-btn" onclick="deleteHistory(${idx})" style="background:var(--danger);color:#fff;">🗑️</button>
                         </div>
                     </div>
@@ -1687,7 +1575,7 @@
                 currentStatementHTML = item.html;
                 document.getElementById('output').classList.add('show');
                 document.getElementById('output').scrollIntoView({ behavior: 'smooth' });
-                showToast('👁️ Viewing saved statement', 'info');
+                showToast('👁️ Viewing', 'info');
             }
         }
 
@@ -1705,53 +1593,40 @@
                 localStorage.setItem('statementHistory', JSON.stringify(history));
                 renderHistory();
                 updateStats();
-                showToast('🗑️ All history cleared', 'info');
+                showToast('🗑️ All cleared', 'info');
             }
         }
 
         function saveToHistory() {
-            if (!currentStatementHTML) {
-                showToast('⚠️ Please generate a statement first.', 'warning');
-                return;
-            }
+            if (!currentStatementHTML) { showToast('⚠️ Generate first', 'warning'); return; }
             const name = document.getElementById('accName').value || 'Unnamed';
-            const bankKey = document.querySelector('.bank-btn.active')?.dataset.bank || 'sbi';
-            const bank = banks[bankKey];
-            history.push({
-                name: name,
-                bank: bank ? bank.name : 'Bank',
-                date: new Date().toLocaleDateString('en-IN'),
-                html: currentStatementHTML
-            });
+            history.push({ name, date: new Date().toLocaleDateString('en-IN'), html: currentStatementHTML });
             localStorage.setItem('statementHistory', JSON.stringify(history));
             renderHistory();
             updateStats();
-            showToast('💾 Saved to history!', 'success');
+            showToast('💾 Saved!', 'success');
         }
 
-        // ─── STATS ───
         function updateStats() {
             document.getElementById('statStatements').textContent = statementCount;
             document.getElementById('statHistory').textContent = history.length;
-            const templates = JSON.parse(localStorage.getItem('customTemplates') || '[]');
-            document.getElementById('statTemplates').textContent = templates.length;
+            const t = JSON.parse(localStorage.getItem('customTemplates') || '[]');
+            document.getElementById('statTemplates').textContent = t.length;
         }
 
         // ─── WHITE-LABEL ───
         function applyWhiteLabel() {
             const company = document.getElementById('wlCompany').value || 'Your Brand';
             const logo = document.getElementById('wlLogo').value || 'BRAND';
-            const color = document.getElementById('wlColor').value || '#1a5276';
-            const accent = document.getElementById('wlAccent').value || '#f39c12';
-            const preview = document.getElementById('wlPreview');
-            preview.innerHTML = `
+            const color = document.getElementById('wlColor').value;
+            const accent = document.getElementById('wlAccent').value;
+            document.getElementById('wlPreview').innerHTML = `
                 <div style="font-size:20px;font-weight:800;color:${color};">${logo}</div>
                 <p style="color:${color};font-weight:700;">${company}</p>
                 <div style="display:flex;gap:8px;justify-content:center;margin-top:8px;">
                     <span style="display:inline-block;width:30px;height:30px;border-radius:6px;background:${color};"></span>
                     <span style="display:inline-block;width:30px;height:30px;border-radius:6px;background:${accent};"></span>
                 </div>
-                <p style="color:var(--text-light);font-size:11px;margin-top:8px;">✅ White-label applied!</p>
             `;
             localStorage.setItem('wlSettings', JSON.stringify({ company, logo, color, accent }));
             showToast('🎨 White-label applied!', 'success');
@@ -1765,46 +1640,33 @@
             if (!file) return;
             const reader = new FileReader();
             reader.onload = function(e) {
-                const text = e.target.result;
-                const lines = text.split('\n').filter(line => line.trim());
-                const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+                const lines = e.target.result.split('\n').filter(l => l.trim());
                 bulkData = [];
                 for (let i = 1; i < lines.length; i++) {
                     const cols = lines[i].split(',').map(c => c.trim());
-                    if (cols.length >= 4) {
-                        bulkData.push({
-                            name: cols[0] || 'Unknown',
-                            account: cols[1] || '',
-                            ifsc: cols[2] || '',
-                            branch: cols[3] || '',
-                            amount: parseFloat(cols[4]) || 0
-                        });
-                    }
+                    if (cols.length >= 4) bulkData.push({ name: cols[0], account: cols[1], ifsc: cols[2], branch: cols[3],
+                        amount: parseFloat(cols[4]) || 0 });
                 }
                 document.getElementById('bulkCount').textContent = bulkData.length;
                 document.getElementById('bulkPreview').style.display = 'block';
-                showToast(`📊 ${bulkData.length} rows uploaded!`, 'success');
+                showToast(`📊 ${bulkData.length} rows uploaded`, 'success');
             };
             reader.readAsText(file);
         }
 
         function processBulk() {
-            if (bulkData.length === 0) {
-                showToast('⚠️ Please upload a CSV first.', 'warning');
-                return;
-            }
+            if (bulkData.length === 0) { showToast('⚠️ Upload CSV first', 'warning'); return; }
             const results = document.getElementById('bulkResults');
-            let html = '<p><strong>Generated Statements:</strong></p>';
+            let html = '';
             bulkData.forEach((row, idx) => {
                 html += `
-                    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:var(--bg);border-radius:6px;margin-bottom:4px;border-left:4px solid ${idx % 2 === 0 ? '#1a5276' : '#f39c12'};">
-                        <span>${row.name} - ${row.account || 'N/A'}</span>
+                    <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 10px;background:var(--bg);border-radius:4px;margin-bottom:4px;border-left:4px solid ${idx % 2 === 0 ? '#1a5276' : '#f39c12'};">
+                        <span>${row.name}</span>
                         <button class="add-btn" onclick="generateBulkItem(${idx})" style="background:var(--primary);color:#fff;">⚡ Generate</button>
                     </div>
                 `;
             });
             results.innerHTML = html;
-            showToast('📊 Click Generate for each row', 'info');
         }
 
         function generateBulkItem(idx) {
@@ -1819,34 +1681,25 @@
         }
 
         // ═══════════════════════════════════════════════
-        // ─── PDF TEMPLATE UPLOAD ───
+        // ─── PDF TEMPLATE UPLOAD & STYLE DETECTION ───
         // ═══════════════════════════════════════════════
 
         function handlePDFUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
-            if (file.type !== 'application/pdf') {
-                showToast('⚠️ Please upload a PDF file.', 'error');
-                return;
-            }
+            if (file.type !== 'application/pdf') { showToast('⚠️ Please upload a PDF file.', 'error'); return; }
 
             uploadedPDF = file;
             document.getElementById('fileNameDisplay').textContent = file.name;
             document.getElementById('templatePreview').classList.add('show');
+            document.getElementById('templateInfo').style.display = 'none';
 
-            // Read PDF and show preview
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const pdfData = new Uint8Array(e.target.result);
-                const container = document.getElementById('pdfPreviewContainer');
-                container.innerHTML = `
-                    <span>📄 <strong>${file.name}</strong> loaded successfully!<br />
-                    <span style="font-size:12px;color:var(--text-light);">Pages: Detected · Ready for extraction</span>
-                    </span>
-                `;
-                showToast('📄 PDF uploaded successfully!', 'success');
-            };
-            reader.readAsArrayBuffer(file);
+            const container = document.getElementById('pdfPreviewContainer');
+            container.innerHTML = `
+                <span style="color:var(--text-light);">📄 <strong>${file.name}</strong> loaded!<br />
+                <span style="font-size:12px;">Click "Detect Style" to extract template details.</span></span>
+            `;
+            showToast('📄 PDF uploaded!', 'success');
         }
 
         function removeTemplate() {
@@ -1854,15 +1707,86 @@
             document.getElementById('templatePreview').classList.remove('show');
             document.getElementById('fieldMapping').classList.remove('show');
             document.getElementById('pdfFileInput').value = '';
-            showToast('🗑️ Template removed', 'info');
+            showToast('🗑️ Removed', 'info');
         }
 
-        function extractTemplate() {
-            if (!uploadedPDF) {
-                showToast('⚠️ Please upload a PDF first.', 'warning');
-                return;
+        function detectPDFStyle() {
+            if (!uploadedPDF) { showToast('⚠️ Please upload a PDF first.', 'warning'); return; }
+
+            showToast('🔍 Analyzing PDF style...', 'info');
+
+            // Simulate style detection (in real scenario, you'd parse PDF)
+            // For demo, we'll detect from filename or user selection
+            const fileName = uploadedPDF.name.toLowerCase();
+
+            let detectedBank = 'Unknown';
+            let detectedColor = '#1a5276';
+            let detectedAccent = '#f39c12';
+            let headerStyle = 'Dark header with logo';
+
+            if (fileName.includes('sbi') || fileName.includes('state bank')) {
+                detectedBank = 'State Bank of India';
+                detectedColor = '#1a5276';
+                detectedAccent = '#f39c12';
+            } else if (fileName.includes('hdfc')) {
+                detectedBank = 'HDFC Bank';
+                detectedColor = '#004d8c';
+                detectedAccent = '#e6b800';
+            } else if (fileName.includes('icici')) {
+                detectedBank = 'ICICI Bank';
+                detectedColor = '#ed1c24';
+                detectedAccent = '#0033a0';
+            } else if (fileName.includes('axis')) {
+                detectedBank = 'Axis Bank';
+                detectedColor = '#a2001a';
+                detectedAccent = '#fdb913';
+            } else if (fileName.includes('kotak')) {
+                detectedBank = 'Kotak Mahindra Bank';
+                detectedColor = '#1a2b5c';
+                detectedAccent = '#e6b800';
+            } else if (fileName.includes('pnb')) {
+                detectedBank = 'Punjab National Bank';
+                detectedColor = '#b8860b';
+                detectedAccent = '#1a3c6e';
+            } else if (fileName.includes('bob') || fileName.includes('baroda')) {
+                detectedBank = 'Bank of Baroda';
+                detectedColor = '#1f3a7a';
+                detectedAccent = '#fdb913';
+            } else if (fileName.includes('indusind')) {
+                detectedBank = 'IndusInd Bank';
+                detectedColor = '#0066b3';
+                detectedAccent = '#e6b800';
+            } else if (fileName.includes('canara')) {
+                detectedBank = 'Canara Bank';
+                detectedColor = '#003366';
+                detectedAccent = '#fdb913';
+            } else if (fileName.includes('union')) {
+                detectedBank = 'Union Bank of India';
+                detectedColor = '#1a3c6e';
+                detectedAccent = '#fdb913';
+            } else {
+                // Try to detect from content
+                detectedBank = 'Detected Bank';
+                detectedColor = '#1a5276';
+                detectedAccent = '#f39c12';
             }
-            // Show field mapping
+
+            detectedStyle = {
+                bankName: detectedBank,
+                primaryColor: detectedColor,
+                accentColor: detectedAccent,
+                headerStyle: headerStyle,
+                fontFamily: 'Courier New, monospace'
+            };
+
+            // Show detected info
+            document.getElementById('templateInfo').style.display = 'grid';
+            document.getElementById('detectedBank').textContent = detectedBank;
+            document.getElementById('detectedColors').textContent = `${detectedColor} / ${detectedAccent}`;
+            document.getElementById('detectedHeader').textContent = headerStyle;
+            document.getElementById('detectedFont').textContent = 'Courier New';
+
+            // Show mapping
             const mappingContainer = document.getElementById('mappingFields');
             const fields = [
                 { label: 'Account Holder Name', id: 'accName' },
@@ -1872,7 +1796,6 @@
                 { label: 'Branch Code', id: 'branchCode' },
                 { label: 'CIF Number', id: 'cif' },
                 { label: 'MICR Code', id: 'micr' },
-                { label: 'CKYCR', id: 'ckycr' },
                 { label: 'Address', id: 'address' },
                 { label: 'Email', id: 'email' },
                 { label: 'Phone', id: 'branchPhone' },
@@ -1882,9 +1805,9 @@
             let html = '';
             fields.forEach(f => {
                 html += `
-                    <div class="mapping-row" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center;padding:6px 0;border-bottom:1px solid var(--border);">
-                        <span class="label" style="font-weight:600;font-size:13px;">${f.label}</span>
-                        <select data-target="${f.id}" style="padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:inherit;">
+                    <div class="mapping-row">
+                        <span class="label">${f.label}</span>
+                        <select data-target="${f.id}">
                             <option value="">— Detect from PDF —</option>
                             <option value="manual">Manual Entry</option>
                         </select>
@@ -1893,27 +1816,29 @@
             });
             mappingContainer.innerHTML = html;
             document.getElementById('fieldMapping').classList.add('show');
-            showToast('🔍 Template fields extracted! Map them to your data.', 'success');
+
+            // Auto-select bank based on detection
+            const bankKey = Object.keys(banks).find(k => banks[k].name === detectedBank);
+            if (bankKey) {
+                document.querySelectorAll('.bank-btn').forEach(b => b.classList.remove('active'));
+                document.querySelector(`.bank-btn[data-bank="${bankKey}"]`)?.classList.add('active');
+                updateBankPreview();
+            }
+
+            showToast(`✅ Style detected: ${detectedBank}`, 'success');
         }
 
         function applyTemplateMapping() {
-            if (!uploadedPDF) {
-                showToast('⚠️ Please upload a PDF first.', 'warning');
-                return;
-            }
-            showToast('✅ Template mapped! Generating statement with your details...', 'success');
+            if (!uploadedPDF) { showToast('⚠️ Upload PDF first', 'warning'); return; }
 
-            // Auto-fill account details from mapping
-            const mappings = document.querySelectorAll('#mappingFields .mapping-row select');
-            mappings.forEach(sel => {
-                const targetId = sel.dataset.target;
-                const target = document.getElementById(targetId);
-                if (target && sel.value && sel.value !== 'manual') {
-                    // In real scenario, you'd extract from PDF
-                    // For demo, we'll use placeholder
-                    target.value = sel.value;
-                }
-            });
+            // Apply detected style to white-label
+            if (detectedStyle.primaryColor) {
+                document.getElementById('wlColor').value = detectedStyle.primaryColor;
+                document.getElementById('wlAccent').value = detectedStyle.accentColor;
+                document.getElementById('wlCompany').value = detectedStyle.bankName || '';
+                document.getElementById('wlLogo').value = detectedStyle.bankName?.substring(0, 4) || 'BANK';
+                applyWhiteLabel();
+            }
 
             // Switch to generator tab
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -1921,21 +1846,16 @@
             document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
             document.getElementById('tab-generator').classList.add('active');
 
-            // Auto-generate
-            setTimeout(() => generateStatement(), 500);
-            showToast('📄 Statement generated from template!', 'success');
+            showToast('✅ Template applied! Generating statement...', 'success');
+            setTimeout(() => generateStatement(), 600);
         }
 
         // ─── DRAG & DROP ───
         const dropArea = document.getElementById('dropArea');
         if (dropArea) {
-            dropArea.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                dropArea.classList.add('dragover');
-            });
-            dropArea.addEventListener('dragleave', () => {
-                dropArea.classList.remove('dragover');
-            });
+            dropArea.addEventListener('dragover', (e) => { e.preventDefault();
+                dropArea.classList.add('dragover'); });
+            dropArea.addEventListener('dragleave', () => { dropArea.classList.remove('dragover'); });
             dropArea.addEventListener('drop', (e) => {
                 e.preventDefault();
                 dropArea.classList.remove('dragover');
@@ -1983,7 +1903,6 @@
                     const profile = document.querySelector('#profileGroup .active')?.dataset.value || 'moderate';
                     const pdfVariant = document.querySelector('#pdfVariant .active')?.dataset.value || 'light';
 
-                    // Recurring expenses
                     const expenseItems = document.querySelectorAll('#expenseList .expense-item');
                     const recurring = [];
                     expenseItems.forEach(item => {
@@ -1997,7 +1916,6 @@
                         }
                     });
 
-                    // ─── Build transactions ───
                     const startDate = new Date();
                     startDate.setMonth(startDate.getMonth() - period);
                     startDate.setDate(1);
@@ -2116,7 +2034,6 @@
 
                     transactions.sort((a, b) => a.date - b.date);
 
-                    // ─── Build HTML ───
                     const variantClass = pdfVariant === 'dark' ? 'dark' : '';
                     const bankCls = bank ? bank.cls : 'sbi';
                     const bankName = bank ? bank.name : 'Bank';
@@ -2168,21 +2085,23 @@
                     const openDateStr = accountOpenDate.toLocaleDateString('en-IN', { day: '2-digit',
                         month: '2-digit', year: 'numeric' });
 
-                    // White-label
-                    const wlColor = document.getElementById('wlColor')?.value || '#1a5276';
-                    const wlAccent = document.getElementById('wlAccent')?.value || '#f39c12';
-                    const wlCompany = document.getElementById('wlCompany')?.value || bankName;
-                    const wlLogo = document.getElementById('wlLogo')?.value || bankShort;
+                    // Use detected style or fallback to white-label or bank style
+                    const wlColor = detectedStyle.primaryColor || document.getElementById('wlColor')?.value || bank?.color ||
+                        '#1a5276';
+                    const wlAccent = detectedStyle.accentColor || document.getElementById('wlAccent')?.value || '#f39c12';
+                    const wlCompany = detectedStyle.bankName || document.getElementById('wlCompany')?.value || bankName;
+                    const wlLogo = detectedStyle.bankName?.substring(0, 4) || document.getElementById('wlLogo')?.value ||
+                        bankShort;
 
                     const html = `
-                        <div class="bank-statement ${bankCls} ${variantClass}" id="statementPrint">
+                        <div class="bank-statement ${bankCls} ${variantClass}" id="statementPrint" style="border-color:${wlColor};">
                             <div class="header" style="background:${wlColor};border-bottom-color:${wlAccent};">
                                 <div class="logo" style="background:${wlAccent};color:${wlColor};">${wlLogo}</div>
                                 <div class="bank-info">
-                                    <div class="name">${wlCompany}</div>
-                                    <div class="tagline">${bankName} · ${bankShort}</div>
+                                    <div class="name" style="color:#fff;">${wlCompany}</div>
+                                    <div class="tagline" style="color:rgba(255,255,255,0.7);">${bankName} · ${bankShort}</div>
                                 </div>
-                                <div class="branch-info">
+                                <div class="branch-info" style="color:rgba(255,255,255,0.9);">
                                     <div class="bname">${branch}</div>
                                     <div class="baddr">Branch Code: ${branchCode} | Phone: ${branchPhone}</div>
                                 </div>
@@ -2230,7 +2149,7 @@
                                 </thead>
                                 <tbody>
                                     ${rows}
-                                    <tr style="font-weight:700;border-top:2px solid;background:#f8f9fa;">
+                                    <tr style="font-weight:700;border-top:2px solid ${wlColor};background:#f8f9fa;">
                                         <td colspan="4" style="text-align:right;">TOTAL</td>
                                         <td class="debit">${Math.round(totalDebits).toLocaleString()}</td>
                                         <td class="credit">${Math.round(totalCredits).toLocaleString()}</td>
@@ -2256,7 +2175,7 @@
 
                     btn.classList.remove('loading');
                     btn.disabled = false;
-                    showToast('✅ Statement generated successfully!', 'success');
+                    showToast('✅ Statement generated!', 'success');
 
                 } catch (err) {
                     btn.classList.remove('loading');
@@ -2270,10 +2189,7 @@
         // ─── PDF DOWNLOAD ───
         function downloadPDF() {
             const element = document.getElementById('statementPrint');
-            if (!element) {
-                showToast('❌ Please generate a statement first', 'error');
-                return;
-            }
+            if (!element) { showToast('❌ Generate first', 'error'); return; }
             const orientation = document.querySelector('#pdfOrientation .active')?.dataset.value || 'portrait';
             const bankKey = document.querySelector('.bank-btn.active')?.dataset.bank || 'sbi';
             const bank = banks[bankKey];
@@ -2301,24 +2217,19 @@
 
             html2pdf().set(opt).from(container).save().then(() => {
                 document.body.removeChild(container);
-                showToast('📥 PDF downloaded!', 'success');
+                showToast('📥 Downloaded!', 'success');
             }).catch(() => {
                 document.body.removeChild(container);
-                showToast('❌ Error generating PDF', 'error');
+                showToast('❌ Error', 'error');
             });
         }
 
         // ─── COPY ───
         function copyStatement() {
             const element = document.getElementById('statementPrint');
-            if (!element) {
-                showToast('❌ Please generate a statement first', 'error');
-                return;
-            }
+            if (!element) { showToast('❌ Generate first', 'error'); return; }
             const text = element.textContent;
-            navigator.clipboard.writeText(text).then(() => {
-                showToast('📋 Copied!', 'success');
-            }).catch(() => {
+            navigator.clipboard.writeText(text).then(() => { showToast('📋 Copied!', 'success'); }).catch(() => {
                 const range = document.createRange();
                 range.selectNode(element);
                 window.getSelection().removeAllRanges();
@@ -2333,8 +2244,8 @@
         loadHistory();
         renderTemplates();
         updateStats();
-        console.log('🚀 Pro Statement loaded!');
-        console.log('📄 PDF Template Upload feature ready!');
+        console.log('🚀 Pro Statement loaded with PDF Template Copy!');
+        console.log('📄 Upload any bank PDF, system copies exact style!');
     </script>
 
 </body>

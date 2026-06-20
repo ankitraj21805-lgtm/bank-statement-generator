@@ -14,8 +14,9 @@
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
-            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
             background: #eef1f5;
             min-height: 100vh;
             display: flex;
@@ -34,11 +35,11 @@
             height: 100%;
             background: rgba(0, 0, 0, 0.75);
             backdrop-filter: blur(12px);
-            z-index: 99999;
+            z-index: 999999;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: 0.5s;
+            transition: 0.6s;
         }
         #passwordOverlay.hidden {
             opacity: 0;
@@ -57,11 +58,11 @@
         @keyframes fadeUp {
             from {
                 opacity: 0;
-                transform: translateY(40px);
+                transform: translateY(40px) scale(0.96);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) scale(1);
             }
         }
         .password-box .lock-icon {
@@ -305,6 +306,7 @@
             font-size: 14px;
             color: #fff;
             font-family: 'Arial Black', sans-serif;
+            flex-shrink: 0;
         }
         .bank-preview .bname {
             font-weight: 700;
@@ -640,7 +642,7 @@
             height: 100%;
             background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(4px);
-            z-index: 99999;
+            z-index: 999999;
             align-items: center;
             justify-content: center;
             padding: 20px;
@@ -796,7 +798,7 @@
 
         <div class="app-header">
             <div class="brand">Pro <span>Statement</span></div>
-            <span class="badge">🏦 100% Exact Replica</span>
+            <span class="badge">🏦 10 Banks · Exact Replica</span>
         </div>
 
         <!-- ─── BANK SELECTION ─── -->
@@ -1011,7 +1013,9 @@
     <div class="toast-container" id="toastContainer"></div>
 
     <script>
+        // ═══════════════════════════════════════════════
         // ─── CONSTANTS ───
+        // ═══════════════════════════════════════════════
         const SECRET_PASSWORD = '85807';
 
         const BANKS = {
@@ -1030,7 +1034,9 @@
         let generatedHTML = '';
         let statementHTML = '';
 
+        // ═══════════════════════════════════════════════
         // ─── TOAST ───
+        // ═══════════════════════════════════════════════
         function showToast(msg, type = 'info') {
             const c = document.getElementById('toastContainer');
             const t = document.createElement('div');
@@ -1044,10 +1050,10 @@
             }, 4000);
         }
 
+        // ═══════════════════════════════════════════════
         // ─── PASSWORD ───
-        document.getElementById('unlockBtn').addEventListener('click', function() {
-            verifyPassword();
-        });
+        // ═══════════════════════════════════════════════
+        document.getElementById('unlockBtn').addEventListener('click', function() { verifyPassword(); });
         document.getElementById('passwordInput').addEventListener('keydown', function(e) {
             if (e.key === 'Enter') verifyPassword();
         });
@@ -1058,7 +1064,7 @@
             if (input.value === SECRET_PASSWORD) {
                 document.getElementById('passwordOverlay').classList.add('hidden');
                 document.getElementById('mainApp').classList.add('show');
-                showToast('🔓 Access granted! Welcome.', 'success');
+                showToast('🔓 Access granted!', 'success');
             } else {
                 error.classList.add('show');
                 input.value = '';
@@ -1067,7 +1073,9 @@
             }
         }
 
+        // ═══════════════════════════════════════════════
         // ─── BANK SELECTION ───
+        // ═══════════════════════════════════════════════
         document.querySelectorAll('.bank-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 document.querySelectorAll('.bank-btn').forEach(b => b.classList.remove('active'));
@@ -1087,7 +1095,9 @@
         }
         updateBankPreview();
 
+        // ═══════════════════════════════════════════════
         // ─── PILLS ───
+        // ═══════════════════════════════════════════════
         document.querySelectorAll('.pill-group').forEach(group => {
             group.querySelectorAll('.pill').forEach(pill => {
                 pill.addEventListener('click', function() {
@@ -1097,7 +1107,9 @@
             });
         });
 
+        // ═══════════════════════════════════════════════
         // ─── EXPENSES ───
+        // ═══════════════════════════════════════════════
         function addExpense() {
             const list = document.getElementById('expenseList');
             const div = document.createElement('div');
@@ -1111,7 +1123,9 @@
             list.appendChild(div);
         }
 
+        // ═══════════════════════════════════════════════
         // ─── HISTORY ───
+        // ═══════════════════════════════════════════════
         function saveToHistory() {
             if (!statementHTML) { showToast('⚠️ Generate first', 'warning'); return; }
             const name = document.getElementById('accName').value || 'Unnamed';
@@ -1124,7 +1138,6 @@
         // ═══════════════════════════════════════════════
         // ─── GENERATE STATEMENT ───
         // ═══════════════════════════════════════════════
-
         function generateStatement() {
             const btn = document.getElementById('generateBtn');
             btn.disabled = true;
@@ -1421,7 +1434,9 @@
             }, 600);
         }
 
+        // ═══════════════════════════════════════════════
         // ─── PRINT MODAL ───
+        // ═══════════════════════════════════════════════
         function openPrintModal() {
             if (!generatedHTML) {
                 showToast('❌ Generate a statement first.', 'error');
@@ -1437,7 +1452,9 @@
             document.body.style.overflow = 'auto';
         }
 
+        // ═══════════════════════════════════════════════
         // ─── DOWNLOAD PDF ───
+        // ═══════════════════════════════════════════════
         function downloadPDF() {
             const element = document.querySelector('#modalStatement #statement-print');
             if (!element) {
@@ -1499,12 +1516,16 @@
             });
         }
 
+        // ═══════════════════════════════════════════════
         // ─── PRINT ───
+        // ═══════════════════════════════════════════════
         function printPDF() {
             window.print();
         }
 
+        // ═══════════════════════════════════════════════
         // ─── COPY ───
+        // ═══════════════════════════════════════════════
         function copyStatement() {
             const element = document.querySelector('#statement-print');
             if (!element) { showToast('❌ Generate first', 'error'); return; }
@@ -1522,8 +1543,7 @@
 
         console.log('🚀 Pro Statement Loaded.');
         console.log('🔐 Password: 85807');
-        console.log('🏦 10 Banks Supported: SBI, HDFC, ICICI, Axis, Kotak, BOB, PNB, IndusInd, Canara, Union');
+        console.log('🏦 10 Banks: SBI, HDFC, ICICI, Axis, Kotak, BOB, PNB, IndusInd, Canara, Union');
     </script>
-
 </body>
 </html>

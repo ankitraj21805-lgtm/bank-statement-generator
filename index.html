@@ -278,6 +278,7 @@
             }
         }
 
+        /* ─── UPDATED: LOGO BOX PREVIEW ─── */
         .bank-preview {
             display: flex;
             align-items: center;
@@ -294,12 +295,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 800;
-            font-size: 16px;
-            color: #fff;
-            font-family: 'Arial Black', sans-serif;
             flex-shrink: 0;
-            background: #1a5276;
+            overflow: hidden;
         }
         .bank-preview .bname {
             font-weight: 700;
@@ -471,6 +468,7 @@
             border-bottom: 3px solid #1c1c1c;
             background: #f8f9fa;
         }
+        /* ─── UPDATED: STATEMENT LOGO ─── */
         #statement-print .bank-header .bank-logo {
             width: 56px;
             height: 56px;
@@ -478,12 +476,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
-            font-weight: 900;
-            color: #fff;
-            font-family: 'Arial Black', sans-serif;
             flex-shrink: 0;
+            overflow: hidden;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            background: transparent; 
         }
         #statement-print .bank-header .bank-info {
             flex: 1;
@@ -509,36 +505,18 @@
             font-size: 11px;
             color: #1c1c1c;
         }
-        #statement-print .bank-header .bank-info .bank-name .sbi-color {
-            color: #1a5276;
-        }
-        #statement-print .bank-header .bank-info .bank-name .hdfc-color {
-            color: #004d8c;
-        }
-        #statement-print .bank-header .bank-info .bank-name .icici-color {
-            color: #ed1c24;
-        }
-        #statement-print .bank-header .bank-info .bank-name .axis-color {
-            color: #a2001a;
-        }
-        #statement-print .bank-header .bank-info .bank-name .kotak-color {
-            color: #1a2b5c;
-        }
-        #statement-print .bank-header .bank-info .bank-name .bob-color {
-            color: #1f3a7a;
-        }
-        #statement-print .bank-header .bank-info .bank-name .pnb-color {
-            color: #b8860b;
-        }
-        #statement-print .bank-header .bank-info .bank-name .indusind-color {
-            color: #0066b3;
-        }
-        #statement-print .bank-header .bank-info .bank-name .canara-color {
-            color: #003366;
-        }
-        #statement-print .bank-header .bank-info .bank-name .union-color {
-            color: #1a3c6e;
-        }
+        /* Colors for fallback text logos */
+        #statement-print .bank-header .bank-info .bank-name .sbi-color { color: #1a5276; }
+        #statement-print .bank-header .bank-info .bank-name .hdfc-color { color: #004d8c; }
+        #statement-print .bank-header .bank-info .bank-name .icici-color { color: #ed1c24; }
+        #statement-print .bank-header .bank-info .bank-name .axis-color { color: #a2001a; }
+        #statement-print .bank-header .bank-info .bank-name .kotak-color { color: #1a2b5c; }
+        #statement-print .bank-header .bank-info .bank-name .bob-color { color: #1f3a7a; }
+        #statement-print .bank-header .bank-info .bank-name .pnb-color { color: #b8860b; }
+        #statement-print .bank-header .bank-info .bank-name .indusind-color { color: #0066b3; }
+        #statement-print .bank-header .bank-info .bank-name .canara-color { color: #003366; }
+        #statement-print .bank-header .bank-info .bank-name .union-color { color: #1a3c6e; }
+        
         #statement-print .stmt-title {
             text-align: center;
             font-size: 15px;
@@ -812,48 +790,6 @@
             background: #1a5276;
             border-radius: 10px;
         }
-
-        /* ─── LOGO STYLES ─── */
-        .logo-sbi {
-            background: #1a5276;
-            color: #f39c12;
-        }
-        .logo-hdfc {
-            background: #004d8c;
-            color: #e6b800;
-        }
-        .logo-icici {
-            background: #ed1c24;
-            color: #ffffff;
-        }
-        .logo-axis {
-            background: #a2001a;
-            color: #fdb913;
-        }
-        .logo-kotak {
-            background: #1a2b5c;
-            color: #e6b800;
-        }
-        .logo-bob {
-            background: #1f3a7a;
-            color: #fdb913;
-        }
-        .logo-pnb {
-            background: #b8860b;
-            color: #ffffff;
-        }
-        .logo-indusind {
-            background: #0066b3;
-            color: #e6b800;
-        }
-        .logo-canara {
-            background: #003366;
-            color: #fdb913;
-        }
-        .logo-union {
-            background: #1a3c6e;
-            color: #fdb913;
-        }
     </style>
 </head>
 <body>
@@ -895,7 +831,7 @@
                 <button class="bank-btn" data-bank="union">Union</button>
             </div>
             <div class="bank-preview">
-                <div class="logo-box logo-sbi" id="logoBox">SBI</div>
+                <div class="logo-box" id="logoBox"></div>
                 <div>
                     <div class="bname" id="bankNameDisplay">State Bank of India</div>
                     <div class="bsub">Selected bank · Official format</div>
@@ -1102,14 +1038,19 @@
                 short: 'SBI',
                 color: '#1a5276',
                 cls: 'sbi',
-                logoClass: 'logo-sbi',
-                logoText: 'SBI'
+                // ✅ UPDATED: SBI SVG LOGO
+                svg: `<svg width="100%" height="100%" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="100" cy="100" r="90" fill="#00bfff" />
+                        <circle cx="100" cy="85" r="30" fill="#ffffff" />
+                        <rect x="91" y="85" width="18" height="115" fill="#ffffff" />
+                      </svg>`
             },
             hdfc: {
                 name: 'HDFC Bank',
                 short: 'HDFC',
                 color: '#004d8c',
                 cls: 'hdfc',
+                // Text fallback - provide SVG to update
                 logoClass: 'logo-hdfc',
                 logoText: 'HDFC'
             },
@@ -1126,16 +1067,23 @@
                 short: 'Axis',
                 color: '#a2001a',
                 cls: 'axis',
-                logoClass: 'logo-axis',
-                logoText: 'Axis'
+                // ✅ UPDATED: AXIS SVG LOGO
+                svg: `<svg width="100%" height="100%" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="100" height="100" rx="15" fill="#861F41"/>
+                        <path d="M25 75 L50 25 L75 75 L62 75 L50 50 L38 75 Z" fill="#FFFFFF"/>
+                        <path d="M50 50 L65 50 L57 65 Z" fill="#FFFFFF"/>
+                      </svg>`
             },
             kotak: {
                 name: 'Kotak Mahindra Bank',
                 short: 'Kotak',
                 color: '#1a2b5c',
                 cls: 'kotak',
-                logoClass: 'logo-kotak',
-                logoText: 'Kotak'
+                // ✅ UPDATED: KOTAK SVG LOGO
+                svg: `<svg width="100%" height="100%" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="45" fill="#EE1C25"/>
+                        <path d="M30 25 C30 25, 45 40, 55 50 C65 60, 75 75, 75 75 M75 25 C75 25, 60 40, 50 50 C40 60, 30 75, 30 75 M30 25 L30 75" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                      </svg>`
             },
             bob: {
                 name: 'Bank of Baroda',
@@ -1150,8 +1098,12 @@
                 short: 'PNB',
                 color: '#b8860b',
                 cls: 'pnb',
-                logoClass: 'logo-pnb',
-                logoText: 'PNB'
+                // ✅ UPDATED: PNB SVG LOGO
+                svg: `<svg width="100%" height="100%" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="45" fill="#ED1C24" />
+                        <circle cx="50" cy="50" r="22" fill="#FFF200" />
+                        <path d="M50 15 L50 50 L25 50 L25 40 L40 40 L40 28 L25 28" stroke="#FFFFFF" stroke-width="6" fill="none" stroke-linecap="square"/>
+                      </svg>`
             },
             indusind: {
                 name: 'IndusInd Bank',
@@ -1166,16 +1118,22 @@
                 short: 'Canara',
                 color: '#003366',
                 cls: 'canara',
-                logoClass: 'logo-canara',
-                logoText: 'CAN'
+                // ✅ UPDATED: CANARA SVG LOGO
+                svg: `<svg width="100%" height="100%" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 75 L55 20 L75 55 Z" fill="#0072BC" opacity="0.9"/>
+                        <path d="M45 75 L80 40 L60 85 Z" fill="#FFD200" opacity="0.9" style="mix-blend-mode: multiply;"/>
+                      </svg>`
             },
             union: {
                 name: 'Union Bank of India',
                 short: 'Union',
                 color: '#1a3c6e',
                 cls: 'union',
-                logoClass: 'logo-union',
-                logoText: 'UNI'
+                // ✅ UPDATED: UNION SVG LOGO
+                svg: `<svg width="100%" height="100%" viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M25 20 L25 55 C25 70, 50 70, 50 55 L50 20" stroke="#0054A6" stroke-width="14" stroke-linecap="round" fill="none"/>
+                        <path d="M45 75 L45 40 C45 25, 70 25, 70 40 L70 75" stroke="#ED1C24" stroke-width="14" stroke-linecap="round" fill="none"/>
+                      </svg>`
             }
         };
 
@@ -1212,6 +1170,7 @@
             if (input.value === SECRET_PASSWORD) {
                 document.getElementById('passwordOverlay').classList.add('hidden');
                 document.getElementById('mainApp').classList.add('show');
+                updateBankPreview();
                 showToast('🔓 Access granted!', 'success');
             } else {
                 error.classList.add('show');
@@ -1237,12 +1196,25 @@
             const bank = BANKS[key];
             if (bank) {
                 const logoBox = document.getElementById('logoBox');
-                logoBox.className = 'logo-box ' + bank.logoClass;
-                logoBox.textContent = bank.logoText;
+                
+                // ✅ UPDATED: Render SVG or Text Fallback
+                if (bank.svg) {
+                    logoBox.innerHTML = bank.svg;
+                    logoBox.style.background = 'transparent';
+                    logoBox.style.padding = '0';
+                    logoBox.style.width = '48px';
+                    logoBox.style.height = '48px';
+                } else {
+                    // Fallback to text-based logo
+                    const cls = bank.logoClass || '';
+                    const text = bank.logoText || bank.short || 'BANK';
+                    logoBox.innerHTML = `<div class="${cls}" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; border-radius:8px;">${text}</div>`;
+                    logoBox.style.background = bank.color;
+                    logoBox.style.padding = '0';
+                }
                 document.getElementById('bankNameDisplay').textContent = bank.name;
             }
         }
-        updateBankPreview();
 
         // ═══════════════════════════════════════════════
         // ─── PILLS ───
@@ -1461,8 +1433,17 @@
                     const bankCls = bank ? bank.cls : 'sbi';
                     const bankName = bank ? bank.name : 'Bank';
                     const bankShort = bank ? bank.short : 'SBI';
-                    const logoCls = bank ? bank.logoClass : 'logo-sbi';
-                    const logoText = bank ? bank.logoText : 'SBI';
+                    
+                    // ✅ UPDATED: Logo rendering for Statement
+                    let logoHtml = '';
+                    if (bank.svg) {
+                        logoHtml = `<div class="bank-logo" style="background:transparent; width:56px; height:56px; padding:0; display:flex; align-items:center; justify-content:center;">${bank.svg}</div>`;
+                    } else {
+                        const logoCls = bank.logoClass || '';
+                        const logoText = bank.logoText || bank.short || 'BANK';
+                        logoHtml = `<div class="bank-logo ${logoCls}" style="background:${bank.color}; color:#fff; font-weight:800; font-size:18px;">${logoText}</div>`;
+                    }
+
                     const bankColor = bank ? bank.color : '#1a5276';
 
                     let rows = '';
@@ -1521,7 +1502,7 @@
                         <div id="statement-print" class="${variantClass}">
                             <!-- BANK HEADER WITH LOGO -->
                             <div class="bank-header">
-                                <div class="bank-logo ${logoCls}">${logoText}</div>
+                                ${logoHtml}
                                 <div class="bank-info">
                                     <div class="bank-name"><span class="${bankCls}-color">${bankName}</span></div>
                                     <div class="bank-tagline">${bankShort} BANK · Established 1921</div>
@@ -1715,8 +1696,8 @@
 
         console.log('🚀 Pro Statement Loaded.');
         console.log('🔐 Password: 85807');
-        console.log('🏦 10 Banks with official styled logos.');
-        console.log('✅ All logos are SVG-based, no external images needed!');
+        console.log('🏦 10 Banks with official styled logos (6 SVGs integrated).');
+        console.log('✅ Logos added: SBI, Kotak, Canara, PNB, Union, Axis.');
     </script>
 
 </body>

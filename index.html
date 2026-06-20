@@ -9,12 +9,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js">
     </script>
     <style>
+        /* ─── All CSS same as before ─── */
+        /* (I'll include full CSS below) */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
             background: #eef1f5;
@@ -23,8 +24,6 @@
             justify-content: center;
             padding: 20px;
         }
-
-        /* ─── PASSWORD OVERLAY ─── */
         #passwordOverlay {
             position: fixed;
             top: 0;
@@ -129,8 +128,6 @@
             color: #5d6d7e;
             margin-top: 14px;
         }
-
-        /* ─── MAIN APP ─── */
         .app {
             max-width: 1150px;
             width: 100%;
@@ -144,7 +141,6 @@
             display: block;
             animation: fadeUp 0.5s ease;
         }
-
         .app-header {
             display: flex;
             justify-content: space-between;
@@ -171,7 +167,6 @@
             border-radius: 30px;
             font-weight: 600;
         }
-
         .card {
             background: #f8f9fc;
             border-radius: 14px;
@@ -187,7 +182,6 @@
             letter-spacing: 0.5px;
             margin-bottom: 14px;
         }
-
         .form-group {
             margin-bottom: 12px;
         }
@@ -217,7 +211,6 @@
             border-color: #1a5276;
             box-shadow: 0 0 0 4px rgba(26, 82, 118, 0.06);
         }
-
         .grid-2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -228,7 +221,6 @@
                 grid-template-columns: 1fr;
             }
         }
-
         .inline {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -245,7 +237,6 @@
                 grid-template-columns: 1fr;
             }
         }
-
         .bank-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
@@ -278,7 +269,6 @@
                 grid-template-columns: repeat(3, 1fr);
             }
         }
-
         .bank-preview {
             display: flex;
             align-items: center;
@@ -309,7 +299,6 @@
             font-size: 11px;
             color: #7f8c8d;
         }
-
         .pill-group {
             display: flex;
             flex-wrap: wrap;
@@ -335,7 +324,6 @@
             color: #fff;
             border-color: #1a5276;
         }
-
         .expense-item {
             display: grid;
             grid-template-columns: 2fr 1fr 0.8fr 0.3fr;
@@ -379,7 +367,6 @@
         .add-btn:hover {
             background: #d4e6f1;
         }
-
         .gen-btn {
             width: 100%;
             padding: 16px;
@@ -404,7 +391,6 @@
             cursor: not-allowed;
             transform: none;
         }
-
         #output {
             display: none;
             margin-top: 28px;
@@ -412,7 +398,6 @@
         #output.show {
             display: block;
         }
-
         .btn-group {
             display: flex;
             gap: 12px;
@@ -447,9 +432,7 @@
             color: #fff;
         }
 
-        /* ═══════════════════════════════════════════ */
-        /* ─── STATEMENT WITH BANK LOGO ─── */
-        /* ═══════════════════════════════════════════ */
+        /* ─── STATEMENT STYLES ─── */
         #statement-print {
             font-family: 'Courier New', monospace;
             background: #ffffff;
@@ -462,8 +445,6 @@
             border: 1px solid #b0b0b0;
             border-radius: 3px;
         }
-
-        /* ─── BANK HEADER WITH LOGO ─── */
         #statement-print .bank-header {
             display: flex;
             align-items: center;
@@ -480,17 +461,17 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 900;
-            font-size: 16px;
-            color: #fff;
-            font-family: 'Arial Black', sans-serif;
+            overflow: hidden;
             flex-shrink: 0;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            background: #fff;
         }
-        #statement-print .bank-header .bank-logo .logo-svg {
+        #statement-print .bank-header .bank-logo img {
             width: 100%;
             height: 100%;
+            object-fit: contain;
             border-radius: 8px;
+            padding: 4px;
         }
         #statement-print .bank-header .bank-info {
             flex: 1;
@@ -516,8 +497,6 @@
             font-size: 11px;
             color: #1c1c1c;
         }
-
-        /* ─── BANK NAME COLORS ─── */
         #statement-print .bank-header .bank-info .bank-name .sbi-color {
             color: #1a5276;
         }
@@ -548,8 +527,6 @@
         #statement-print .bank-header .bank-info .bank-name .union-color {
             color: #1a3c6e;
         }
-
-        /* ─── STATEMENT TITLE ─── */
         #statement-print .stmt-title {
             text-align: center;
             font-size: 15px;
@@ -560,8 +537,6 @@
             margin-bottom: 10px;
             color: #1c1c1c;
         }
-
-        /* ─── ACCOUNT DETAILS ─── */
         #statement-print .acc-details {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -574,8 +549,6 @@
         #statement-print .acc-details .lbl {
             font-weight: 700;
         }
-
-        /* ─── TABLE ─── */
         #statement-print table {
             width: 100%;
             border-collapse: collapse;
@@ -607,8 +580,6 @@
         #statement-print table .bal-neg {
             color: #c0392b;
         }
-
-        /* ─── SUMMARY ─── */
         #statement-print .summary-box {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -623,8 +594,6 @@
         #statement-print .summary-box strong {
             font-weight: 700;
         }
-
-        /* ─── FOOTER ─── */
         #statement-print .footer {
             margin-top: 10px;
             border-top: 2px solid #1c1c1c;
@@ -638,8 +607,6 @@
         #statement-print .footer strong {
             color: #1a5276;
         }
-
-        /* ─── DARK VARIANT ─── */
         #statement-print.dark {
             background: #1a1a2e;
             color: #e8e8e8;
@@ -855,7 +822,7 @@
 
         <div class="app-header">
             <div class="brand">Pro <span>Statement</span></div>
-            <span class="badge">🏦 Real Bank Logos · 10 Banks</span>
+            <span class="badge">🏦 Official Logos · 10 Banks</span>
         </div>
 
         <!-- ─── BANK SELECTION ─── -->
@@ -877,7 +844,7 @@
                 <div class="logo-box" id="logoBox" style="background:#1a5276;">SBI</div>
                 <div>
                     <div class="bname" id="bankNameDisplay">State Bank of India</div>
-                    <div class="bsub">Selected bank · Official logo format</div>
+                    <div class="bsub">Selected bank · Official format</div>
                 </div>
             </div>
         </div>
@@ -1071,6 +1038,39 @@
 
     <script>
         // ═══════════════════════════════════════════════
+        // ─── BANK LOGOS (REPLACE WITH YOUR PNG BASE64) ───
+        // ═══════════════════════════════════════════════
+
+        // 🔴 IMPORTANT: Replace these placeholder strings with your actual PNG base64 data.
+        // Convert your PNG to base64 using: https://www.base64-image.de/
+        // Paste the full 'data:image/png;base64,...' string inside the quotes.
+
+        const LOGO_SBI = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...'; // <-- Replace with your SBI logo base64
+        const LOGO_HDFC = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...'; // <-- Replace with your HDFC logo base64
+        const LOGO_ICICI = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...'; // <-- Replace with your ICICI logo base64
+        const LOGO_AXIS = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...'; // <-- Replace with your Axis logo base64
+        const LOGO_KOTAK = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...'; // <-- Replace with your Kotak logo base64
+        const LOGO_BOB = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...'; // <-- Replace with your BOB logo base64
+        const LOGO_PNB = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...'; // <-- Replace with your PNB logo base64
+        const LOGO_INDUSIND = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...'; // <-- Replace with your IndusInd logo base64
+        const LOGO_CANARA = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...'; // <-- Replace with your Canara logo base64
+        const LOGO_UNION = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...'; // <-- Replace with your Union logo base64
+
+        // ─── BANK LOGO MAP ───
+        const BANK_LOGOS = {
+            sbi: LOGO_SBI,
+            hdfc: LOGO_HDFC,
+            icici: LOGO_ICICI,
+            axis: LOGO_AXIS,
+            kotak: LOGO_KOTAK,
+            bob: LOGO_BOB,
+            pnb: LOGO_PNB,
+            indusind: LOGO_INDUSIND,
+            canara: LOGO_CANARA,
+            union: LOGO_UNION
+        };
+
+        // ═══════════════════════════════════════════════
         // ─── CONSTANTS ───
         // ═══════════════════════════════════════════════
         const SECRET_PASSWORD = '85807';
@@ -1081,80 +1081,70 @@
                 short: 'SBI',
                 color: '#1a5276',
                 cls: 'sbi',
-                logoBg: '#1a5276',
-                logoText: '#f39c12'
+                logo: LOGO_SBI
             },
             hdfc: {
                 name: 'HDFC Bank',
                 short: 'HDFC',
                 color: '#004d8c',
                 cls: 'hdfc',
-                logoBg: '#004d8c',
-                logoText: '#e6b800'
+                logo: LOGO_HDFC
             },
             icici: {
                 name: 'ICICI Bank',
                 short: 'ICICI',
                 color: '#ed1c24',
                 cls: 'icici',
-                logoBg: '#ed1c24',
-                logoText: '#0033a0'
+                logo: LOGO_ICICI
             },
             axis: {
                 name: 'Axis Bank',
                 short: 'Axis',
                 color: '#a2001a',
                 cls: 'axis',
-                logoBg: '#a2001a',
-                logoText: '#fdb913'
+                logo: LOGO_AXIS
             },
             kotak: {
                 name: 'Kotak Mahindra Bank',
                 short: 'Kotak',
                 color: '#1a2b5c',
                 cls: 'kotak',
-                logoBg: '#1a2b5c',
-                logoText: '#e6b800'
+                logo: LOGO_KOTAK
             },
             bob: {
                 name: 'Bank of Baroda',
                 short: 'BOB',
                 color: '#1f3a7a',
                 cls: 'bob',
-                logoBg: '#1f3a7a',
-                logoText: '#fdb913'
+                logo: LOGO_BOB
             },
             pnb: {
                 name: 'Punjab National Bank',
                 short: 'PNB',
                 color: '#b8860b',
                 cls: 'pnb',
-                logoBg: '#b8860b',
-                logoText: '#1a3c6e'
+                logo: LOGO_PNB
             },
             indusind: {
                 name: 'IndusInd Bank',
                 short: 'IndusInd',
                 color: '#0066b3',
                 cls: 'indusind',
-                logoBg: '#0066b3',
-                logoText: '#e6b800'
+                logo: LOGO_INDUSIND
             },
             canara: {
                 name: 'Canara Bank',
                 short: 'Canara',
                 color: '#003366',
                 cls: 'canara',
-                logoBg: '#003366',
-                logoText: '#fdb913'
+                logo: LOGO_CANARA
             },
             union: {
                 name: 'Union Bank of India',
                 short: 'Union',
                 color: '#1a3c6e',
                 cls: 'union',
-                logoBg: '#1a3c6e',
-                logoText: '#fdb913'
+                logo: LOGO_UNION
             }
         };
 
@@ -1439,8 +1429,7 @@
                     const bankCls = bank ? bank.cls : 'sbi';
                     const bankName = bank ? bank.name : 'Bank';
                     const bankShort = bank ? bank.short : 'SBI';
-                    const logoBg = bank ? bank.logoBg : '#1a5276';
-                    const logoText = bank ? bank.logoText : '#f39c12';
+                    const logoData = bank ? bank.logo : LOGO_SBI;
 
                     let rows = '';
                     let totalDebits = 0,
@@ -1493,25 +1482,17 @@
 
                     let openingDisplay = openingBal.toLocaleString();
 
-                    // ─── Build the statement HTML with SVG logo ───
-                    const svgLogo = `
-                        <svg width="56" height="56" viewBox="0 0 56 56" style="border-radius:8px;">
-                            <rect width="56" height="56" rx="8" fill="${logoBg}" />
-                            <text x="28" y="34" font-family="Arial Black, sans-serif" font-size="16" font-weight="900" fill="${logoText}" text-anchor="middle">${bankShort}</text>
-                            <text x="28" y="46" font-family="Arial, sans-serif" font-size="6" fill="${logoText}" text-anchor="middle" opacity="0.7">${bankName.substring(0, 15)}</text>
-                        </svg>
-                    `;
-
+                    // ─── Build the statement HTML with real logo image ───
                     const html = `
                         <div id="statement-print" class="${variantClass}">
                             <!-- BANK HEADER WITH LOGO -->
                             <div class="bank-header">
                                 <div class="bank-logo">
-                                    ${svgLogo}
+                                    <img src="${logoData}" alt="${bankName} Logo" />
                                 </div>
                                 <div class="bank-info">
                                     <div class="bank-name"><span class="${bankCls}-color">${bankName}</span></div>
-                                    <div class="bank-tagline">${bankShort} BANK · Established 1921</div>
+                                    <div class="bank-tagline">${bankShort} BANK</div>
                                 </div>
                                 <div class="branch-details">
                                     <div class="branch-name">${branch}</div>
@@ -1582,7 +1563,7 @@
 
                     btn.disabled = false;
                     btn.textContent = '⚡ Generate Statement';
-                    showToast('✅ Statement generated!', 'success');
+                    showToast('✅ Statement generated with official logo!', 'success');
 
                 } catch (err) {
                     btn.disabled = false;
@@ -1668,7 +1649,7 @@
 
                 pdf.save(fileName);
                 closePrintModal();
-                showToast('📥 PDF downloaded!', 'success');
+                showToast('📥 PDF downloaded with official logo!', 'success');
             }).catch(err => {
                 showToast('❌ Error: ' + err.message, 'error');
                 console.error(err);
@@ -1702,7 +1683,8 @@
 
         console.log('🚀 Pro Statement Loaded.');
         console.log('🔐 Password: 85807');
-        console.log('🏦 10 Banks with official logos: SBI, HDFC, ICICI, Axis, Kotak, BOB, PNB, IndusInd, Canara, Union');
+        console.log('🏦 10 Banks with official logos.');
+        console.log('📌 Replace LOGO_* variables with your PNG base64 data.');
     </script>
 </body>
 </html>

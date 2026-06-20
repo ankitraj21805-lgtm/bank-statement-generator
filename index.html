@@ -16,7 +16,7 @@
         }
 
         body {
-            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
             background: #eef1f5;
             min-height: 100vh;
             display: flex;
@@ -24,9 +24,7 @@
             padding: 20px;
         }
 
-        /* ═══════════════════════════════════════════ */
         /* ─── PASSWORD OVERLAY ─── */
-        /* ═══════════════════════════════════════════ */
         #passwordOverlay {
             position: fixed;
             top: 0;
@@ -132,9 +130,7 @@
             margin-top: 14px;
         }
 
-        /* ═══════════════════════════════════════════ */
         /* ─── MAIN APP ─── */
-        /* ═══════════════════════════════════════════ */
         .app {
             max-width: 1150px;
             width: 100%;
@@ -176,7 +172,6 @@
             font-weight: 600;
         }
 
-        /* ─── CARDS ─── */
         .card {
             background: #f8f9fc;
             border-radius: 14px;
@@ -193,7 +188,6 @@
             margin-bottom: 14px;
         }
 
-        /* ─── FORM ─── */
         .form-group {
             margin-bottom: 12px;
         }
@@ -252,7 +246,6 @@
             }
         }
 
-        /* ─── BANK SELECTION ─── */
         .bank-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
@@ -317,7 +310,6 @@
             color: #7f8c8d;
         }
 
-        /* ─── PILLS ─── */
         .pill-group {
             display: flex;
             flex-wrap: wrap;
@@ -344,7 +336,6 @@
             border-color: #1a5276;
         }
 
-        /* ─── EXPENSES ─── */
         .expense-item {
             display: grid;
             grid-template-columns: 2fr 1fr 0.8fr 0.3fr;
@@ -389,7 +380,6 @@
             background: #d4e6f1;
         }
 
-        /* ─── GENERATE BUTTON ─── */
         .gen-btn {
             width: 100%;
             padding: 16px;
@@ -415,7 +405,6 @@
             transform: none;
         }
 
-        /* ─── OUTPUT ─── */
         #output {
             display: none;
             margin-top: 28px;
@@ -458,31 +447,28 @@
             color: #fff;
         }
 
-        /* ═══════════════════════════════════════════ */
-        /* ─── EXACT PDF STATEMENT ─── */
-        /* ═══════════════════════════════════════════ */
+        /* ─── STATEMENT STYLES (EXACT PDF REPLICA) ─── */
         #statement-print {
             font-family: 'Courier New', monospace;
             background: #ffffff;
-            padding: 24px 28px;
+            padding: 20px 25px;
             max-width: 1000px;
             margin: 0 auto;
-            font-size: 11.5px;
-            line-height: 1.6;
+            font-size: 11px;
+            line-height: 1.5;
             color: #1c1c1c;
             border: 1px solid #b0b0b0;
-            border-radius: 4px;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+            border-radius: 3px;
         }
 
         #statement-print .bank-header {
             text-align: center;
-            border-bottom: 2.5px solid #1c1c1c;
-            padding-bottom: 8px;
-            margin-bottom: 12px;
+            border-bottom: 2px solid #1c1c1c;
+            padding-bottom: 6px;
+            margin-bottom: 10px;
         }
         #statement-print .bank-header .bank-name {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 700;
             letter-spacing: 2px;
         }
@@ -517,7 +503,7 @@
             color: #1a3c6e;
         }
         #statement-print .bank-header .sub {
-            font-size: 10px;
+            font-size: 9.5px;
             color: #444;
             letter-spacing: 1px;
         }
@@ -526,10 +512,10 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 2px 30px;
-            font-size: 10px;
+            font-size: 9.5px;
             border-bottom: 1px dashed #aaa;
-            padding-bottom: 8px;
-            margin-bottom: 10px;
+            padding-bottom: 6px;
+            margin-bottom: 8px;
         }
         #statement-print .acc-details .lbl {
             font-weight: 700;
@@ -538,7 +524,7 @@
         #statement-print table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 10px;
+            font-size: 9.5px;
         }
         #statement-print table th {
             background: #f0f2f5;
@@ -546,14 +532,14 @@
             padding: 4px 6px;
             border-bottom: 2px solid #1c1c1c;
             font-weight: 700;
-            font-size: 9px;
+            font-size: 8.5px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
         #statement-print table td {
             padding: 3px 6px;
             border-bottom: 1px solid #eee;
-            font-size: 9.5px;
+            font-size: 9px;
         }
         #statement-print table .debit {
             color: #c0392b;
@@ -572,10 +558,10 @@
             grid-template-columns: 1fr 1fr 1fr 1fr;
             gap: 8px;
             background: #f8f9fa;
-            padding: 8px 14px;
-            border-radius: 6px;
-            margin-top: 10px;
-            font-size: 10px;
+            padding: 6px 12px;
+            border-radius: 4px;
+            margin-top: 8px;
+            font-size: 9.5px;
             border: 1px solid #e0e0e0;
         }
         #statement-print .summary-box strong {
@@ -583,10 +569,10 @@
         }
 
         #statement-print .footer {
-            margin-top: 12px;
+            margin-top: 10px;
             border-top: 2px solid #1c1c1c;
-            padding-top: 8px;
-            font-size: 8px;
+            padding-top: 6px;
+            font-size: 7.5px;
             color: #555;
             text-align: center;
             line-height: 1.7;
@@ -596,7 +582,7 @@
             color: #1a5276;
         }
 
-        /* ─── DARK VARIANT ─── */
+        /* Dark variant */
         #statement-print.dark {
             background: #1a1a2e;
             color: #e8e8e8;
@@ -776,9 +762,7 @@
 </head>
 <body>
 
-    <!-- ═══════════════════════════════════════════ -->
     <!-- ─── PASSWORD OVERLAY ─── -->
-    <!-- ═══════════════════════════════════════════ -->
     <div id="passwordOverlay">
         <div class="password-box">
             <div class="lock-icon">🔐</div>
@@ -791,9 +775,7 @@
         </div>
     </div>
 
-    <!-- ═══════════════════════════════════════════ -->
     <!-- ─── MAIN APP ─── -->
-    <!-- ═══════════════════════════════════════════ -->
     <div class="app" id="mainApp">
 
         <div class="app-header">
@@ -801,7 +783,7 @@
             <span class="badge">🏦 10 Banks · Exact Replica</span>
         </div>
 
-        <!-- ─── BANK SELECTION ─── -->
+        <!-- BANK SELECTION -->
         <div class="card">
             <div class="card-title">🏛️ Select Bank</div>
             <div class="bank-grid" id="bankGrid">
